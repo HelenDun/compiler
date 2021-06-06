@@ -33,17 +33,17 @@ clean_test:
 	rm -f $(DIR_TESTS_RUNNABLE)/*_ppv.ul $(DIR_TESTS_PARSABLE)/*_ppv.ul $(DIR_TESTS_INVALID)/*_ppv.ul
 
 # java Compiler ./tests/runnable/some_file.ul
-grammar_test: test_runnable test_parsable test_invalid
-grammar_test_runnable:
+g_t: g_t_r g_t_p g_t_i
+g_t_r: # grammar test runnable
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)*.ul), echo; echo $(file) ; java Compiler $(file);)
-grammar_test_parsable:
+g_t_p: # grammar test parsable
 	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)*.ul), echo; echo $(file) ; java Compiler $(file);)
-grammar_test_invalid:
+g_t_i: # grammar test invalid
 	$(foreach file, $(wildcard $(DIR_TESTS_INVALID)*.ul), echo; echo $(file) ; java Compiler $(file);)
 
 # java Compiler ./tests/runnable/some_file.ul -ppv
-ppv_test: ppv_test_runnable ppv_test_parsable
-ppv_test_runnable:
+ppv_t: ppv_t_r ppv_t_p
+ppv_t_r:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)*.ul), echo; echo $(file) ; java Compiler $(file) -ppv;)
-ppv_test_parsable:
+ppv_t_p:
 	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)*.ul), echo; echo $(file) ; java Compiler $(file) -ppv;)
