@@ -39,14 +39,15 @@ public class PrettyPrintVisitor extends Visitor
 	public Object visit(Program program)
 	{
 		String sProgram = "";
-
 		Vector<Function> functions = program.getFunctions();
-		for (Function function : functions)
+		for (int i = 0; i < functions.size(); ++i)
 		{
-			sProgram += function.accept(this).toString();
-			sProgram += "\n\n";
+			sProgram += functions.elementAt(i).accept(this).toString();
+			if (i < functions.size() - 1)
+			{
+				sProgram += "\n\n";
+			}
 		}
-
 		return sProgram;
 	}
 
