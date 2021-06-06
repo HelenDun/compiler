@@ -78,12 +78,12 @@ compoundType returns [CompoundType ct5]
     ;
 
 type returns [TypeNode t3]
-    : x1=INT {t3 = TypeNode(x1.getLine(), x1.getCharPositionInLine(), x1.getTokenIndex(), Type_Int);}
-    | x2=FLOAT {t3 = TypeNode(x2.getLine(), x2.getCharPositionInLine(), x2.getTokenIndex(), Type_Float);}
-    | x3=CHAR {t3 = TypeNode(x3.getLine(), x3.getCharPositionInLine(), x3.getTokenIndex(), Type_Char);}
-    | x4=STRING {t3 = TypeNode(x4.getLine(), x4.getCharPositionInLine(), x4.getTokenIndex(), Type_String);}
-    | x5=BOOLEAN {t3 = TypeNode(x5.getLine(), x5.getCharPositionInLine(), x5.getTokenIndex(), Type_Boolean);}
-    | x6=VOID {t3 = TypeNode(x6.getLine(), x6.getCharPositionInLine(), x6.getTokenIndex(), Type_Void);}
+    : x1=INT {t3 = new TypeNode(x1.getLine(), x1.getCharPositionInLine(), x1.getTokenIndex(), Type_Int);}
+    | x2=FLOAT {t3 = new TypeNode(x2.getLine(), x2.getCharPositionInLine(), x2.getTokenIndex(), Type_Float);}
+    | x3=CHAR {t3 = new TypeNode(x3.getLine(), x3.getCharPositionInLine(), x3.getTokenIndex(), Type_Char);}
+    | x4=STRING {t3 = new TypeNode(x4.getLine(), x4.getCharPositionInLine(), x4.getTokenIndex(), Type_String);}
+    | x5=BOOLEAN {t3 = new TypeNode(x5.getLine(), x5.getCharPositionInLine(), x5.getTokenIndex(), Type_Boolean);}
+    | x6=VOID {t3 = new TypeNode(x6.getLine(), x6.getCharPositionInLine(), x6.getTokenIndex(), Type_Void);}
     ;
 
 statement returns [Statement s2] options {backtrack=true;} 

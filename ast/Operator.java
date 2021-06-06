@@ -1,6 +1,6 @@
 package ast;
 
-enum Operator
+public enum Operator
 {
     Operator_Multiply,
     Operator_Addition,

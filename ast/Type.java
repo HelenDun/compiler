@@ -1,6 +1,6 @@
 package ast;
 
-enum Type
+public enum Type
 {
     Type_Int,
     Type_Float,
