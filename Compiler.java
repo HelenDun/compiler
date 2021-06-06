@@ -26,14 +26,18 @@ public class Compiler {
 		try 
 		{
 			Program p = parser.program();
+			if (args.length > 1)
+			{
+				System.out.println(args[1]);
+			}
 
-			if (args[1] == "-ppv")
+			if (args.length > 1 && args[1].equals("-ppv"))
 			{
 				PrettyPrintVisitor ppv = new PrettyPrintVisitor();
 				String sOutput = p.accept(ppv).toString();
 	
 				String ulPathname = args[0];
-				ulPathname = ulPathname.substring(0, ulPathname.length()-2);
+				ulPathname = ulPathname.substring(0, ulPathname.length()-3);
 				ulPathname += "_ppv.ul";
 	
 				FileWriter output = new FileWriter(ulPathname);
