@@ -36,7 +36,11 @@ formalParameters returns [Vector<Variable> vs1]
 {
     vs1 = new Vector<Variable>();
 }
-    : ct2=compoundType i2=id {vs1.add(Variable(ct2.getLine(), ct2.getCharPositionInLine(), ct2.getTokenIndex(), ct2, i2));}
+    : ct2=compoundType i2=id 
+    {
+        Variable v4 = Variable(ct2.getLine(), ct2.getCharPositionInLine(), ct2.getTokenIndex(), ct2, i2));
+        vs1.add(v4);
+    }
         (v1=moreFormals {vs1.add(v1);})*
     ;
 
@@ -49,8 +53,8 @@ moreFormals returns [Variable v2]
 functionBody returns [FunctionBody fb2]
 @init
 {
-    vs2 = new Vector<Variable>();
-    ss1 = new Vector<Statement>();
+    Vector<Variable> vs2 = new Vector<Variable>();
+    Vector<Statement> ss1 = new Vector<Statement>();
 }
 @after
 {
@@ -71,13 +75,13 @@ compoundType returns [CompoundType ct5]
         {ct5 = new CompoundType(t2.getLine(), t2.getCharPositionInLine(), t2.getTokenIndex(), t2, Integer.parseInt(i5.getText()));}
     ;
 
-type returns [Type t3]
-    : INT {t3 = Type_Int;}
-    | FLOAT {t3 = Type_Float;}
-    | CHAR {t3 = Type_Char;}
-    | STRING {t3 = Type_String;}
-    | BOOLEAN {t3 = Type_Boolean;}
-    | VOID {t3 = Type_Void;}
+type returns [TypeNode t3]
+    : x1=INT {t3 = TypeNode(x1.getLine(), x1.getCharPositionInLine(), x1.getTokenIndex(), Type_Int);}
+    | x2=FLOAT {t3 = TypeNode(x2.getLine(), x2.getCharPositionInLine(), x2.getTokenIndex(), Type_Float);}
+    | x3=CHAR {t3 = TypeNode(x3.getLine(), x3.getCharPositionInLine(), x3.getTokenIndex(), Type_Char);}
+    | x4=STRING {t3 = TypeNode(x4.getLine(), x4.getCharPositionInLine(), x4.getTokenIndex(), Type_String);}
+    | x5=BOOLEAN {t3 = TypeNode(x5.getLine(), x5.getCharPositionInLine(), x5.getTokenIndex(), Type_Boolean);}
+    | x6=VOID {t3 = TypeNode(x6.getLine(), x6.getCharPositionInLine(), x6.getTokenIndex(), Type_Void);}
     ;
 
 statement returns [Statement s2] options {backtrack=true;} 

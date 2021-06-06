@@ -8,8 +8,6 @@ DIR_TESTS_INVALID= $(DIR_TESTS)/invalid
 GNAME= ulActions
 GSRC= $(GNAME).g
 
-.PHONY: all grammar compiler test clean
-
 all: grammar compiler test
 
 grammar: $(GSRCS)
