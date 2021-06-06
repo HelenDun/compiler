@@ -1,9 +1,3 @@
-/*
- * Compiler.java
- *
- * A starting place for the unnamed language compiler for CSC 435/535
- *
- */
 
 import org.antlr.runtime.*;
 import java.io.*;
@@ -12,30 +6,41 @@ public class Compiler {
 	public static void main (String[] args) throws Exception {
 		ANTLRInputStream input;
 
-		if (args.length == 0 ) {
+		if (args.length == 0 ) 
+		{
 			System.out.println("Usage: Compiler filename.ul");
 			return;
 		}
-		else {
+		else 
+		{
 			input = new ANTLRInputStream(new FileInputStream(args[0]));
 		}
 
-		// The name of the grammar here is "ulNoActions",
-		// so ANTLR generates ulNoActionsLexer and ulNoActionsParser
 		ulActionsLexer lexer = new ulActionsLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		ulActionsParser parser = new ulActionsParser(tokens);
 
-		try {
-			parser.program();
+		try 
+		{
+			Program p = parser.program();
+
+			PrettyPrintVisitor ppv = new PrettyPrintVisitor();
+			String sOutput = p.accept(ppv);
+
+			String ulPathname = args[0];
+			ulPathname = ulPathname.substring(0, ulPathname.length()-2);
+			ulPathname += "_ppv.ul";
+
+			FileWriter output = new File(ulPathname);
+			output.write(sOutput);
+			output.close();
 		}
-		catch (RecognitionException e )	{
-			// A lexical or parsing error occured.
-			// ANTLR will have already printed information on the
-			// console due to code added to the grammar.  So there is
-			// nothing to do here.
+		catch (RecognitionException e )	
+		{
+			// Oopsies
 		}
-		catch (Exception e) {
+		catch (Exception e) 
+		{
 			System.out.println(e);
 			e.printStackTrace();
 		}

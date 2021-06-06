@@ -21,7 +21,7 @@ compile_root:
 compile_ast:
 	javac $(DIR_AST)/*.java
 
-clean: clean_root clean_ast
+clean: clean_root clean_ast clean_test
 
 clean_root:
 	rm -f *.class $(GNAME)*.java $(GNAME)__.g $(GNAME).tokens
@@ -29,14 +29,15 @@ clean_root:
 clean_ast:
 	rm -f $(DIR_AST)/*.class
 
-test: test_parser
+clean_test:
+	rm -f $(DIR_TESTS_RUNNABLE)/*_ppv.ul $(DIR_TESTS_PARSABLE)/*_ppv.ul $(DIR_TESTS_INVALID)/*_ppv.ul
 
-test_parser: grammar_tests_runnable grammar_tests_parsable grammar_tests_invalid
+test: test_runnable test_parsable test_invalid
 
 # java Compiler ./tests/runnable/$(*).ul
-test_parser_runnable:
+test_runnable:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)*.ul), echo; echo $(file) ; java Compiler $(file);)
-test_parser_parsable:
+test_parsable:
 	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)*.ul), echo; echo $(file) ; java Compiler $(file);)
-test_parser_invalid:
+test_invalid:
 	$(foreach file, $(wildcard $(DIR_TESTS_INVALID)*.ul), echo; echo $(file) ; java Compiler $(file);)
