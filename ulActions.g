@@ -155,7 +155,7 @@ literal returns [Expression l2]
     | f4=FLOATCONSTANT
         {l2 = new LiteralFloat(f4.getLine(), f4.getCharPositionInLine(), f4.getTokenIndex(), Float.parseFloat(f4.getText()));}
     | c1=CHARACTERCONSTANT 
-        {l2 = new LiteralCharacter(c1.getLine(), c1.getCharPositionInLine(), c1.getTokenIndex(), c1.getText().charAt(0));}
+        {l2 = new LiteralCharacter(c1.getLine(), c1.getCharPositionInLine(), c1.getTokenIndex(), c1.getText().charAt(1));}
     | b5=TRUE 
         {l2 = new LiteralBoolean(b5.getLine(), b5.getCharPositionInLine(), b5.getTokenIndex(), true);}
     | b6=FALSE

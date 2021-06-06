@@ -324,7 +324,7 @@ public class PrettyPrintVisitor extends Visitor
 
 	public Object visit(LiteralCharacter literal_character)
 	{
-		return String.valueOf(literal_character.get_value());
+		return '\'' + String.valueOf(literal_character.get_value()) + '\'';
 	}
 
 	public Object visit(LiteralFloat literal_float)
