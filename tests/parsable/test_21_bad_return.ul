@@ -1,0 +1,7 @@
+// test 21 : Returns an int instead of a char
+// Parser / Lexer Valid: Yes
+
+char main()
+{
+    return ((((3))));
+}

@@ -1,0 +1,7 @@
+// test 6 : Tests print
+// Parser / Lexer Valid: Yes
+
+void main()
+{
+    print true ;
+}

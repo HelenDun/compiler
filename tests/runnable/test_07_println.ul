@@ -1,0 +1,7 @@
+// test 7 : Tests println
+// Parser / Lexer Valid: Yes
+
+void main()
+{
+    println "hello world" ;
+}

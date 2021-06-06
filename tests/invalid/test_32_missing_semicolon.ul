@@ -1,0 +1,7 @@
+// test 32 : The most bare, valid program.
+// Parser / Lexer Valid: Yes
+
+int main() 
+{
+    return 3
+}

@@ -1,0 +1,10 @@
+// test 23 : Assigns a variable a wrong type value
+// Parser / Lexer Valid: Yes
+
+char main()
+{
+    float a;
+    // random comment
+    a = 'b';
+    return a;
+}

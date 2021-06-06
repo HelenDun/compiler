@@ -1,0 +1,4 @@
+// test 2 : The most bare, valid program.
+// Parser / Lexer Valid: Yes
+
+void main() {;}// random comment

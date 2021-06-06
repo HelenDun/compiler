@@ -1,0 +1,8 @@
+// test 38 : Declare array size with non-integerconstant
+// Parser / Lexer Valid: Yes
+
+char main(int a) 
+{
+    char[a] b;
+    return b[5];
+}

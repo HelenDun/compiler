@@ -1,0 +1,10 @@
+// test 9 : Tests operator precedence 1
+// Parser / Lexer Valid: Yes
+
+int main()
+{
+    int a;
+    a = 3 + 4 * 2;
+    return a;
+    a = 2;
+}

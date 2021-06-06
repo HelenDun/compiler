@@ -1,0 +1,15 @@
+// test 13 : Has an if-statement
+// Parser / Lexer Valid: Yes
+
+void main()
+{
+    int a;
+    a = 3;
+
+    if (0 < a)
+    {
+        a = 5;
+    }
+
+    print a;
+}

@@ -1,0 +1,10 @@
+// test 24 : Returns the wrong type value
+// Parser / Lexer Valid: Yes
+
+char main()
+{
+    float a;
+    a = 3.0;
+    print a;
+    return a;
+}

@@ -1,0 +1,15 @@
+// test 1 : The sample program (sample.ul) from the specification of the Unnamed Language.
+// Parser / Lexer Valid: Yes
+
+int factorial (int n) {
+    if (n == 1) {
+        return 1; 
+    }
+    else {
+        return n*factorial(n-1);
+    } 
+}
+void main () {
+    print "The factorial of 8 is ";
+    println factorial(8);
+}

@@ -1,0 +1,21 @@
+// test 14 : Has an if-else statement
+// Parser / Lexer Valid: Yes
+
+int main()
+{
+    int a;
+    a = 3;
+
+    if (a < 0)
+    {
+        a = 5;
+    }// random comment
+    else
+    {
+        a = 0 - 1;
+    }
+
+    println a;
+    //return 22;// random comment
+    return a;
+}

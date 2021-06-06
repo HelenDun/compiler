@@ -1,0 +1,7 @@
+// test 34 : invalid type 'foo'
+// Parser / Lexer Valid: Yes
+
+int main(foo a)
+{
+    return 34;
+}

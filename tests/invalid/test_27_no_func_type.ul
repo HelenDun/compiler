@@ -1,0 +1,4 @@
+// test 27 : no function type
+// Parser / Lexer Valid: Yes
+
+main() {}

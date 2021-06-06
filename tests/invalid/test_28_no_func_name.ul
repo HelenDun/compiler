@@ -1,0 +1,4 @@
+// test 28 : no function name
+// Parser / Lexer Valid: Yes
+
+void () {}

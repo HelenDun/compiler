@@ -1,0 +1,8 @@
+// test 37 : Array out-of-bounds error
+// Parser / Lexer Valid: Yes
+
+char main(float a) 
+{
+    char[2] b;
+    return b[37];
+}

@@ -1,0 +1,7 @@
+// test 20 : Has a statement without variable declaration
+// Parser / Lexer Valid: Yes
+
+void main()
+{
+    a = 3;
+}

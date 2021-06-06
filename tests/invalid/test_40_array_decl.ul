@@ -1,0 +1,12 @@
+// test 40 : array declaration should be 'int[3] a', not 'int a[3]'
+// Parser / Lexer Valid: Yes
+
+string main()
+{
+    int a[3];
+    a[0] = 1;
+    a[1] = 2;
+    a[2] = 0;
+    print a[a[0] - a[2]];
+    return "15";
+}

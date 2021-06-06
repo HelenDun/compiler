@@ -1,0 +1,16 @@
+// test 17 : Has multiple functions
+// Parser / Lexer Valid: Yes
+
+char _foo()
+{
+    print "foo";
+    return 'a';
+}
+
+int main()
+{
+    char x;
+    x = _foo();
+    print x;
+    return 16;
+}

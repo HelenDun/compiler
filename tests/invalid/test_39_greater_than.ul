@@ -1,0 +1,15 @@
+// test 39 : Uses > instead of <
+// Parser / Lexer Valid: Yes
+
+void main()
+{
+    int a;
+    a = 3;
+
+    if (a > 0)
+    {
+        a = 5;
+    }
+
+    print a;
+}

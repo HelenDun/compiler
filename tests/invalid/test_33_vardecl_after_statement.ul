@@ -1,0 +1,13 @@
+// test 33 : variable declaration after a statement
+// Parser / Lexer Valid: Yes
+
+int main(int a) 
+{
+    int b;
+    b = 2;
+    print a;
+    print b;
+    int c;
+    c = 3;
+    return b;
+}

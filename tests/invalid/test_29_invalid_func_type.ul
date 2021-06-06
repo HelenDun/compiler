@@ -1,0 +1,4 @@
+// test 29 : uses invalid type 'foo' for function return type
+// Parser / Lexer Valid: Yes
+
+foo main() {}

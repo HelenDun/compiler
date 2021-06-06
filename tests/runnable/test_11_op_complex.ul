@@ -1,0 +1,7 @@
+// test 11 : Tests operator complex
+// Parser / Lexer Valid: Yes
+
+boolean main()
+{
+    return true == ((true == (0 < 3)) == false);
+}

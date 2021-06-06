@@ -1,0 +1,32 @@
+// test 15 : Has nested if-else statements
+// Parser / Lexer Valid: Yes
+
+int main()
+{
+    int a;
+    a = 3;
+
+    if (a < 0)
+    {
+        a = 2;
+        if (true)
+        {
+            return 15;
+        }
+    }
+    else
+    {
+        if (false)
+        {
+            print 15;
+        }
+        else
+        {
+            print 15;
+        }
+        a = 0 - 1;
+    }
+
+    println a;
+    return a;
+}

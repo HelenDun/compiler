@@ -1,0 +1,29 @@
+// test 19 : Has functions with parameters
+// Parser / Lexer Valid: Yes
+
+char foo(char b, char z)
+{
+    println b;
+    println z;
+    return 'a';
+}
+
+boolean main(int z, float a, boolean c)
+{
+    // random comment
+    char _x;
+    _x = foo('y', 'z');
+
+    print _x;
+    print " _ " ;
+    print z;
+    print ' ';
+    println a;
+
+    if (z < a)
+    {
+        // random comment
+        return c ;
+    }
+    return false;
+}

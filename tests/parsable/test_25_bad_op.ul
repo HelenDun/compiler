@@ -1,0 +1,10 @@
+// test 25 : bad operation
+// Parser / Lexer Valid: Yes
+
+void main()
+{
+    int a;
+    char b;
+
+    println a + b ;
+}

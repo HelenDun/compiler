@@ -1,0 +1,4 @@
+// test 30 : uses keyword void for function name
+// Parser / Lexer Valid: Yes
+
+void void() {}

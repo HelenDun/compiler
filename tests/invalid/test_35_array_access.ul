@@ -1,0 +1,8 @@
+// test 35 : Access array with non-integer
+// Parser / Lexer Valid: Yes
+
+char main(float a) 
+{
+    char[35.5] b;
+    return b[5];
+}

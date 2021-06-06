@@ -1,0 +1,32 @@
+// test 18 : Has nested if-else statements and while loops
+// Parser / Lexer Valid: Yes
+
+int main()
+{
+    int a;
+    int b;
+    int temp;
+
+    a = 3;
+    b = 18;// random comment
+
+    if (a < b)
+    {
+        temp = b;
+        b = a;
+        a = temp;
+        while (b < a)
+        {
+            if (b == 9)
+            {
+                b = 4;
+            }
+            print b;
+            b = b * 3;
+        }
+    }
+    else{}
+
+    println a;
+    return a;
+}
