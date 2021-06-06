@@ -1,3 +1,4 @@
+package ast;
 import java.util.Vector;
 
 public class Program extends AbstractSyntaxTreeNode

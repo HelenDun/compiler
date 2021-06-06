@@ -1,3 +1,4 @@
+package ast;
 
 public class LiteralInteger extends Literal 
 {

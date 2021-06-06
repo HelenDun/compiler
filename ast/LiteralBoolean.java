@@ -1,3 +1,4 @@
+package ast;
 
 public class LiteralBoolean extends Literal 
 {

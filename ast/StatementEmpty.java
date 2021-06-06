@@ -1,4 +1,4 @@
-
+package ast;
 public class StatementEmpty extends Statement
 {
     public StatementEmpty(int line, int pos, int index)

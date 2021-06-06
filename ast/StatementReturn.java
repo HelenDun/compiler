@@ -1,4 +1,4 @@
-
+package ast;
 public class StatementReturn extends Statement
 {
     Expression m_expression;

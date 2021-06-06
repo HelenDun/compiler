@@ -1,3 +1,4 @@
+package ast;
 import java.util.Vector;
 import java.lang.String;
 
@@ -106,39 +107,37 @@ public class PrettyPrintVisitor extends Visitor
 
 	public Object visit(CompoundType compound_type)
 	{
-		String sType = "";
+		String sTypeNode = compound_type.get_type_node().accept(this).toString();
 		String sArray = "";
-
-		switch (compound_type.get_type())
-		{
-			case Type_Int:
-				sType = "int";
-				break;
-			case Type_Float:
-				sType = "float";
-				break;
-			case Type_Char:
-				sType = "char";
-				break;
-			case Type_String:
-				sType = "string";
-				break;
-			case Type_Boolean:
-				sType = "boolean";
-				break;
-			case Type_Void:
-				sType = "void";
-				break;
-			default:
-				break;
-		}
 		
 		if (compound_type.is_array())
 		{
 			sArray = "[" + compound_type.toString() + "]";
 		}
 
-		return sType + sArray;
+		return sTypeNode + sArray;
+	}
+
+	public Object visit(TypeNode type_node)
+	{
+		switch (type_node.get_type())
+		{
+			case Type_Int:
+				return "int";
+			case Type_Float:
+				return "float";
+			case Type_Char:
+				return "char";
+			case Type_String:
+				return "string";
+			case Type_Boolean:
+				return "boolean";
+			case Type_Void:
+				return "void";
+			default:
+				break;
+		}
+		return "?";
 	}
 
 	public Object visit(Identifier identifier)

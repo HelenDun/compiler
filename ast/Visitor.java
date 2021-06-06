@@ -1,4 +1,4 @@
-
+package ast;
 public abstract class Visitor
 {
 	public abstract Object visit(Program program);
@@ -7,6 +7,7 @@ public abstract class Visitor
 	public abstract Object visit(FunctionBody function_body);
 	public abstract Object visit(Block block);
 	public abstract Object visit(CompoundType compound_type);
+	public abstract Object visit(TypeNode type_node);
 	public abstract Object visit(Identifier identifier);
 	public abstract Object visit(Variable variable);
 	

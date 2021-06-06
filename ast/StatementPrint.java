@@ -1,4 +1,4 @@
-
+package ast;
 public class StatementPrint extends Statement
 {
     Expression m_expression;

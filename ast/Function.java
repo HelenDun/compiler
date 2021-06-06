@@ -1,3 +1,4 @@
+package ast;
 
 public class Function extends AbstractSyntaxTreeNode
 {

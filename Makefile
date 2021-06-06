@@ -1,5 +1,5 @@
 DIR_SRC= .
-DIR_GRAMMAR= $(DIR_SRC)/grammar
+DIR_AST= $(DIR_SRC)/ast
 DIR_TESTS= $(DIR_SRC)/tests
 DIR_TESTS_RUNNABLE= $(DIR_TESTS)/runnable
 DIR_TESTS_PARSABLE= $(DIR_TESTS)/parsable
@@ -15,20 +15,30 @@ all: grammar compiler test
 grammar: $(GSRCS)
 	java org.antlr.Tool -fo . $(GSRC)
 
-compiler:
+compile: compile_ast compile_root
+
+compile_root:
 	javac *.java
 
-clean:
-	rm *.class $(GNAME)*.java $(GNAME)__.g $(GNAME).tokens
+compile_ast:
+	javac $(DIR_AST)/*.java
 
-test: grammar_tests
+clean: clean_root clean_ast
 
-grammar_tests: grammar_tests_runnable grammar_tests_parsable grammar_tests_invalid
+clean_root:
+	rm -f *.class $(GNAME)*.java $(GNAME)__.g $(GNAME).tokens
+
+clean_ast:
+	rm -f $(DIR_AST)/*.class
+
+test: test_parser
+
+test_parser: grammar_tests_runnable grammar_tests_parsable grammar_tests_invalid
 
 # java Compiler ./tests/runnable/$(*).ul
-grammar_tests_runnable:
+test_parser_runnable:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)*.ul), echo; echo $(file) ; java Compiler $(file);)
-grammar_tests_parsable:
+test_parser_parsable:
 	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)*.ul), echo; echo $(file) ; java Compiler $(file);)
-grammar_tests_invalid:
+test_parser_invalid:
 	$(foreach file, $(wildcard $(DIR_TESTS_INVALID)*.ul), echo; echo $(file) ; java Compiler $(file);)

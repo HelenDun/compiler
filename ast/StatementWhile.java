@@ -1,4 +1,4 @@
-
+package ast;
 public class StatementWhile extends Statement
 {
     Expression m_expression;

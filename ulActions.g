@@ -11,7 +11,6 @@ grammar ulActions;
 {
     import java.util.Vector;
     import ast.*;
-    import types.*;
 }
 
 /* Parser */

@@ -1,4 +1,4 @@
-
+package ast;
 public class StatementAssignment extends Statement
 {
     Identifier m_identifier;

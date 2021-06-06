@@ -1,3 +1,4 @@
+package ast;
 import java.lang.String;
 
 public class Identifier extends AbstractSyntaxTreeNode
