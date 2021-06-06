@@ -29,8 +29,10 @@ function returns [Function f3]
     ;
 
 functionDecl returns [FunctionDeclaration fd2]
-    : ct1=compoundType i1=id PAREN_LEFT fp1=formalParameters? PAREN_RIGHT
-        {fd2 = new FunctionDeclaration(ct1.getLine(), ct1.getCharPositionInLine(), ct1.getTokenIndex(), ct1, i1, fp1);}
+    : ct1=compoundType i1=id PAREN_LEFT PAREN_RIGHT
+        {fd2 = new FunctionDeclaration(ct1.getLine(), ct1.getCharPositionInLine(), ct1.getTokenIndex(), ct1, i1, null);}
+    | ct6=compoundType i17=id PAREN_LEFT fp1=formalParameters PAREN_RIGHT
+        {fd2 = new FunctionDeclaration(ct6.getLine(), ct6.getCharPositionInLine(), ct6.getTokenIndex(), ct6, i17, fp1);}
     ;
 
 formalParameters returns [Vector<Variable> vs1]
