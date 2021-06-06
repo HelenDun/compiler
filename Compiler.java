@@ -26,10 +26,6 @@ public class Compiler {
 		try 
 		{
 			Program p = parser.program();
-			if (args.length > 1)
-			{
-				System.out.println(args[1]);
-			}
 
 			if (args.length > 1 && args[1].equals("-ppv"))
 			{

@@ -8,7 +8,7 @@ DIR_TESTS_INVALID= $(DIR_TESTS)/invalid
 GNAME= ulActions
 GSRC= $(GNAME).g
 
-all: grammar compile g_t ppv_t
+all: grammar compile
 
 grammar: $(GSRCS)
 	java org.antlr.Tool -fo . $(GSRC)
@@ -33,17 +33,22 @@ clean_test:
 	rm -f $(DIR_TESTS_RUNNABLE)/*_ppv.ul $(DIR_TESTS_PARSABLE)/*_ppv.ul $(DIR_TESTS_INVALID)/*_ppv.ul
 
 # java Compiler ./tests/runnable/some_file.ul
-g_t: g_t_r g_t_p g_t_i
-g_t_r: # grammar test runnable
+grammar_test: grammar_test_runnable grammar_test_parsable grammar_test_invalid
+grammar_test_runnable:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file);)
-g_t_p: # grammar test parsable
+grammar_test_parsable:
 	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file);)
-g_t_i: # grammar test invalid
+grammar_test_invalid:
 	$(foreach file, $(wildcard $(DIR_TESTS_INVALID)/*.ul), echo; echo $(file) ; java Compiler $(file);)
 
 # java Compiler ./tests/runnable/some_file.ul -ppv
-ppv_t: ppv_t_r ppv_t_p
-ppv_t_r:
+ppv_test: ppv_test_runnable ppv_test_parsable ppv_test_ultimate
+ppv_test_runnable:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -ppv;)
-ppv_t_p:
+ppv_test_parsable:
 	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -ppv;)
+ppv_test_ultimate:
+	java Compiler ./tests/runnable/test_41_pretty_print_ugly.ul -ppv
+	java Compiler ./tests/runnable/test_42_pretty_print_expected.ul -ppv
+	diff ./tests/runnable/test_42_pretty_print_expected_ppv.ul ./tests/runnable/test_42_pretty_print_expected.ul
+	diff ./tests/runnable/test_41_pretty_print_ugly_ppv.ul ./tests/runnable/test_42_pretty_print_expected.ul
