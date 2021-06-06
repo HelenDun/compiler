@@ -1,6 +1,9 @@
 
 import org.antlr.runtime.*;
 import java.io.*;
+import ast.*;
+import static ast.Type.*;
+import static ast.Operator.*;
 
 public class Compiler {
 	public static void main (String[] args) throws Exception {
@@ -31,7 +34,7 @@ public class Compiler {
 			ulPathname = ulPathname.substring(0, ulPathname.length()-2);
 			ulPathname += "_ppv.ul";
 
-			FileWriter output = new File(ulPathname);
+			FileWriter output = new FileWriter(ulPathname);
 			output.write(sOutput);
 			output.close();
 		}
