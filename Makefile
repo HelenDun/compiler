@@ -8,10 +8,11 @@ DIR_TESTS_INVALID= $(DIR_TESTS)/invalid
 GNAME= ulActions
 GSRC= $(GNAME).g
 
-all: grammar compile
+all: grammar compile test
 
 grammar: $(GSRCS)
 	java org.antlr.Tool -fo . $(GSRC)
+
 
 compile: compile_ast compile_root
 
@@ -20,6 +21,7 @@ compile_root:
 
 compile_ast:
 	javac $(DIR_AST)/*.java
+
 
 clean: clean_root clean_ast clean_test
 
@@ -31,6 +33,9 @@ clean_ast:
 
 clean_test:
 	rm -f $(DIR_TESTS_RUNNABLE)/*_ppv.ul $(DIR_TESTS_PARSABLE)/*_ppv.ul $(DIR_TESTS_INVALID)/*_ppv.ul
+
+
+test: grammar_test ppv_test
 
 # java Compiler ./tests/runnable/some_file.ul
 grammar_test: grammar_test_runnable grammar_test_parsable grammar_test_invalid
