@@ -1,5 +1,7 @@
 # Compiled class file
 *.class
+
+# PrettyPrintVisitor test file
 *_ppv.ul
 
 # Log file
