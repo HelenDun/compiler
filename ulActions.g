@@ -11,6 +11,7 @@ grammar ulActions;
 {
     import java.util.Vector;
     import ast.*;
+    import static ast.*;
 }
 
 /* Parser */
@@ -38,7 +39,7 @@ formalParameters returns [Vector<Variable> vs1]
 }
     : ct2=compoundType i2=id 
     {
-        Variable v4 = Variable(ct2.getLine(), ct2.getCharPositionInLine(), ct2.getTokenIndex(), ct2, i2));
+        Variable v4 = new Variable(ct2.getLine(), ct2.getCharPositionInLine(), ct2.getTokenIndex(), ct2, i2);
         vs1.add(v4);
     }
         (v1=moreFormals {vs1.add(v1);})*
