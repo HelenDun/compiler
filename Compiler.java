@@ -9,9 +9,9 @@ public class Compiler {
 	public static void main (String[] args) throws Exception {
 		ANTLRInputStream input;
 
-		if (args.length == 0 ) 
+		if (args.length == 0) 
 		{
-			System.out.println("Usage: Compiler filename.ul");
+			System.out.println("Usage: Compiler filename.ul [-ppv]");
 			return;
 		}
 		else 
@@ -27,16 +27,19 @@ public class Compiler {
 		{
 			Program p = parser.program();
 
-			PrettyPrintVisitor ppv = new PrettyPrintVisitor();
-			String sOutput = p.accept(ppv);
-
-			String ulPathname = args[0];
-			ulPathname = ulPathname.substring(0, ulPathname.length()-2);
-			ulPathname += "_ppv.ul";
-
-			FileWriter output = new FileWriter(ulPathname);
-			output.write(sOutput);
-			output.close();
+			if (args[1] == "-ppv")
+			{
+				PrettyPrintVisitor ppv = new PrettyPrintVisitor();
+				String sOutput = p.accept(ppv).toString();
+	
+				String ulPathname = args[0];
+				ulPathname = ulPathname.substring(0, ulPathname.length()-2);
+				ulPathname += "_ppv.ul";
+	
+				FileWriter output = new FileWriter(ulPathname);
+				output.write(sOutput);
+				output.close();
+			}
 		}
 		catch (RecognitionException e )	
 		{

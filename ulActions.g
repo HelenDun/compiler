@@ -87,10 +87,10 @@ type returns [TypeNode t3]
     ;
 
 statement returns [Statement s2] options {backtrack=true;} 
-    : i6=IF PAREN_LEFT e1=expr PAREN_RIGHT b1=block
-        {s2 = new StatementIfElse(i6.getLine(), i6.getCharPositionInLine(), i6.getTokenIndex(), e1, b1, null);}
-    | i7=IF PAREN_LEFT e2=expr PAREN_RIGHT b2=block ELSE b3=block
+    : i7=IF PAREN_LEFT e2=expr PAREN_RIGHT b2=block ELSE b3=block
         {s2 = new StatementIfElse(i7.getLine(), i7.getCharPositionInLine(), i7.getTokenIndex(), e2, b2, b3);}
+    | i6=IF PAREN_LEFT e1=expr PAREN_RIGHT b1=block
+        {s2 = new StatementIfElse(i6.getLine(), i6.getCharPositionInLine(), i6.getTokenIndex(), e1, b1, null);}
     | w1=WHILE PAREN_LEFT e3=expr PAREN_RIGHT ss2=block
         {s2 = new StatementWhile(w1.getLine(), w1.getCharPositionInLine(), w1.getTokenIndex(), e3, ss2);}
 
