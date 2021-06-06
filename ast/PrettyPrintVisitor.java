@@ -61,16 +61,18 @@ public class PrettyPrintVisitor extends Visitor
 		String sIdentifier = function_declaration.get_identifier().accept(this).toString();
 		String sParameters = "";
 
-		Vector<Variable> parameters = function_declaration.get_parameters();
-		for (int i = 0; i < parameters.size(); ++i)
+		if (function_declaration.is_parameters())
 		{
-			sParameters += parameters.elementAt(i).accept(this).toString();
-			if (i < parameters.size() - 1)
+			Vector<Variable> parameters = function_declaration.get_parameters();
+			for (int i = 0; i < parameters.size(); ++i)
 			{
-				sParameters += ", ";
+				sParameters += parameters.elementAt(i).accept(this).toString();
+				if (i < parameters.size() - 1)
+				{
+					sParameters += ", ";
+				}
 			}
 		}
-
 		return (sCompoundType + " " + sIdentifier + " (" + sParameters + ")");
 	}
 

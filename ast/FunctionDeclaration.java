@@ -30,6 +30,11 @@ public class FunctionDeclaration extends AbstractSyntaxTreeNode
         return m_parameters;
     }
 
+    public boolean is_parameters()
+    {
+        return m_parameters != null;
+    }
+
 	public Object accept(Visitor v)
 	{
 		return v.visit(this);
