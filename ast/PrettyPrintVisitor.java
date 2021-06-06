@@ -13,9 +13,11 @@ public class PrettyPrintVisitor extends Visitor
 		for (int i = 0; i < statements.size(); ++i)
 		{
 			// add a TAB to each line of the statement string
+			String sTabNewline = "\n" + TAB;
+
 			String sStatement = statements.elementAt(i).accept(this).toString();
 			sStatement = TAB + sStatement;
-			sStatement.replaceAll("\n", ("\n" + TAB));
+			sStatement = sStatement.replaceAll("\n", sTabNewline);
 
 			sStatements += sStatement;
 			if (i < statements.size() - 1)
