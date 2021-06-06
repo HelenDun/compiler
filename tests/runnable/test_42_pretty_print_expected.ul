@@ -8,16 +8,16 @@ int sampleOne (int x, float y)
     {
         print "Goodbye";
     }
-    return x*y; 
+    return x*y;
 }
 
-void sampleTwo (int x) 
+void sampleTwo (int x)
 {
     float[10] b;
 
     while (x<10)
     {
-        x=x-1;    
+        x=x-1;
     }
     x=8;
 }

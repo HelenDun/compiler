@@ -116,7 +116,7 @@ public class PrettyPrintVisitor extends Visitor
 		
 		if (compound_type.is_array())
 		{
-			sArray = "[" + compound_type.toString() + "]";
+			sArray = "[" + String.valueOf(compound_type.get_array_size()) + "]";
 		}
 
 		return sTypeNode + sArray;
