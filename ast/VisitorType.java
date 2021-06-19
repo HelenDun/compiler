@@ -47,7 +47,7 @@ public class VisitorType extends Visitor
         result += String.valueOf(lineNumber) + ":";
         result += String.valueOf(lineOffset) + ":";
         result += errorMsg;
-        throw new SemanticException(result, m_function_environment, m_variable_environment);
+        throw new SemanticException(result, m_function_environment, m_variable_environment, m_current_function);
     }
 
     private boolean __isMain(EnvironmentElementFunction ef, int lineNumber, int lineOffset)
@@ -239,14 +239,14 @@ public class VisitorType extends Visitor
         if (sa.is_array())
         {
             Type type_index = (Type) sa.get_array_index().accept(this);
-            if (__isSubtype(Type.Type_Int, type_index))
+            if (!__isSubtype(Type.Type_Int, type_index))
                 __throwError("Cannot index array with non-Integer", sa.getLine(), sa.getCharPositionInLine());
         }
 
         Type type = (Type) sa.get_expression().accept(this);
 
         // check that correct type is being assigned to the variable
-        if (__isSubtype(e.get_type(), type))
+        if (!__isSubtype(e.get_type(), type))
             __throwError("Type of assignment expression does not match variable", sa.getLine(), sa.getCharPositionInLine());
 
         return null;
@@ -268,7 +268,7 @@ public class VisitorType extends Visitor
         Type type = (Type) sie.get_expression().accept(this);
 
         // check that the conditional is a boolean
-        if (__isSubtype(Type.Type_Boolean, type))
+        if (!__isSubtype(Type.Type_Boolean, type))
             __throwError("If-Else conditional expression is not of type 'boolean'", sie.getLine(), sie.getCharPositionInLine());
 
         // type-check the blocks
@@ -295,7 +295,7 @@ public class VisitorType extends Visitor
 
             Type type = (Type) sr.getExpression().accept(this);
 
-            if (__isSubtype(m_current_function.m_type, type))
+            if (!__isSubtype(m_current_function.m_type, type))
                 __throwError("Type of return expression does not match the function's return type", sr.getLine(), sr.getCharPositionInLine());
         }
 
