@@ -52,8 +52,7 @@ public class VisitorType extends Visitor
 
     private boolean __isMain(EnvironmentElementFunction ef, int lineNumber, int lineOffset)
     {
-        System.out.println("%" + ef.get_name() + "%");
-        if (ef.get_name() != "main")
+        if (!ef.get_name().equals("main"))
         {
             return false; // function is not called 'main'
         }
@@ -94,7 +93,7 @@ public class VisitorType extends Visitor
             m_function_environment.add(ef);
 
             // check whether the function is main
-            hasMain = hasMain || __isMain(ef, fd.getLine(), fd.getCharPositionInLine());
+            hasMain = (hasMain || __isMain(ef, fd.getLine(), fd.getCharPositionInLine()));
         }
 
         // check that main is one of the functions
