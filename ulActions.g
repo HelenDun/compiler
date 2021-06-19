@@ -126,28 +126,28 @@ block returns [Block b4]
     ;
 
 expr returns [Expression e11] options {backtrack=true;}
-    : e12=expr1 MULTIPLY e13=expr
+    : e12=expr MULTIPLY e13=expr1
         {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Multiply, e12, e13);}
     | e14=expr1
         {e11 = e14;}
     ;
 
 expr1 returns [Expression e22]
-    : e12=expr2 ADDITION e13=expr1
+    : e12=expr1 ADDITION e13=expr2
         {e22 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Addition, e12, e13);}
-    : e12=expr2 SUBTRACTION e13=expr1
+    : e12=expr1 SUBTRACTION e13=expr2
         {e22 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Subtraction, e12, e13);}
     | e23=expr2
         {e22 = e23;}
 
 expr2 return [Expression e24]
-    : e12=expr3 LESS_THAN e13=expr2
+    : e12=expr2 LESS_THAN e13=expr3
         {e24 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Less_Than, e12, e13);}
     | e25=expr3
         {e24 = e25;}
 
 expr3 return [Expression e26]
-    : e12=expr4 EQUALS e13=expr3
+    : e12=expr3 EQUALS e13=expr4
         {e26 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Equals, e12, e13);}
     | e27=expr4
         {e26 = e27;}
