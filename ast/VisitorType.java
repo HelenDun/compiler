@@ -311,7 +311,7 @@ public class VisitorType extends Visitor
         Type type = (Type) sw.get_expression().accept(this);
 
         // check that the conditional is a boolean
-        if (__isSubtype(Type.Type_Boolean, type))
+        if (!__isSubtype(Type.Type_Boolean, type))
             __throwError("While conditional expression is not of type 'boolean'", sw.getLine(), sw.getCharPositionInLine());
 
         // type-check the blocks
@@ -344,7 +344,7 @@ public class VisitorType extends Visitor
             Expression exp = expressions.elementAt(i);
             Type type = (Type) exp.accept(this);
 
-            if (__isSubtype(var.get_type(), type))
+            if (!__isSubtype(var.get_type(), type))
                 __throwError("Type of expression does not match the function parameter", exp.getLine(), exp.getCharPositionInLine());
         }
 
@@ -385,7 +385,9 @@ public class VisitorType extends Visitor
         Type type2 = (Type) eo.get_expression2().accept(this);
 
         // check that both sides of the operation are of the same type
-        if (!__isSubtype(type1, type2) || !__isSubtype(type2, type1))
+        boolean isSubtype1 = __isSubtype(type1, type2);
+        boolean isSubtype2 = __isSubtype(type2, type1);
+        if (!isSubtype1 || !isSubtype2)
             __throwError("Cannot operate on values of different types", eo.getLine(), eo.getCharPositionInLine());
 
         // check the operation is not on void

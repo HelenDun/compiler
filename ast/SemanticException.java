@@ -51,9 +51,10 @@ public class SemanticException extends RuntimeException
         String env = "VARIABLE ENVIRONMENT\n";
         for (EnvironmentElement ef : m_variable_environment)
         {
-            env += ef.get_type() + " " + ef.get_name() + "\n";
+            env += ef.get_type();
             if (ef.is_array())
                 env += "[]";
+            env += " " + ef.get_name() + "\n";
         }
         return env;
     }

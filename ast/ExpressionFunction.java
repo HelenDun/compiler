@@ -11,6 +11,8 @@ public class ExpressionFunction extends Expression
         super(line, pos, index);
         m_identifier = id;
         m_parameters = parameters;
+        if (m_parameters == null)
+            m_parameters = new Vector<Expression>();
     }
 
     public Identifier get_identifier()
@@ -21,11 +23,6 @@ public class ExpressionFunction extends Expression
     public Vector<Expression> get_parameters()
     {
         return m_parameters;
-    }
-
-    public boolean is_parameters()
-    {
-        return m_parameters != null;
     }
 
 	public Object accept(Visitor v)

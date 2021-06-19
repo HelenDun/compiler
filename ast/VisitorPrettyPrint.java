@@ -251,16 +251,13 @@ public class VisitorPrettyPrint extends Visitor
 		String sIdentifier = expression_function.get_identifier().accept(this).toString();
 		String sParameters = "";
 
-		if (expression_function.is_parameters())
+		Vector<Expression> parameters = expression_function.get_parameters();
+		for (int i = 0; i < parameters.size(); ++i)
 		{
-			Vector<Expression> parameters = expression_function.get_parameters();
-			for (int i = 0; i < parameters.size(); ++i)
+			sParameters += parameters.elementAt(i).accept(this).toString();
+			if (i < parameters.size() - 1)
 			{
-				sParameters += parameters.elementAt(i).accept(this).toString();
-				if (i < parameters.size() - 1)
-				{
-					sParameters += ",";
-				}
+				sParameters += ",";
 			}
 		}
 
