@@ -149,12 +149,14 @@ exprLessThan return [Expression e24]
 exprEqual return [Expression e26]
     : e12=exprAtom EQUALS e13=exprEqual
         {e26 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Equals, e12, e13);}
-    | e27=expexprAtomr4
+    | e27=exprAtom
         {e26 = e27;}
 
 exprAtom returns [Expression e15]
     : l1=literal
         {e15 = l1;}
+    | e28=expr
+        {e15 = e28;}
     | PAREN_LEFT e16=expr PAREN_RIGHT
         {e15 = e16; e15.increment_num_parentheses();}
     | i10=id
