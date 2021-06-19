@@ -52,6 +52,7 @@ public class VisitorType extends Visitor
 
     private boolean __isMain(EnvironmentElementFunction ef, int lineNumber, int lineOffset)
     {
+        System.out.println("%" + ef.get_name() + "%");
         if (ef.get_name() != "main")
         {
             return false; // function is not called 'main'
