@@ -20,5 +20,5 @@ void main ()
 {
 string[10] a;
 int w;
-println sampleOne(10,9.3);
+println sampleOne(7.2,9.3);
 sampleTwo(); }

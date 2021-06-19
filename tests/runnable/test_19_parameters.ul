@@ -21,9 +21,4 @@ void main()
     print 3;
     print ' ';
     println a;
-
-    if (z < a)
-    {
-        // random comment
-    }
 }

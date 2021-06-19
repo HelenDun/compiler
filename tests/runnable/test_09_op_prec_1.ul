@@ -4,7 +4,13 @@
 void main()
 {
     int a;
-    a = 3 + 4 * 2;
+    int b;
+    if ((3 < 4 * 2) == true)
+    {
+        a = 5 * 2 + 1;
+        b = 1 + 2 * 5;
+    }
     print a;
+    print b;
     a = 2;
 }

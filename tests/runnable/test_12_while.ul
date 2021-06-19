@@ -9,7 +9,7 @@ void main()
     a = 3;
     b = 22;
 
-    while(a + 5 < b)
+    while((a + 5) < b)
     {
         print "test 12";
         a = a + 2 ;

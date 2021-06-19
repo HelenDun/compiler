@@ -1,6 +1,6 @@
 ./tests/runnable/test_19_parameters.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-Error:16:13:Type of expression does not match the function parameter
+Error:25:8:Cannot operate on values of different types
 
 CURRENT FUNCTION
 Type_Void main()
@@ -15,12 +15,12 @@ Type_Float a
 Type_Boolean c
 Type_Char _x
 
-ast.SemanticException: Error:16:13:Type of expression does not match the function parameter
+ast.SemanticException: Error:25:8:Cannot operate on values of different types
 	at ast.VisitorType.__throwError(VisitorType.java:50)
-	at ast.VisitorType.visit(VisitorType.java:348)
-	at ast.ExpressionFunction.accept(ExpressionFunction.java:33)
-	at ast.VisitorType.visit(VisitorType.java:246)
-	at ast.StatementAssignment.accept(StatementAssignment.java:38)
+	at ast.VisitorType.visit(VisitorType.java:391)
+	at ast.ExpressionOperation.accept(ExpressionOperation.java:34)
+	at ast.VisitorType.visit(VisitorType.java:268)
+	at ast.StatementIfElse.accept(StatementIfElse.java:38)
 	at ast.VisitorType.visit(VisitorType.java:159)
 	at ast.FunctionBody.accept(FunctionBody.java:28)
 	at ast.VisitorType.visit(VisitorType.java:122)
@@ -55,10 +55,10 @@ Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
 
 ./tests/runnable/test_41_pretty_print_ugly.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-Error:16:0:While conditional expression is not of type 'boolean'
+Error:23:18:Type of expression does not match the function parameter
 
 CURRENT FUNCTION
-Type_Void sampleTwo(Type_Int x, )
+Type_Void main()
 
 FUNCTION ENVIRONMENT
 Type_Float sampleOne(Type_Float x, Type_Float y, )
@@ -66,13 +66,15 @@ Type_Void sampleTwo(Type_Int x, )
 Type_Void main()
 
 VARIABLE ENVIRONMENT
-Type_Int x
-Type_Float b
-[]
-ast.SemanticException: Error:16:0:While conditional expression is not of type 'boolean'
+Type_String[] a
+Type_Int w
+
+ast.SemanticException: Error:23:18:Type of expression does not match the function parameter
 	at ast.VisitorType.__throwError(VisitorType.java:50)
-	at ast.VisitorType.visit(VisitorType.java:315)
-	at ast.StatementWhile.accept(StatementWhile.java:26)
+	at ast.VisitorType.visit(VisitorType.java:348)
+	at ast.ExpressionFunction.accept(ExpressionFunction.java:30)
+	at ast.VisitorType.visit(VisitorType.java:284)
+	at ast.StatementPrint.accept(StatementPrint.java:26)
 	at ast.VisitorType.visit(VisitorType.java:159)
 	at ast.FunctionBody.accept(FunctionBody.java:28)
 	at ast.VisitorType.visit(VisitorType.java:122)
@@ -83,101 +85,21 @@ ast.SemanticException: Error:16:0:While conditional expression is not of type 'b
 
 ./tests/runnable/test_43_comment_bottom.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-Error:6:27:Type of expression does not match the function parameter
-
-CURRENT FUNCTION
-Type_Int factorial(Type_Int n, )
-
-FUNCTION ENVIRONMENT
-Type_Int factorial(Type_Int n, )
-Type_Void main()
-
-VARIABLE ENVIRONMENT
-Type_Int n
-
-ast.SemanticException: Error:6:27:Type of expression does not match the function parameter
-	at ast.VisitorType.__throwError(VisitorType.java:50)
-	at ast.VisitorType.visit(VisitorType.java:348)
-	at ast.ExpressionFunction.accept(ExpressionFunction.java:33)
-	at ast.VisitorType.visit(VisitorType.java:385)
-	at ast.ExpressionOperation.accept(ExpressionOperation.java:34)
-	at ast.VisitorType.visit(VisitorType.java:297)
-	at ast.StatementReturn.accept(StatementReturn.java:24)
-	at ast.VisitorType.visit(VisitorType.java:167)
-	at ast.Block.accept(Block.java:27)
-	at ast.VisitorType.visit(VisitorType.java:277)
-	at ast.StatementIfElse.accept(StatementIfElse.java:38)
-	at ast.VisitorType.visit(VisitorType.java:159)
-	at ast.FunctionBody.accept(FunctionBody.java:28)
-	at ast.VisitorType.visit(VisitorType.java:122)
-	at ast.Function.accept(Function.java:27)
-	at ast.VisitorType.visit(VisitorType.java:106)
-	at ast.Program.accept(Program.java:38)
-	at Compiler.main(Compiler.java:56)
 
 ./tests/runnable/test_14_if_else.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
 
 ./tests/runnable/test_08_basic_op.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-java.lang.NullPointerException
-	at ast.VisitorType.visit(VisitorType.java:337)
-	at ast.ExpressionFunction.accept(ExpressionFunction.java:33)
-	at ast.VisitorType.visit(VisitorType.java:262)
-	at ast.StatementExpression.accept(StatementExpression.java:19)
-	at ast.VisitorType.visit(VisitorType.java:159)
-	at ast.FunctionBody.accept(FunctionBody.java:28)
-	at ast.VisitorType.visit(VisitorType.java:122)
-	at ast.Function.accept(Function.java:27)
-	at ast.VisitorType.visit(VisitorType.java:106)
-	at ast.Program.accept(Program.java:38)
-	at Compiler.main(Compiler.java:56)
 
 ./tests/runnable/test_17_multifuncs.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-java.lang.NullPointerException
-	at ast.VisitorType.visit(VisitorType.java:337)
-	at ast.ExpressionFunction.accept(ExpressionFunction.java:33)
-	at ast.VisitorType.visit(VisitorType.java:246)
-	at ast.StatementAssignment.accept(StatementAssignment.java:38)
-	at ast.VisitorType.visit(VisitorType.java:159)
-	at ast.FunctionBody.accept(FunctionBody.java:28)
-	at ast.VisitorType.visit(VisitorType.java:122)
-	at ast.Function.accept(Function.java:27)
-	at ast.VisitorType.visit(VisitorType.java:106)
-	at ast.Program.accept(Program.java:38)
-	at Compiler.main(Compiler.java:56)
 
 ./tests/runnable/test_02_bare.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
 
 ./tests/runnable/test_42_pretty_print_expected.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-Error:18:4:While conditional expression is not of type 'boolean'
-
-CURRENT FUNCTION
-Type_Void sampleTwo(Type_Int x, )
-
-FUNCTION ENVIRONMENT
-Type_Float sampleOne(Type_Float x, Type_Float y, )
-Type_Void sampleTwo(Type_Int x, )
-Type_Void main()
-
-VARIABLE ENVIRONMENT
-Type_Int x
-Type_Float b
-[]
-ast.SemanticException: Error:18:4:While conditional expression is not of type 'boolean'
-	at ast.VisitorType.__throwError(VisitorType.java:50)
-	at ast.VisitorType.visit(VisitorType.java:315)
-	at ast.StatementWhile.accept(StatementWhile.java:26)
-	at ast.VisitorType.visit(VisitorType.java:159)
-	at ast.FunctionBody.accept(FunctionBody.java:28)
-	at ast.VisitorType.visit(VisitorType.java:122)
-	at ast.Function.accept(Function.java:27)
-	at ast.VisitorType.visit(VisitorType.java:106)
-	at ast.Program.accept(Program.java:38)
-	at Compiler.main(Compiler.java:56)
 
 ./tests/runnable/test_09_op_prec_1.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
@@ -201,7 +123,7 @@ Type_Int b
 
 ast.SemanticException: Error:12:10:Cannot operate on values of different types
 	at ast.VisitorType.__throwError(VisitorType.java:50)
-	at ast.VisitorType.visit(VisitorType.java:389)
+	at ast.VisitorType.visit(VisitorType.java:391)
 	at ast.ExpressionOperation.accept(ExpressionOperation.java:34)
 	at ast.VisitorType.visit(VisitorType.java:311)
 	at ast.StatementWhile.accept(StatementWhile.java:26)
@@ -218,65 +140,6 @@ Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
 
 ./tests/runnable/test_18_while_if.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-Error:18:8:While conditional expression is not of type 'boolean'
-
-CURRENT FUNCTION
-Type_Void main()
-
-FUNCTION ENVIRONMENT
-Type_Void main()
-
-VARIABLE ENVIRONMENT
-Type_Int a
-Type_Int b
-Type_Int temp
-
-ast.SemanticException: Error:18:8:While conditional expression is not of type 'boolean'
-	at ast.VisitorType.__throwError(VisitorType.java:50)
-	at ast.VisitorType.visit(VisitorType.java:315)
-	at ast.StatementWhile.accept(StatementWhile.java:26)
-	at ast.VisitorType.visit(VisitorType.java:167)
-	at ast.Block.accept(Block.java:27)
-	at ast.VisitorType.visit(VisitorType.java:275)
-	at ast.StatementIfElse.accept(StatementIfElse.java:38)
-	at ast.VisitorType.visit(VisitorType.java:159)
-	at ast.FunctionBody.accept(FunctionBody.java:28)
-	at ast.VisitorType.visit(VisitorType.java:122)
-	at ast.Function.accept(Function.java:27)
-	at ast.VisitorType.visit(VisitorType.java:106)
-	at ast.Program.accept(Program.java:38)
-	at Compiler.main(Compiler.java:56)
 
 ./tests/runnable/test_01_example.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-Error:8:27:Type of expression does not match the function parameter
-
-CURRENT FUNCTION
-Type_Int factorial(Type_Int n, )
-
-FUNCTION ENVIRONMENT
-Type_Int factorial(Type_Int n, )
-Type_Void main()
-
-VARIABLE ENVIRONMENT
-Type_Int n
-
-ast.SemanticException: Error:8:27:Type of expression does not match the function parameter
-	at ast.VisitorType.__throwError(VisitorType.java:50)
-	at ast.VisitorType.visit(VisitorType.java:348)
-	at ast.ExpressionFunction.accept(ExpressionFunction.java:33)
-	at ast.VisitorType.visit(VisitorType.java:385)
-	at ast.ExpressionOperation.accept(ExpressionOperation.java:34)
-	at ast.VisitorType.visit(VisitorType.java:297)
-	at ast.StatementReturn.accept(StatementReturn.java:24)
-	at ast.VisitorType.visit(VisitorType.java:167)
-	at ast.Block.accept(Block.java:27)
-	at ast.VisitorType.visit(VisitorType.java:277)
-	at ast.StatementIfElse.accept(StatementIfElse.java:38)
-	at ast.VisitorType.visit(VisitorType.java:159)
-	at ast.FunctionBody.accept(FunctionBody.java:28)
-	at ast.VisitorType.visit(VisitorType.java:122)
-	at ast.Function.accept(Function.java:27)
-	at ast.VisitorType.visit(VisitorType.java:106)
-	at ast.Program.accept(Program.java:38)
-	at Compiler.main(Compiler.java:56)

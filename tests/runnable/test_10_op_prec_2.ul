@@ -3,6 +3,10 @@
 
 void main()
 {
+    if ((4 - 2 == 0 + 2) == false)
+    {
+        print "heeeeellllooooooo";
+    }
     println 4 * 2 + 3;
     // random comment
 }
