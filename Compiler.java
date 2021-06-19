@@ -65,9 +65,9 @@ public class Compiler {
 			System.out.println(e);
 			// delete below
 			System.out.println("");
+			System.out.println(e.getCurrentFunction());
 			System.out.println(e.getFunctionEnvironment());
 			System.out.println(e.getVariableEnvironment());
-			System.out.println("");
 			e.printStackTrace();
 		}
 		catch (Exception e) 

@@ -38,7 +38,7 @@ public class VisitorType extends Visitor
 
     private boolean __isSubtype(Type t1, Type t2)
     {
-        return t1 == t2;
+        return t1.equals(t2);
     }
 
     private void __throwError(String errorMsg, int lineNumber, int lineOffset)
