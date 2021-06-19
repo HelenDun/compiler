@@ -16,7 +16,7 @@ public class VisitorType extends Visitor
     {
         for (EnvironmentElementFunction ef : m_function_environment)
         {
-            if (ef.get_name() == name)
+            if (ef.get_name().equals(name))
             {
                 return ef;
             }
@@ -28,7 +28,7 @@ public class VisitorType extends Visitor
     {
         for (EnvironmentElement ef : m_variable_environment)
         {
-            if (ef.get_name() == name)
+            if (ef.get_name().equals(name))
             {
                 return ef;
             }
