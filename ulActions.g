@@ -139,21 +139,21 @@ exprLessThan returns [Expression e22]
         {e22 = e23;}
     ;
 
-exprAdd return [Expression e24]
+exprAdd returns [Expression e24]
     : e12=exprSub ADDITION e13=exprAdd
         {e24 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Addition, e12, e13);}
     | e25=exprSub
         {e24 = e25;}
     ;
 
-exprSub return [Expression e28]
+exprSub returns [Expression e28]
     : e12=exprMult SUBTRACTION e13=exprAddSub
         {e28 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Subtraction, e12, e13);}
     | e29=exprMult
         {e28 = e29;}
     ;
 
-exprMult return [Expression e26]
+exprMult returns [Expression e26]
     : e12=exprAtom MULTIPLY e13=exprMult
         {e26 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Multiply, e12, e13);}
     | e27=exprAtom
