@@ -141,7 +141,7 @@ exprLessThan returns [Expression e22]
 exprAddSub return [Expression e24]
     : e12=exprMult ADDITION e13=exprAddSub
         {e24 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Addition, e12, e13);}
-    : e12=exprMult SUBTRACTION e13=exprAddSub
+    | e12=exprMult SUBTRACTION e13=exprAddSub
         {e24 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Subtraction, e12, e13);}
     | e25=exprMult
         {e24 = e25;}
