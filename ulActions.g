@@ -125,35 +125,35 @@ block returns [Block b4]
     (s=statement {b4.add_statement(s);})* CURLY_RIGHT
     ;
 
-expr returns [Expression e11]
+expr returns [Expression e11] options {backtrack=true;} 
     : e12=exprLessThan EQUALS e13=expr
         {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Equals, e12, e13);}
     | e14=exprLessThan
         {e11 = e14;}
     ;
 
-exprLessThan returns [Expression e22]
+exprLessThan returns [Expression e22] options {backtrack=true;} 
     : e12=exprAdd LESS_THAN e13=exprLessThan
         {e22 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Less_Than, e12, e13);}
     | e23=exprAdd
         {e22 = e23;}
     ;
 
-exprAdd returns [Expression e24]
+exprAdd returns [Expression e24] options {backtrack=true;} 
     : e12=exprSub ADDITION e13=exprAdd
         {e24 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Addition, e12, e13);}
     | e25=exprSub
         {e24 = e25;}
     ;
 
-exprSub returns [Expression e28]
+exprSub returns [Expression e28] options {backtrack=true;} 
     : e12=exprMult SUBTRACTION e13=exprAdd
         {e28 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Subtraction, e12, e13);}
     | e29=exprMult
         {e28 = e29;}
     ;
 
-exprMult returns [Expression e26]
+exprMult returns [Expression e26] options {backtrack=true;} 
     : e12=exprAtom MULTIPLY e13=exprMult
         {e26 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Multiply, e12, e13);}
     | e27=exprAtom
