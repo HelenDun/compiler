@@ -56,13 +56,20 @@ public class Compiler {
 				p.accept(tcv);
 			}
 		}
-		catch (RecognitionException e )	
+		catch (RecognitionException e)	
 		{
 			// Oopsies
 		}
-		catch (Exception e) 
+		catch (SemanticException e)
 		{
 			System.out.println(e);
+			// delete below
+			System.out.println(e.getFunctionEnvironment());
+			System.out.println(e.getVariableEnvironment());
+			e.printStackTrace();
+		}
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 	}

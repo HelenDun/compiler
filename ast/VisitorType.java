@@ -47,7 +47,7 @@ public class VisitorType extends Visitor
         result += String.valueOf(lineNumber) + ":";
         result += String.valueOf(lineOffset) + ":";
         result += errorMsg;
-        throw new RuntimeException(result);
+        throw new SemanticException(result, m_function_environment, m_variable_environment);
     }
 
     private boolean __isMain(EnvironmentElementFunction ef, int lineNumber, int lineOffset)

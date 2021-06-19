@@ -8,15 +8,17 @@ char foo(char b, char z)
     return 'a';
 }
 
-void main(int z, float a, boolean c)
+void main()
 {
     // random comment
+    int z; float a; boolean c;
     char _x;
     _x = foo('y', 'z');
+    a = 3.14;
 
     print _x;
     print " _ " ;
-    print z;
+    print 3;
     print ' ';
     println a;
 
