@@ -27,7 +27,7 @@ void main ()
     string[10] a;
     int w;
 
-    w = 4;
+    w=4;
     println sampleOne(10.2,9.3);
     sampleTwo(w);
 }

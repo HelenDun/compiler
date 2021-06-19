@@ -3,7 +3,7 @@
 void main()
 {
     int a;
-    int[9000000000000000000] b;
+    int[9000] b;
 
     b = a[61];
     return;

@@ -20,5 +20,6 @@ void main ()
 {
 string[10] a;
 int w;
+w = 3;
 println sampleOne(7.2,9.3);
-sampleTwo(); }
+sampleTwo(w); }

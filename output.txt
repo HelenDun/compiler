@@ -1,23 +1,37 @@
 ./tests/runnable/test_19_parameters.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-Error:25:8:Cannot operate on values of different types
+
+./tests/runnable/test_07_println.ul
+Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+
+./tests/runnable/test_11_op_complex.ul
+Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+blah
+heya
+heya
+heya
+
+./tests/runnable/test_16_array.ul
+Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+
+./tests/runnable/test_10_op_prec_2.ul
+Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+heya
+Error:6:9:Cannot operate on values of different types
 
 CURRENT FUNCTION
 Type_Void main()
 
 FUNCTION ENVIRONMENT
-Type_Char foo(Type_Char b, Type_Char z, )
 Type_Void main()
 
 VARIABLE ENVIRONMENT
-Type_Int z
-Type_Float a
-Type_Boolean c
-Type_Char _x
 
-ast.SemanticException: Error:25:8:Cannot operate on values of different types
+ast.SemanticException: Error:6:9:Cannot operate on values of different types
 	at ast.VisitorType.__throwError(VisitorType.java:50)
 	at ast.VisitorType.visit(VisitorType.java:391)
+	at ast.ExpressionOperation.accept(ExpressionOperation.java:34)
+	at ast.VisitorType.visit(VisitorType.java:384)
 	at ast.ExpressionOperation.accept(ExpressionOperation.java:34)
 	at ast.VisitorType.visit(VisitorType.java:268)
 	at ast.StatementIfElse.accept(StatementIfElse.java:38)
@@ -29,20 +43,9 @@ ast.SemanticException: Error:25:8:Cannot operate on values of different types
 	at ast.Program.accept(Program.java:38)
 	at Compiler.main(Compiler.java:56)
 
-./tests/runnable/test_07_println.ul
-Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-
-./tests/runnable/test_11_op_complex.ul
-Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-
-./tests/runnable/test_16_array.ul
-Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-
-./tests/runnable/test_10_op_prec_2.ul
-Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-
 ./tests/runnable/test_15_nested_if.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+blah
 
 ./tests/runnable/test_06_print.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
@@ -55,7 +58,9 @@ Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
 
 ./tests/runnable/test_41_pretty_print_ugly.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-Error:23:18:Type of expression does not match the function parameter
+blah
+blah
+Error:24:0:Incorrect number of parameters in function call
 
 CURRENT FUNCTION
 Type_Void main()
@@ -69,12 +74,12 @@ VARIABLE ENVIRONMENT
 Type_String[] a
 Type_Int w
 
-ast.SemanticException: Error:23:18:Type of expression does not match the function parameter
+ast.SemanticException: Error:24:0:Incorrect number of parameters in function call
 	at ast.VisitorType.__throwError(VisitorType.java:50)
-	at ast.VisitorType.visit(VisitorType.java:348)
+	at ast.VisitorType.visit(VisitorType.java:338)
 	at ast.ExpressionFunction.accept(ExpressionFunction.java:30)
-	at ast.VisitorType.visit(VisitorType.java:284)
-	at ast.StatementPrint.accept(StatementPrint.java:26)
+	at ast.VisitorType.visit(VisitorType.java:262)
+	at ast.StatementExpression.accept(StatementExpression.java:19)
 	at ast.VisitorType.visit(VisitorType.java:159)
 	at ast.FunctionBody.accept(FunctionBody.java:28)
 	at ast.VisitorType.visit(VisitorType.java:122)
@@ -85,9 +90,11 @@ ast.SemanticException: Error:23:18:Type of expression does not match the functio
 
 ./tests/runnable/test_43_comment_bottom.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+heya
 
 ./tests/runnable/test_14_if_else.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+blah
 
 ./tests/runnable/test_08_basic_op.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
@@ -100,46 +107,31 @@ Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
 
 ./tests/runnable/test_42_pretty_print_expected.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+blah
+blah
 
 ./tests/runnable/test_09_op_prec_1.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+blah
+heya
 
 ./tests/runnable/test_13_if.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+blah
 
 ./tests/runnable/test_12_while.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
-Error:12:10:Cannot operate on values of different types
-
-CURRENT FUNCTION
-Type_Void main()
-
-FUNCTION ENVIRONMENT
-Type_Void main()
-
-VARIABLE ENVIRONMENT
-Type_Int a
-Type_Int b
-
-ast.SemanticException: Error:12:10:Cannot operate on values of different types
-	at ast.VisitorType.__throwError(VisitorType.java:50)
-	at ast.VisitorType.visit(VisitorType.java:391)
-	at ast.ExpressionOperation.accept(ExpressionOperation.java:34)
-	at ast.VisitorType.visit(VisitorType.java:311)
-	at ast.StatementWhile.accept(StatementWhile.java:26)
-	at ast.VisitorType.visit(VisitorType.java:159)
-	at ast.FunctionBody.accept(FunctionBody.java:28)
-	at ast.VisitorType.visit(VisitorType.java:122)
-	at ast.Function.accept(Function.java:27)
-	at ast.VisitorType.visit(VisitorType.java:106)
-	at ast.Program.accept(Program.java:38)
-	at Compiler.main(Compiler.java:56)
+blah
 
 ./tests/runnable/test_04_statement.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
 
 ./tests/runnable/test_18_while_if.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+blah
+blah
+heya
 
 ./tests/runnable/test_01_example.ul
 Picked up _JAVA_OPTIONS: -Xmx1024m -XX:CompressedClassSpaceSize=256m
+heya

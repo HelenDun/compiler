@@ -415,10 +415,8 @@ public class VisitorType extends Visitor
                     __throwError("Cannot subtract booleans", eo.getLine(), eo.getCharPositionInLine());
                 break;
 			case Operator_Less_Than:
-                System.out.println("blah");
 				return Type.Type_Boolean;
 			case Operator_Equals:
-                System.out.println("heya");
 				return Type.Type_Boolean;
 			default:
 				break;
