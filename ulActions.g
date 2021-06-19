@@ -126,8 +126,16 @@ block returns [Block b4]
     ;
 
 expr returns [Expression e11] options {backtrack=true;}
-    : e12=expr_lhs o1=op e13=expr
-        {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), o1, e12, e13);}
+    : e12=expr_lhs MULTIPLY e13=expr
+        {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Multiply, e12, e13);}
+    | e12=expr_lhs ADDITION e13=expr
+        {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Addition, e12, e13);}
+    | e12=expr_lhs SUBTRACTION e13=expr
+        {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Subtraction, e12, e13);}
+    | e12=expr_lhs LESS_THAN e13=expr
+        {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Less_Than, e12, e13);}
+    | e12=expr_lhs EQUALS e13=expr
+        {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Equals, e12, e13);}
     | e14=expr_lhs
         {e11 = e14;}
     ;
@@ -182,18 +190,6 @@ id returns [Identifier i15]
         {i15 = new Identifier(i16.getLine(), i16.getCharPositionInLine(), i16.getTokenIndex(), i16.getText());} 
     ;
 
-op returns [Operator o2]
-    : MULTIPLY
-        {o2 = Operator_Multiply;}
-    | ADDITION 
-        {o2 = Operator_Addition;}
-    | SUBTRACTION 
-        {o2 = Operator_Subtraction;}
-    | LESS_THAN
-        {o2 = Operator_Less_Than;}
-    | EQUALS
-        {o2 = Operator_Equals;}
-    ;
 
 /* Lexer */
 
