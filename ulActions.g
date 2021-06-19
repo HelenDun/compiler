@@ -126,21 +126,33 @@ block returns [Block b4]
     ;
 
 expr returns [Expression e11] options {backtrack=true;}
-    : e12=expr_lhs MULTIPLY e13=expr
+    : e12=expr1 MULTIPLY e13=expr
         {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Multiply, e12, e13);}
-    | e12=expr_lhs ADDITION e13=expr
-        {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Addition, e12, e13);}
-    | e12=expr_lhs SUBTRACTION e13=expr
-        {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Subtraction, e12, e13);}
-    | e12=expr_lhs LESS_THAN e13=expr
-        {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Less_Than, e12, e13);}
-    | e12=expr_lhs EQUALS e13=expr
-        {e11 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Equals, e12, e13);}
-    | e14=expr_lhs
+    | e14=expr1
         {e11 = e14;}
     ;
 
-expr_lhs returns [Expression e15]
+expr1 returns [Expression e22]
+    : e12=expr2 ADDITION e13=expr1
+        {e22 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Addition, e12, e13);}
+    : e12=expr2 SUBTRACTION e13=expr1
+        {e22 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Subtraction, e12, e13);}
+    | e23=expr2
+        {e22 = e23;}
+
+expr2 return [Expression e24]
+    : e12=expr3 LESS_THAN e13=expr2
+        {e24 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Less_Than, e12, e13);}
+    | e25=expr3
+        {e24 = e25;}
+
+expr3 return [Expression e26]
+    : e12=expr4 EQUALS e13=expr3
+        {e26 = new ExpressionOperation(e12.getLine(), e12.getCharPositionInLine(), e12.getTokenIndex(), Operator_Equals, e12, e13);}
+    | e27=expr4
+        {e26 = e27;}
+
+expr4 returns [Expression e15]
     : l1=literal
         {e15 = l1;}
     | PAREN_LEFT e16=expr PAREN_RIGHT
