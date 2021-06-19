@@ -13,6 +13,8 @@ public class FunctionDeclaration extends AbstractSyntaxTreeNode
         m_compound_type = compound_type;
         m_identifier = identifier;
         m_parameters = parameters;
+        if (m_parameters == null)
+            m_parameters = new Vector<Variable>();
     }
 
     public CompoundType get_compound_type()
@@ -28,11 +30,6 @@ public class FunctionDeclaration extends AbstractSyntaxTreeNode
     public Vector<Variable> get_parameters()
     {
         return m_parameters;
-    }
-
-    public boolean is_parameters()
-    {
-        return m_parameters != null;
     }
 
 	public Object accept(Visitor v)
