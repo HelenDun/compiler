@@ -1,0 +1,11 @@
+// test 63 : cannot operate on values of type void
+
+void foo(int a)
+{
+    return;
+}
+
+void main()
+{
+    print (foo(3) + foo(5));
+}

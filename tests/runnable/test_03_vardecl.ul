@@ -1,5 +1,4 @@
 // test 3 : Has a variable declaration
-// Parser / Lexer Valid: Yes
 
 void main ()
 {

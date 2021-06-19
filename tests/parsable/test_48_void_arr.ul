@@ -1,0 +1,13 @@
+// test 48 : void arrays are invalid.
+
+void[3] foo()
+{
+    return;
+}
+
+void main()
+{
+    char x;
+
+    foo();
+}

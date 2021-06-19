@@ -1,7 +1,7 @@
 // test 15 : Has nested if-else statements
 // Parser / Lexer Valid: Yes
 
-int main()
+void main()
 {
     int a;
     a = 3;
@@ -28,5 +28,4 @@ int main()
     }
 
     println a;
-    return a;
 }

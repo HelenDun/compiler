@@ -1,0 +1,18 @@
+// test 46 : Invalid because no main function
+
+char foo(boolean e)
+{
+    return '4';
+}
+
+int foo (int y)
+{
+    return y;
+}
+
+void main()
+{
+    char x;
+
+    println foo(true);
+}

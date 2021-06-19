@@ -1,5 +1,4 @@
 // test 25 : bad operation
-// Parser / Lexer Valid: Yes
 
 void main()
 {

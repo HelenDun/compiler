@@ -1,0 +1,3 @@
+// test 44 : A bare program, invalid due to main's return type not being void.
+
+int main() {;}// random comment

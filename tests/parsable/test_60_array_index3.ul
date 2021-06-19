@@ -1,0 +1,10 @@
+// test 60 : same as test 50 but rhs
+
+void main()
+{
+    int a;
+    int[60] b;
+
+    a = b;
+    return;
+}

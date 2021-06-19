@@ -2,12 +2,11 @@ package ast;
 import java.util.Vector;
 import java.lang.String;
 
-
-public class PrettyPrintVisitor extends Visitor
+public class VisitorPrettyPrint extends Visitor
 {
 	static final String TAB = "    ";
 	static final String NEWLINE = "\n";
-	private String toStringStatements(Vector<Statement> statements)
+	private String __toStringStatements(Vector<Statement> statements)
 	{
 		String sStatements = "";
 		for (int i = 0; i < statements.size(); ++i)
@@ -27,13 +26,17 @@ public class PrettyPrintVisitor extends Visitor
 		}
 		return sStatements;
 	}
-	private String toStringExprParen(String sExpression, int num_parentheses)
+	private String __toStringExprParen(String sExpression, int num_parentheses)
 	{
 		for (int i = 0; i < num_parentheses; ++i)
 		{
 			sExpression = "(" + sExpression + ")";
 		}
 		return sExpression;
+	}
+
+	public VisitorPrettyPrint()
+	{
 	}
 
 	public Object visit(Program program)
@@ -82,7 +85,7 @@ public class PrettyPrintVisitor extends Visitor
 	public Object visit(FunctionBody function_body)
 	{
 		String sVariables = "";
-		String sStatements = toStringStatements(function_body.get_statements());
+		String sStatements = __toStringStatements(function_body.get_statements());
 
 		Vector<Variable> variables = function_body.get_variables();
 		for (int i = 0; i < variables.size(); ++i)
@@ -159,7 +162,7 @@ public class PrettyPrintVisitor extends Visitor
 
 	public Object visit(Block block)
 	{
-		return "{\n" + toStringStatements(block.get_statements()) + "\n}";
+		return "{\n" + __toStringStatements(block.get_statements()) + "\n}";
 	}
 
 
@@ -225,10 +228,10 @@ public class PrettyPrintVisitor extends Visitor
 		// RETURN expr? SEMICOLON
 		String sExpression = "";
 
-		if (statement_return.is_return_value())
+		if (statement_return.hasReturnExpression())
 		{
 			sExpression += " ";
-			sExpression += statement_return.get_expression().accept(this).toString();
+			sExpression += statement_return.getExpression().accept(this).toString();
 		}
 
 		return "return" + sExpression + ";";
@@ -265,7 +268,7 @@ public class PrettyPrintVisitor extends Visitor
 		}
 
 		String sExpression = sIdentifier + "(" + sParameters + ")";
-		return toStringExprParen(sExpression, expression_function.get_num_parentheses());
+		return __toStringExprParen(sExpression, expression_function.get_num_parentheses());
 	}
 
 	public Object visit(ExpressionIdentifier expression_identifier)
@@ -282,7 +285,7 @@ public class PrettyPrintVisitor extends Visitor
 		}
 
 		String sExpression = sIdentifier + sArrayIndex;
-		return toStringExprParen(sExpression, expression_identifier.get_num_parentheses());
+		return __toStringExprParen(sExpression, expression_identifier.get_num_parentheses());
 	}
 
 	public Object visit(ExpressionOperation expression_operation)
@@ -313,7 +316,7 @@ public class PrettyPrintVisitor extends Visitor
 		}
 
 		String sExpression = sExpression1 + sOperator + sExpression2;
-		return toStringExprParen(sExpression, expression_operation.get_num_parentheses());
+		return __toStringExprParen(sExpression, expression_operation.get_num_parentheses());
 	}
     
 

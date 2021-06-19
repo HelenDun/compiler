@@ -1,0 +1,14 @@
+// test 53 : cannot print a value of type void
+
+void foo()
+{
+    return;
+}
+
+void main()
+{
+    int a;
+    float b;
+
+    println foo();
+}

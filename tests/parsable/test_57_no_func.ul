@@ -1,0 +1,9 @@
+// test 57 : cannot call non-existant function
+
+void main()
+{
+    int a;
+    a =3;
+    
+    foo();
+}

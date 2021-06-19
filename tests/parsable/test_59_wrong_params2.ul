@@ -1,0 +1,22 @@
+// test 59 : call function with values that match the types of the parameters
+
+int foo(int x, boolean y)
+{
+    if (y)
+    {
+        return x * 2;
+    }
+    else
+    {
+        return 1 + x;
+    }
+}
+
+void main()
+{
+    float x;
+    boolean y;
+    int result;
+    result = foo(x,y);
+    print result;
+}

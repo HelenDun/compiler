@@ -1,0 +1,14 @@
+// test 56 : while conditional needs a boolean-type value
+
+void main()
+{
+    string a;
+    string b;
+
+    return;
+    while (a + b)
+    {
+        print a;
+    }
+    print b;
+}

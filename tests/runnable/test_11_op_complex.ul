@@ -1,7 +1,7 @@
 // test 11 : Tests operator complex
 // Parser / Lexer Valid: Yes
 
-boolean main()
+void main()
 {
-    return true == ((true == (0 < 3)) == false);
+    print true == ((true == (0 < 3)) == false);
 }

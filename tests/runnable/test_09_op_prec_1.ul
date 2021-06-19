@@ -1,10 +1,10 @@
 // test 9 : Tests operator precedence 1
 // Parser / Lexer Valid: Yes
 
-int main()
+void main()
 {
     int a;
     a = 3 + 4 * 2;
-    return a;
+    print a;
     a = 2;
 }

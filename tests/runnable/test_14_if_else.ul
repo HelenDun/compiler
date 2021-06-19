@@ -1,7 +1,7 @@
 // test 14 : Has an if-else statement
 // Parser / Lexer Valid: Yes
 
-int main()
+void main()
 {
     int a;
     a = 3;
@@ -17,5 +17,4 @@ int main()
 
     println a;
     //return 22;// random comment
-    return a;
 }

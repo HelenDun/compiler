@@ -7,10 +7,10 @@ char _foo()
     return 'a';
 }
 
-int main()
+void main()
 {
     char x;
     x = _foo();
     print x;
-    return 16;
+    print 16;
 }

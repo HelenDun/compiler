@@ -1,0 +1,17 @@
+// test 64 : cannot multiply chars
+
+void main(
+
+
+)
+{
+    char a;
+    char b;
+    char c;
+
+    a = '3';
+    b = 'c';
+    println a * b;
+    c = b;
+    return;
+}

@@ -1,0 +1,17 @@
+// test 55 : if function has return type, then should return something
+
+
+boolean foo(int a)
+{
+    if (a < 3)
+    {
+        return true;
+    }
+    return;
+}
+
+
+void main()
+{
+    return;
+}

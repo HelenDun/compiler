@@ -1,5 +1,4 @@
 // test 4 : Has a statement
-// Parser / Lexer Valid: Yes
 
 void main()
 {// random comment

@@ -1,7 +1,7 @@
 // test 12 : Has a while loop
 // Parser / Lexer Valid: Yes
 
-int main()
+void main()
 {
     int a;
     int b;

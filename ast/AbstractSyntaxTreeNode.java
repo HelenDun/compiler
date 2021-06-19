@@ -2,9 +2,9 @@ package ast;
 
 public abstract class AbstractSyntaxTreeNode 
 {
-    int m_line;
-    int m_pos;
-    int m_index;
+    private int m_line;
+    private int m_pos;
+    private int m_index;
 
     public AbstractSyntaxTreeNode(int line, int pos, int index)
     {

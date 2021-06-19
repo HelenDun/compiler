@@ -1,0 +1,6 @@
+// test 54 : function should not return anything on void
+
+void main()
+{
+    return 3;
+}

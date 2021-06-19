@@ -9,9 +9,18 @@ public class Compiler {
 	public static void main (String[] args) throws Exception {
 		ANTLRInputStream input;
 
-		if (args.length == 0) 
+		boolean wrongNumArgs = (args.length == 0 || args.length > 2);
+		boolean ppvFlag = false;
+		boolean tcvFlag = false;
+		if (args.length == 2)
 		{
-			System.out.println("Usage: Compiler filename.ul [-ppv]");
+			ppvFlag = args[1].equals("-ppv");
+			tcvFlag = args[1].equals("-tcv");
+		}
+
+		if (wrongNumArgs || (args.length == 2 && !(ppvFlag || tcvFlag)))
+		{
+			System.out.println("Usage: Compiler filename.ul [-ppv|-tcv]");
 			return;
 		}
 		else 
@@ -27,9 +36,9 @@ public class Compiler {
 		{
 			Program p = parser.program();
 
-			if (args.length > 1 && args[1].equals("-ppv"))
+			if (ppvFlag)
 			{
-				PrettyPrintVisitor ppv = new PrettyPrintVisitor();
+				VisitorPrettyPrint ppv = new VisitorPrettyPrint();
 				String sOutput = p.accept(ppv).toString();
 	
 				String ulPathname = args[0];
@@ -39,6 +48,12 @@ public class Compiler {
 				FileWriter output = new FileWriter(ulPathname);
 				output.write(sOutput);
 				output.close();
+			}
+			
+			if (tcvFlag)
+			{
+				VisitorType tcv = new VisitorType();
+				p.accept(tcv);
 			}
 		}
 		catch (RecognitionException e )	

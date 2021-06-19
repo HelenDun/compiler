@@ -1,0 +1,15 @@
+// test 49 : variables cannot have type 'void'
+
+
+void foo(char a)
+{
+    void b;
+    return b;
+}
+
+void main()
+{
+    void a;
+    a = foo();
+    return;
+}

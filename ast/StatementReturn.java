@@ -9,12 +9,12 @@ public class StatementReturn extends Statement
         m_expression = expression;
     }
 
-    public Expression get_expression()
+    public Expression getExpression()
     {
         return m_expression;
     }
 
-    public boolean is_return_value()
+    public boolean hasReturnExpression()
     {
         return m_expression != null;
     }

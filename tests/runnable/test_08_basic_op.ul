@@ -1,10 +1,15 @@
 // test 8 : Has a single '+' operator
 // Parser / Lexer Valid: Yes
 
-float main()
+float foo()
 {
     float a;
     // random comment
     a = 3.0 + 4.1;
     return a;
+}
+
+void main()
+{
+    foo();
 }

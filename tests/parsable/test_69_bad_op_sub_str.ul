@@ -1,0 +1,12 @@
+// test 69 : cannot subtract strings
+
+
+void main()
+{
+    string a;
+    string b;
+    string bel;
+    a = "hi";
+    b = "bye";
+    bel = b - a;
+}

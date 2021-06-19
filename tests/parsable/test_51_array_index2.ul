@@ -1,0 +1,9 @@
+// test 51 : cannot index a non-array variable
+
+void main()
+{
+    int a;
+    a[51] = 51; 
+    print a[51];
+    return; return;
+}

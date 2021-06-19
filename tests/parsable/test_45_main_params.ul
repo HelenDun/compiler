@@ -1,0 +1,3 @@
+// test 44 : A bare program, invalid due to main having parameters
+
+int main(boolean a) {;}// random comment

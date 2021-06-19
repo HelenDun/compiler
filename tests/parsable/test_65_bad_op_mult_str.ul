@@ -1,0 +1,12 @@
+// test 65 : cannot multiply strings
+
+
+void main()
+{
+    string a;
+    string b;
+    string hw;
+    a = "hello";
+    b = "world";
+    hw = a * b;
+}

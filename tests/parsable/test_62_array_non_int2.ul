@@ -1,0 +1,7 @@
+// test 36 : Access array with non-integer
+
+void main(float a) 
+{
+    char['a'] b;
+    print b[3];
+}

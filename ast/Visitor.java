@@ -1,4 +1,5 @@
 package ast;
+
 public abstract class Visitor
 {
 	public abstract Object visit(Program program);

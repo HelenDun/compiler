@@ -1,7 +1,0 @@
-// test 22 : Tests println
-// Parser / Lexer Valid: Yes
-
-void main()
-{
-    println x ;
-} // random comment

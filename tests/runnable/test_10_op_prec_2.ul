@@ -1,8 +1,8 @@
 // test 10 : Tests operator precedence 2
 // Parser / Lexer Valid: Yes
 
-int main()
+void main()
 {
-    return 4 * 2 + 3;
+    println 4 * 2 + 3;
     // random comment
 }

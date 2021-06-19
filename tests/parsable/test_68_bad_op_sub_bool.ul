@@ -1,0 +1,12 @@
+// test 68 : cannot subtract booleans
+
+
+void main()
+{
+    boolean a;
+    boolean b;
+    boolean bel;
+    a = true;
+    b = false;
+    bel = a - b;
+}

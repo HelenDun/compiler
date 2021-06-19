@@ -1,7 +1,7 @@
 // test 18 : Has nested if-else statements and while loops
 // Parser / Lexer Valid: Yes
 
-int main()
+void main()
 {
     int a;
     int b;
@@ -28,5 +28,4 @@ int main()
     else{}
 
     println a;
-    return a;
 }

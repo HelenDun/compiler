@@ -1,0 +1,9 @@
+// test 50 : variable is an array but the assignment does not assign an index
+
+void main()
+{
+    int[50] a;
+    a = 3;
+    return;
+    return;
+}

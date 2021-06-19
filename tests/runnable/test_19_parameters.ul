@@ -8,7 +8,7 @@ char foo(char b, char z)
     return 'a';
 }
 
-boolean main(int z, float a, boolean c)
+void main(int z, float a, boolean c)
 {
     // random comment
     char _x;
@@ -23,7 +23,5 @@ boolean main(int z, float a, boolean c)
     if (z < a)
     {
         // random comment
-        return c ;
     }
-    return false;
 }

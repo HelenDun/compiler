@@ -1,10 +1,13 @@
 // test 23 : Assigns a variable a wrong type value
-// Parser / Lexer Valid: Yes
 
-char main()
+char foo()
 {
     float a;
-    // random comment
-    a = 'b';
+    a='b';
     return a;
+}
+
+void main()
+{
+    string b = foo();
 }

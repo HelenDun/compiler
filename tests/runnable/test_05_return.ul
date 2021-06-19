@@ -1,5 +1,4 @@
 // test 5 : Has a return
-// Parser / Lexer Valid: Yes
 
 void main()
 {

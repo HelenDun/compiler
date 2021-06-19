@@ -1,0 +1,20 @@
+// test 22 : Redeclaring a variable is invalid
+
+
+int foo(char a)
+{
+    boolean b;
+    int a;
+    boolean c;
+    int d;
+    float a;
+
+    return a;
+}
+
+void main()
+{
+    int a;
+    a = foo();
+    return;
+}
