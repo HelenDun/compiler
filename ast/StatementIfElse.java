@@ -13,22 +13,22 @@ public class StatementIfElse extends Statement
         m_block2 = block2;
     }
 
-    public Expression get_expression()
+    public Expression getExpression()
     {
         return m_expression;
     }
 
-    public Block get_block1()
+    public Block getBlock1()
     {
         return m_block1;
     }
 
-    public Block get_block2()
+    public Block getBlock2()
     {
         return m_block2;
     }
 
-    public boolean is_else()
+    public boolean hasElse()
     {
         return m_block2 != null;
     }

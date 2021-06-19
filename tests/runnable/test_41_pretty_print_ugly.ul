@@ -1,7 +1,7 @@
 // test 41 : The ugly copy-paste version of the example for prettyprintvisitor.
 // The prettyprintvisitor output using this file should match the contents of test 42.
 
-int sampleOne (float x, float y)
+float sampleOne (float x, float y)
 {
 if (x<y)
 {

@@ -62,7 +62,7 @@ public class Compiler {
 		}
 		catch (SemanticException e)
 		{
-			System.out.println(e);
+			System.out.println(e.getMessage());
 			// delete below
 			System.out.println("");
 			System.out.println(e.getCurrentFunction());

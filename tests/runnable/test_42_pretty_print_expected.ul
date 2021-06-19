@@ -1,4 +1,4 @@
-int sampleOne (float x, float y)
+float sampleOne (float x, float y)
 {
     if (x<y)
     {

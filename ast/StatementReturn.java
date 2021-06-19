@@ -14,7 +14,7 @@ public class StatementReturn extends Statement
         return m_expression;
     }
 
-    public boolean hasReturnExpression()
+    public boolean hasExpression()
     {
         return m_expression != null;
     }

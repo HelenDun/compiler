@@ -193,14 +193,14 @@ public class VisitorPrettyPrint extends Visitor
 	public Object visit(StatementIfElse statement_if_else)
 	{
 		String sExpression = "if (";
-		sExpression += statement_if_else.get_expression().accept(this).toString();
+		sExpression += statement_if_else.getExpression().accept(this).toString();
 		sExpression += ")\n";
 
-		String sBlock1 = statement_if_else.get_block1().accept(this).toString();
+		String sBlock1 = statement_if_else.getBlock1().accept(this).toString();
 		String sBlock2 = "";
-		if (statement_if_else.is_else())
+		if (statement_if_else.hasElse())
 		{
-			sBlock2 = statement_if_else.get_block2().accept(this).toString();
+			sBlock2 = statement_if_else.getBlock2().accept(this).toString();
 			return sExpression + sBlock1 + "\nelse\n" + sBlock2;
 		}
 		return sExpression + sBlock1;
@@ -225,7 +225,7 @@ public class VisitorPrettyPrint extends Visitor
 		// RETURN expr? SEMICOLON
 		String sExpression = "";
 
-		if (statement_return.hasReturnExpression())
+		if (statement_return.hasExpression())
 		{
 			sExpression += " ";
 			sExpression += statement_return.getExpression().accept(this).toString();

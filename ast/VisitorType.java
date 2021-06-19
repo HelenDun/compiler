@@ -265,15 +265,16 @@ public class VisitorType extends Visitor
 
     public Object visit(StatementIfElse sie)
     {
-        Type type = (Type) sie.get_expression().accept(this);
+        Type type = (Type) sie.getExpression().accept(this);
 
         // check that the conditional is a boolean
         if (!__isSubtype(Type.Type_Boolean, type))
             __throwError("If-Else conditional expression is not of type 'boolean'", sie.getLine(), sie.getCharPositionInLine());
 
         // type-check the blocks
-        sie.get_block1().accept(this);
-        sie.get_block2().accept(this);
+        sie.getBlock1().accept(this);
+        if (sie.hasElse())
+            sie.getBlock2().accept(this);
         return null;
     }
 
@@ -288,7 +289,7 @@ public class VisitorType extends Visitor
 
     public Object visit(StatementReturn sr)
     {
-        if (sr.hasReturnExpression())
+        if (sr.hasExpression())
         {
             if (__isSubtype(Type.Type_Void, m_current_function.m_type))
                 __throwError("Return expression should not return anything", sr.getLine(), sr.getCharPositionInLine());
@@ -299,7 +300,7 @@ public class VisitorType extends Visitor
                 __throwError("Type of return expression does not match the function's return type", sr.getLine(), sr.getCharPositionInLine());
         }
 
-        if (!__isSubtype(Type.Type_Void, m_current_function.m_type))
+        else if (!__isSubtype(Type.Type_Void, m_current_function.m_type))
             __throwError("Return expression should return something", sr.getLine(), sr.getCharPositionInLine());
 
         return null;
@@ -371,7 +372,7 @@ public class VisitorType extends Visitor
         if (ei.is_array())
         {
             Type type_index = (Type) ei.get_array_index().accept(this);
-            if (__isSubtype(Type.Type_Int, type_index))
+            if (!__isSubtype(Type.Type_Int, type_index))
                 __throwError("Cannot index array with non-Integer", ei.getLine(), ei.getCharPositionInLine());
         }
 
