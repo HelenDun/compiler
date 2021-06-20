@@ -6,7 +6,7 @@ public abstract class Expression extends AbstractSyntaxTreeNode
 	public Expression(int line, int pos, int index)
 	{
 		super(line, pos, index);
-		m_num_parentheses = 1;
+		m_num_parentheses = 0;
 	}
 	public void increment_num_parentheses()
 	{
