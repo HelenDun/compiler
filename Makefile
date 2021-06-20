@@ -41,18 +41,18 @@ test: grammar_test ppv_test tcv_test
 # java Compiler ./tests/runnable/some_file.ul
 grammar_test: grammar_test_runnable grammar_test_parsable grammar_test_invalid
 grammar_test_runnable:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*(?!_ppv).ul), echo; echo $(file) ; java Compiler $(file);)
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file);)
 grammar_test_parsable:
-	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*(?!_ppv).ul), echo; echo $(file) ; java Compiler $(file);)
+	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file);)
 grammar_test_invalid:
-	$(foreach file, $(wildcard $(DIR_TESTS_INVALID)/*(?!_ppv).ul), echo; echo $(file) ; java Compiler $(file);)
+	$(foreach file, $(wildcard $(DIR_TESTS_INVALID)/*.ul), echo; echo $(file) ; java Compiler $(file);)
 
 # java Compiler ./tests/runnable/some_file.ul -ppv
 ppv_test: ppv_test_runnable ppv_test_parsable ppv_test_ultimate
 ppv_test_runnable:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*(?!_ppv).ul), echo; echo $(file) ; java Compiler $(file) -ppv;)
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -ppv;)
 ppv_test_parsable:
-	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*(?!_ppv).ul), echo; echo $(file) ; java Compiler $(file) -ppv;)
+	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -ppv;)
 ppv_test_ultimate:
 	java Compiler ./tests/runnable/test_41_pretty_print_ugly.ul -ppv
 	java Compiler ./tests/runnable/test_42_pretty_print_expected.ul -ppv
@@ -61,6 +61,6 @@ ppv_test_ultimate:
 
 tcv_test: tcv_test_runnable tcv_test_parsable
 tcv_test_runnable:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*(?!_ppv).ul), echo; echo $(file) ; java Compiler $(file) -tcv;)
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -tcv;)
 tcv_test_parsable:
-	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*(?!_ppv).ul), echo; echo $(file) ; java Compiler $(file) -tcv;)
+	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -tcv;)
