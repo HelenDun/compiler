@@ -3,29 +3,29 @@ package ast;
 import java.lang.String;
 import java.util.Vector;
 
-public class EnvironmentElementFunction extends EnvironmentElement
+public class ElementFunction extends Element
 {
-    Vector<EnvironmentElement> m_parameters;
+    Vector<Element> m_parameters;
     
-    public EnvironmentElementFunction(Type type, int array_size, String name)
+    public ElementFunction(Type type, int array_size, String name)
     {
         super(type, array_size, name);
-        m_parameters = new Vector<EnvironmentElement>();
+        m_parameters = new Vector<Element>();
     }
 
-    public Vector<EnvironmentElement> get_parameters()
+    public Vector<Element> get_parameters()
     {
         return m_parameters;
     }
 
-    public void add_parameter(EnvironmentElement element)
+    public void add_parameter(Element element)
     {
         m_parameters.add(element);
     }
 
-    public boolean compare(EnvironmentElementFunction other)
+    public boolean compare(ElementFunction other)
     {
-        Vector<EnvironmentElement> parameters = other.get_parameters();
+        Vector<Element> parameters = other.get_parameters();
         
         boolean is_same = m_array_size == other.get_array_size()
             && m_type == other.get_type()

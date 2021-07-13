@@ -8,32 +8,18 @@ public class VisitorType extends Visitor
 {
     /* PRIVATE */
     
-    private Vector<EnvironmentElementFunction> m_function_environment;
-    private Vector<EnvironmentElement> m_variable_environment;
-    private EnvironmentElementFunction m_current_function;
+    private Environment<ElementFunction> m_function_environment;
+    private Environment<Element> m_variable_environment;
+    private ElementFunction m_current_function;
     
-    private EnvironmentElementFunction __findElementFunction(String name)
+    private ElementFunction __findElementFunction(String name)
     {
-        for (EnvironmentElementFunction ef : m_function_environment)
-        {
-            if (ef.get_name().equals(name))
-            {
-                return ef;
-            }
-        }
-        return null;
+        return m_function_environment.find(name);
     }
 
-    private EnvironmentElement __findElementVariable(String name)
+    private Element __findElementVariable(String name)
     {
-        for (EnvironmentElement ef : m_variable_environment)
-        {
-            if (ef.get_name().equals(name))
-            {
-                return ef;
-            }
-        }
-        return null;
+        return m_variable_environment.find(name);
     }
 
     private boolean __isSubtype(Type t1, Type t2)
@@ -50,7 +36,7 @@ public class VisitorType extends Visitor
         throw new SemanticException(result, m_function_environment, m_variable_environment, m_current_function);
     }
 
-    private boolean __isMain(EnvironmentElementFunction ef, int lineNumber, int lineOffset)
+    private boolean __isMain(ElementFunction ef, int lineNumber, int lineOffset)
     {
         if (!ef.get_name().equals("main"))
         {
@@ -73,8 +59,8 @@ public class VisitorType extends Visitor
 
     public VisitorType()
     {
-        m_function_environment = new Vector<EnvironmentElementFunction>();
-        m_variable_environment = new Vector<EnvironmentElement>();
+        m_function_environment = new Vector<ElementFunction>();
+        m_variable_environment = new Vector<Element>();
         m_current_function = null;
     }
 
@@ -89,7 +75,7 @@ public class VisitorType extends Visitor
         {
             FunctionDeclaration fd = function.get_function_declaration();
 
-            EnvironmentElementFunction ef = (EnvironmentElementFunction) fd.accept(this);
+            ElementFunction ef = (ElementFunction) fd.accept(this);
             m_function_environment.add(ef);
 
             // check whether the function is main
@@ -112,18 +98,18 @@ public class VisitorType extends Visitor
     {
         // add function parameters to the variable environment
         String name = function.get_function_declaration().get_identifier().get_name();
-        EnvironmentElementFunction ef = __findElementFunction(name);
+        ElementFunction ef = __findElementFunction(name);
         m_current_function = ef;
 
         m_variable_environment.clear();
-        for (EnvironmentElement e : ef.get_parameters())
+        for (Element e : ef.get_parameters())
             m_variable_environment.add(e);
 
         function.get_function_body().accept(this);
         return null;
     }
 
-    // returns an EnvironmentElementFunction
+    // returns an ElementFunction
     public Object visit(FunctionDeclaration fd)
     {
         // check that the function is not already in the environment
@@ -131,16 +117,16 @@ public class VisitorType extends Visitor
         if (__findElementFunction(name) != null)
             __throwError("Functions with the same name are not allowed", fd.getLine(), fd.getCharPositionInLine());
 
-        // create the EnvironmentElementFunction
+        // create the ElementFunction
         Pair<Type, Integer> pair = (Pair<Type, Integer>) fd.get_compound_type().accept(this);
         Type type = pair.getFirst();
         int array_size = pair.getSecond();
     
-        EnvironmentElementFunction ef = new EnvironmentElementFunction(type, array_size, name);
+        ElementFunction ef = new ElementFunction(type, array_size, name);
         m_variable_environment.clear();
         for (Variable var : fd.get_parameters())
         {
-            EnvironmentElement e = (EnvironmentElement) var.accept(this);
+            Element e = (Element) var.accept(this);
             m_variable_environment.add(e);
             ef.add_parameter(e);
         }
@@ -152,7 +138,7 @@ public class VisitorType extends Visitor
     {
         // add variable declarations to variable environment
         for (Variable var : function_body.get_variables())
-            m_variable_environment.add(((EnvironmentElement) var.accept(this)));
+            m_variable_environment.add(((Element) var.accept(this)));
 
         // type-check statements
         for (Statement statement : function_body.get_statements())
@@ -191,7 +177,7 @@ public class VisitorType extends Visitor
         return identifier.get_name();
     }
 
-    // returns an EnvironmentElement
+    // returns an Element
     public Object visit(Variable var)
     {
         Pair<Type, Integer> pair = (Pair<Type, Integer>) var.get_compound_type().accept(this);
@@ -207,8 +193,8 @@ public class VisitorType extends Visitor
         if (__findElementFunction(name) != null)
             __throwError("Re-declaration of variables is not allowed", var.getLine(), var.getCharPositionInLine());
         
-        // create and return the EnvironmentElement
-        return new EnvironmentElement(type, array_size, name);
+        // create and return the Element
+        return new Element(type, array_size, name);
     }
 
 
@@ -221,7 +207,7 @@ public class VisitorType extends Visitor
         Expression m_expression;
         */
         String name = sa.get_identifier().accept(this).toString();
-        EnvironmentElement e = __findElementVariable(name);
+        Element e = __findElementVariable(name);
 
         // check that the variable to be assigned is in the environment
         if (e == null)
@@ -324,13 +310,13 @@ public class VisitorType extends Visitor
     public Object visit(ExpressionFunction ef)
     {
         String name = ef.m_identifier.accept(this).toString();
-        EnvironmentElementFunction eef = __findElementFunction(name);
+        ElementFunction eef = __findElementFunction(name);
 
         // check the function exists
         if (eef == null)
             __throwError("Function to be called does not exist", ef.getLine(), ef.getCharPositionInLine());
 
-        Vector<EnvironmentElement> parameters = eef.get_parameters();
+        Vector<Element> parameters = eef.get_parameters();
         Vector<Expression> expressions = ef.get_parameters();
 
         // check there are as many expressions as parameters
@@ -340,7 +326,7 @@ public class VisitorType extends Visitor
         // check each expression matches the type of the parameter
         for (int i = 0; i < parameters.size(); ++i)
         {
-            EnvironmentElement var = parameters.elementAt(i);
+            Element var = parameters.elementAt(i);
             Expression exp = expressions.elementAt(i);
             Type type = (Type) exp.accept(this);
 
@@ -354,7 +340,7 @@ public class VisitorType extends Visitor
     public Object visit(ExpressionIdentifier ei)
     {
         String name = ei.m_identifier.accept(this).toString();
-        EnvironmentElement ef = __findElementVariable(name);
+        Element ef = __findElementVariable(name);
 
         // check the variable exists
         if (ef == null)

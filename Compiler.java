@@ -11,14 +11,12 @@ public class Compiler {
 
 		boolean wrongNumArgs = (args.length == 0 || args.length > 2);
 		boolean ppvFlag = false;
-		boolean tcvFlag = false;
 		if (args.length == 2)
 		{
 			ppvFlag = args[1].equals("-ppv");
-			tcvFlag = args[1].equals("-tcv");
 		}
 
-		if (wrongNumArgs || (args.length == 2 && !(ppvFlag || tcvFlag)))
+		if (wrongNumArgs || (args.length == 2 && !ppvFlag))
 		{
 			System.out.println("Usage: Compiler filename.ul [-ppv|-tcv]");
 			return;
@@ -48,12 +46,14 @@ public class Compiler {
 				FileWriter output = new FileWriter(ulPathname);
 				output.write(sOutput);
 				output.close();
+
+				System.out.println(sOutput);
 			}
-			
-			if (tcvFlag)
+			else
 			{
 				VisitorType tcv = new VisitorType();
 				p.accept(tcv);
+				
 			}
 		}
 		catch (RecognitionException e)	

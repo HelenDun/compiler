@@ -2,17 +2,27 @@ package ast;
 
 import java.lang.String;
 
-public class EnvironmentElement
+public class Element
 {
     Type m_type;
     int m_array_size; // if <= 0, then not an array
     String m_name;
+    int m_register;
 
-    public EnvironmentElement(Type type, int array_size, String name)
+    public Element(Type type, int array_size, String name)
     {
         m_type = type;
         m_array_size = array_size;
         m_name = name;
+        m_register = -1;
+    }
+
+    public Element(Type type, int array_size, String name, int register)
+    {
+        m_type = type;
+        m_array_size = array_size;
+        m_name = name;
+        m_register = register;
     }
 
     public Type get_type()
@@ -35,7 +45,12 @@ public class EnvironmentElement
         return m_name;
     }
 
-    public boolean compare(EnvironmentElement other)
+    public int getRegister()
+    {
+        return m_register;
+    }
+
+    public boolean compare(Element other)
     {
         return m_array_size == other.get_array_size()
             && m_type == other.get_type()

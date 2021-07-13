@@ -4,7 +4,7 @@ public class TypeNode extends AbstractSyntaxTreeNode
 {    
     Type m_type;
 
-    // for TypeVisitor
+    // this constructor is for VisitorType 
     public TypeNode(Type type)
     {
         super(0,0,0);
