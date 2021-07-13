@@ -122,7 +122,7 @@ block returns [Block b4]
         {
             b4 = new Block(cl2.getLine(), cl2.getCharPositionInLine(), cl2.getTokenIndex());
         } 
-    (s=statement {b4.add_statement(s);})* CURLY_RIGHT
+    (s=statement {b4.addStatement(s);})* CURLY_RIGHT
     ;
 
 expr returns [Expression e11] options {backtrack=true;} 
@@ -164,7 +164,7 @@ exprAtom returns [Expression e15]
     : l1=literal
         {e15 = l1;}
     | PAREN_LEFT e16=expr PAREN_RIGHT
-        {e15 = e16; e15.increment_num_parentheses();}
+        {e15 = e16; e15.incParentheses();}
     | i10=id
         {e15 = new ExpressionIdentifier(i10.getLine(), i10.getCharPositionInLine(), i10.getTokenIndex(), i10, null);}
     | i11=id BRACKET_LEFT e17=expr BRACKET_RIGHT

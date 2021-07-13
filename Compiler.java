@@ -1,9 +1,9 @@
 
 import org.antlr.runtime.*;
+import visitor.*;
+import visitor.ast.*;
+import visitor.ir.*;
 import java.io.*;
-import ast.*;
-import static ast.Type.*;
-import static ast.Operator.*;
 
 public class Compiler {
 	public static void main (String[] args) throws Exception {
