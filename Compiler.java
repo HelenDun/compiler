@@ -10,17 +10,19 @@ public class Compiler {
 		ANTLRInputStream input;
 
 		boolean wrongNumArgs = (args.length == 0 || args.length > 2);
+		boolean gFlag = false;
 		boolean ppvFlag = false;
 		boolean tcvFlag = false;
-		boolean irFlag = true;
+		boolean irFlag = false;
 		if (args.length == 2)
 		{
+			gFlag = gFlag | args[1].equals("-g");
 			ppvFlag = ppvFlag | args[1].equals("-ppv");
 			tcvFlag = tcvFlag | args[1].equals("-tcv");
 			irFlag = irFlag | args[1].equals("-ir");
 		}
 
-		if (wrongNumArgs || (args.length == 2 && !(ppvFlag || tcvFlag || irFlag)))
+		if (wrongNumArgs || (args.length == 2 && !(gFlag || ppvFlag || tcvFlag || irFlag)))
 		{
 			System.out.println("Usage: Compiler filename.ul [-ppv|-tcv|-ir]");
 			return;
@@ -50,8 +52,6 @@ public class Compiler {
 				FileWriter output = new FileWriter(ulPathname);
 				output.write(sOutput);
 				output.close();
-
-				System.out.println(sOutput);
 			}
 			else if (tcvFlag)
 			{
@@ -74,10 +74,8 @@ public class Compiler {
 				FileWriter output = new FileWriter(ulPathname);
 				output.write(sOutput);
 				output.close();
-
-				System.out.println(sOutput);
 			}
-			else
+			else if (!gFlag)
 			{
 				VisitorType tcv = new VisitorType();
 				Environment<ElementFunction> env_func = (Environment<ElementFunction>) p.accept(tcv);

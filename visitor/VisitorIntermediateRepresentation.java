@@ -236,7 +236,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         int labelEnd = __getLabel();
 
         // if conditional is true, go to that block
-        m_func_curr.getFirst().addStatement(new IRStatementGoto(labelIf, type_register.getSecond()));
+        m_func_curr.getFirst().addStatement(new IRStatementGoto(type_register.getSecond(), labelIf));
 
         // add lines for else block
         if (sie.hasElse())
