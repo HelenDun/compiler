@@ -331,10 +331,18 @@ public class VisitorIntermediateRepresentation extends Visitor
         Operator operator = eo.getOperator();
         Type type = type_register_first.getFirst();
 
+        Type type_new = type;
+        if (operator == Operator.Operator_Equals || operator == Operator.Operator_Less_Than)
+        {
+            type_new = Type.Type_Boolean;
+            if (type != type_new)
+                register_assign = __getRegister();
+        }
+
         IRAssignmentOperation irao = new IRAssignmentOperation(register_assign, register_right, register_left, operator, type);
         m_func_curr.getFirst().addStatement(irao);
 
-        return register_assign;
+        return new Pair<Type,Integer>(type_new, register_assign);
     }
 
     public Object visit(LiteralBoolean literal_boolean)
