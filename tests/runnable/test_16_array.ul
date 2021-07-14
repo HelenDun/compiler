@@ -1,12 +1,13 @@
 // test 16 : Has an array
 // Parser / Lexer Valid: Yes
 
-void main()
+void main(char[4] b)
 {
     int[3] a;
     a[0] = 1;
     a[1] = 2;
     a[2] = 0;
+    b[3] = a[0];
     print a[a[0] - a[2]];
     println "15";
 }

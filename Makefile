@@ -11,7 +11,7 @@ PPV_FILE= _ppv
 GNAME= ulActions
 GSRC= $(GNAME).g
 
-all: grammar compile
+all: grammar compile ir_test
 
 grammar: $(GSRCS)
 	java org.antlr.Tool -fo . $(GSRC)
@@ -35,8 +35,11 @@ clean_ast:
 	rm -f $(DIR_AST)/*.class
 clean_ir:
 	rm -f $(DIR_IR)/*.class
-clean_test:
-	rm -f $(DIR_TESTS_RUNNABLE)/*_ppv.ul $(DIR_TESTS_PARSABLE)/*_ppv.ul $(DIR_TESTS_RUNNABLE)/*.ir
+clean_test: clean_test_ppv clean_test_ir
+clean_test_ppv:
+	rm -f $(DIR_TESTS_RUNNABLE)/*_ppv.ul $(DIR_TESTS_PARSABLE)/*_ppv.ul
+clean_test_ir:
+	rm -f $(DIR_TESTS_RUNNABLE)/*.ir $(DIR_TESTS_RUNNABLE)/*.j $(DIR_TESTS_RUNNABLE)/*.class
 
 test: grammar_test ppv_test tcv_test ir_test
 

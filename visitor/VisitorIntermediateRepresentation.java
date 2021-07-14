@@ -293,7 +293,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         sw.getBlock().accept(this);
 
         // add the conditional to repeat the while loop
-        sw.getExpression().accept(this);
+        type_register = (Pair<Type,Integer>) sw.getExpression().accept(this);
         m_func_curr.getFirst().addStatement(new IRStatementGoto(type_register.getSecond(), labelLoop));
 
         // add the way out of the while loop
@@ -357,17 +357,13 @@ public class VisitorIntermediateRepresentation extends Visitor
 
         int register_left = type_register_first.getSecond();
         int register_right = type_register_second.getSecond();
-        int register_assign = register_right;
         Operator operator = eo.getOperator();
         Type type = type_register_first.getFirst();
 
         Type type_new = type;
         if (operator == Operator.Operator_Equals || operator == Operator.Operator_Less_Than)
-        {
             type_new = Type.Type_Boolean;
-            if (type != type_new)
-                register_assign = __getRegister(false, type_new);
-        }
+        int register_assign = __getRegister(false, type_new);
 
         IRAssignmentOperation irao = new IRAssignmentOperation(register_assign, NO_ARRAY, register_right, register_left, operator, type);
         m_func_curr.getFirst().addStatement(irao);
