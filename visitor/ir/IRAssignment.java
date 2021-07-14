@@ -28,7 +28,7 @@ public abstract class IRAssignment extends IRStatement
         str += String.valueOf(getRegister());
         if(isArray())
         {
-            str += '[';
+            str += "[T";
             str += String.valueOf(m_register_array);
             str += ']';
         }

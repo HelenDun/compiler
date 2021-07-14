@@ -30,6 +30,6 @@ public class LiteralString extends Literal
 
     public String toString()
     {
-        return '"' + m_str + '"';
+        return m_str;
     }
 }

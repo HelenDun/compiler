@@ -22,11 +22,22 @@ public class IRAssignmentRegister extends IRAssignment
         return m_register_right_array;
     }
 
+    public boolean isRegisterRightArray()
+    {
+        return m_register_right_array > 0;
+    }
+
     public String toString()
     {
         String str = __toString();
         str += 'T';
         str += String.valueOf(m_register_right);
+        if (isRegisterRightArray())
+        {
+            str += "[T";
+            str += String.valueOf(m_register_right_array);
+            str += ']';
+        }
         return str;
     }
 }
