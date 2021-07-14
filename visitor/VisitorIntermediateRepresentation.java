@@ -46,7 +46,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         int array_size = e.getArraySize();
         int register = __getRegister();
 
-        IRDeclaration declaration = new IRDeclaration(register, is_array, name, isParameter);
+        IRDeclaration declaration = new IRDeclaration(register, is_array, type, name, isParameter);
         m_func_curr.getFirst().addDeclaration(declaration);
 
         ElementRegister er = new ElementRegister(type, array_size, name, register);

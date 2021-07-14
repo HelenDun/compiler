@@ -19,10 +19,10 @@ public class IRDeclaration extends IRNode
         m_is_parameter = false;
     }
 
-    public IRDeclaration(int register, boolean is_array, String name, boolean is_parameter)
+    public IRDeclaration(int register, boolean is_array, Type type, String name, boolean is_parameter)
     {
         m_register = register;
-        m_type = Type.Type_Int;
+        m_type = type;
         m_is_array = is_array;
         m_name = name;
         m_is_parameter = is_parameter;
