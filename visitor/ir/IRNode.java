@@ -2,7 +2,7 @@ package visitor.ir;
 
 import java.lang.String;
 
-public class IRNode 
+public abstract class IRNode
 {
-    
+    public abstract String toString();
 }

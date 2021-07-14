@@ -8,6 +8,7 @@ public class IRStatementLabel extends IRStatement
 
     public IRStatementLabel(int number)
     {
+        super(-1);
         m_number = number;
     }
 
@@ -20,7 +21,7 @@ public class IRStatementLabel extends IRStatement
     {
         String str = "L";
         str += String.valueOf(m_number);
-        str += ":;";
+        str += ':';
         return str;
     }
     

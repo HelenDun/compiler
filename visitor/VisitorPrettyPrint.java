@@ -1,32 +1,7 @@
 package visitor;
 import java.util.Vector;
 
-import visitor.ast.Block;
-import visitor.ast.CompoundType;
-import visitor.ast.Expression;
-import visitor.ast.ExpressionFunction;
-import visitor.ast.ExpressionIdentifier;
-import visitor.ast.ExpressionOperation;
-import visitor.ast.Function;
-import visitor.ast.FunctionBody;
-import visitor.ast.FunctionDeclaration;
-import visitor.ast.Identifier;
-import visitor.ast.LiteralBoolean;
-import visitor.ast.LiteralCharacter;
-import visitor.ast.LiteralFloat;
-import visitor.ast.LiteralInteger;
-import visitor.ast.LiteralString;
-import visitor.ast.Program;
-import visitor.ast.Statement;
-import visitor.ast.StatementAssignment;
-import visitor.ast.StatementEmpty;
-import visitor.ast.StatementExpression;
-import visitor.ast.StatementIfElse;
-import visitor.ast.StatementPrint;
-import visitor.ast.StatementReturn;
-import visitor.ast.StatementWhile;
-import visitor.ast.TypeNode;
-import visitor.ast.Variable;
+import visitor.ast.*;
 
 import java.lang.String;
 

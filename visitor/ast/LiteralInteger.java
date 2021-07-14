@@ -26,4 +26,9 @@ public class LiteralInteger extends Literal
     {
 		return v.visit(this);
     }
+
+    public String toString()
+    {
+        return String.valueOf(m_int);
+    }
 }

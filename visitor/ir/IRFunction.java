@@ -98,9 +98,10 @@ public class IRFunction extends IRNode
         for (IRStatement statement : m_statements)
         {
             str += statement.toString();
-            str += '\n';
+            str += ";\n";
         }
 
+        str += "}\n";
         return str;
     }
 }

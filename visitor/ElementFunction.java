@@ -30,9 +30,9 @@ public class ElementFunction extends Element
         Vector<Element> parameters = other.getParameters();
         
         boolean is_same = getArraySize() == other.getArraySize()
-            && getType() == other.getType()
-            && getName() == other.getName()
-            && m_parameters.size() == parameters.size();
+                       && getType() == other.getType()
+                       && getName() == other.getName()
+                       && m_parameters.size() == parameters.size();
             
         if (is_same)
         {

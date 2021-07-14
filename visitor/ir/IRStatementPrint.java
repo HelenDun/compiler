@@ -5,20 +5,14 @@ import visitor.ast.Type;
 
 public class IRStatementPrint extends IRStatement
 {
-    private int m_register;
     private Type m_type;
     private boolean m_is_newline;
 
     public IRStatementPrint(int register, Type type, boolean is_newline)
     {
-        m_register = register;
+        super(register);
         m_type = type;
         m_is_newline = is_newline;
-    }
-
-    public int getRegister()
-    {
-        return m_register;
     }
 
     public Type getType()
@@ -38,7 +32,7 @@ public class IRStatementPrint extends IRStatement
             str += "LN";
         str += m_type.toChar();
         str += " T";
-        str += String.valueOf(m_register);
+        str += String.valueOf(getRegister());
         return str;
     }
 }

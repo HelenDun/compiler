@@ -26,4 +26,11 @@ public class LiteralBoolean extends Literal
     {
 		return v.visit(this);
     }
+
+    public String toString()
+    {
+        if (m_boolean)
+            return "TRUE";
+        return "FALSE";
+    }
 }

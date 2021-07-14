@@ -52,8 +52,11 @@ public class Compiler {
 			else
 			{
 				VisitorType tcv = new VisitorType();
-				p.accept(tcv);
+				Environment<ElementFunction> env_func = (Environment<ElementFunction>) p.accept(tcv);
 				
+				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(args[0], env_func);
+				IRProgram irprogram = (IRProgram) p.accept(irv);
+				System.out.println(irprogram.toString());
 			}
 		}
 		catch (RecognitionException e)	

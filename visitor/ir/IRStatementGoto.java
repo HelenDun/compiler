@@ -8,6 +8,13 @@ public class IRStatementGoto extends IRStatement
 
     public IRStatementGoto(int label)
     {
+        super(-1);
+        m_label = label;
+    }
+
+    public IRStatementGoto(int register, int label)
+    {
+        super(register);
         m_label = label;
     }
 
@@ -18,7 +25,14 @@ public class IRStatementGoto extends IRStatement
 
     public String toString()
     {
-        String str = "GOTO L";
+        String str = "";
+        if (isRegister())
+        {
+            str += "IF T";
+            str += String.valueOf(getRegister());
+            str += ' ';
+        }
+        str += "GOTO L";
         str += String.valueOf(m_label);
         return str;
     }

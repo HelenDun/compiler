@@ -4,26 +4,19 @@ import java.lang.String;
 
 public class IRStatementReturn extends IRStatement
 {
-    private int m_register;
-
     public IRStatementReturn()
     {
-        m_register = -1;
+        super(-1);
     }
 
     public IRStatementReturn(int register)
     {
+        super(register);
+    }
+
+    public void setRegister(int register)
+    {
         m_register = register;
-    }
-
-    public int getRegister()
-    {
-        return m_register;
-    }
-
-    public boolean isRegister()
-    {
-        return m_register >= 0;
     }
 
     public String toString()
@@ -32,7 +25,7 @@ public class IRStatementReturn extends IRStatement
         if (isRegister())
         {
             str += " T";
-            str += String.valueOf(m_register);
+            str += String.valueOf(getRegister());
         }
         return str;
     }

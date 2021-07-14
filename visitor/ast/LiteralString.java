@@ -27,4 +27,9 @@ public class LiteralString extends Literal
     {
 		return v.visit(this);
     }
+
+    public String toString()
+    {
+        return '"' + m_str + '"';
+    }
 }

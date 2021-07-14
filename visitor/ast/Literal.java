@@ -9,6 +9,7 @@ public abstract class Literal extends Expression
 		super(line, pos, index);
 	}
 	
+	public abstract String toString();
 	public abstract Type getType();
 	public abstract Object accept(Visitor v);
 }

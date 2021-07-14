@@ -26,4 +26,9 @@ public class LiteralFloat extends Literal
     {
 		return v.visit(this);
     }
+
+    public String toString()
+    {
+        return String.valueOf(m_float);
+    }
 }
