@@ -1,8 +1,8 @@
 
 import org.antlr.runtime.*;
 import visitor.*;
-import visitor.ast.*;
-import visitor.ir.*;
+import visitor.ast.Program;
+import visitor.ir.IRProgram;
 import java.io.*;
 
 public class Compiler {
@@ -11,14 +11,18 @@ public class Compiler {
 
 		boolean wrongNumArgs = (args.length == 0 || args.length > 2);
 		boolean ppvFlag = false;
+		boolean tcvFlag = false;
+		boolean irFlag = false;
 		if (args.length == 2)
 		{
 			ppvFlag = args[1].equals("-ppv");
+			tcvFlag = args[1].equals("-tcv");
+			irFlag = args[1].equals("-ir");
 		}
 
-		if (wrongNumArgs || (args.length == 2 && !ppvFlag))
+		if (wrongNumArgs || (args.length == 2 && !(ppvFlag || tcvFlag || irFlag)))
 		{
-			System.out.println("Usage: Compiler filename.ul [-ppv|-tcv]");
+			System.out.println("Usage: Compiler filename.ul [-ppv|-tcv|-ir]");
 			return;
 		}
 		else 
@@ -49,7 +53,12 @@ public class Compiler {
 
 				System.out.println(sOutput);
 			}
-			else
+			else if (tcvFlag)
+			{
+				VisitorType tcv = new VisitorType();
+				p.accept(tcv);
+			}
+			else if (irFlag)
 			{
 				VisitorType tcv = new VisitorType();
 				Environment<ElementFunction> env_func = (Environment<ElementFunction>) p.accept(tcv);
@@ -66,13 +75,14 @@ public class Compiler {
 		catch (SemanticException e)
 		{
 			System.out.println(e.getMessage());
-			/*
-			System.out.println("");
-			System.out.println(e.getCurrentFunction());
-			System.out.println(e.getFunctionEnvironment());
-			System.out.println(e.getVariableEnvironment());
-			e.printStackTrace();
-			*/
+			if (tcvFlag)
+			{
+				System.out.println("");
+				System.out.println(e.getCurrentFunction());
+				System.out.println(e.getFunctionEnvironment());
+				System.out.println(e.getVariableEnvironment());
+				e.printStackTrace();
+			}
 		}
 		catch (Exception e) 
 		{

@@ -10,9 +10,9 @@ grammar ulActions;
 @header 
 {
     import java.util.Vector;
-    import ast.*;
-    import static ast.Type.*;
-    import static ast.Operator.*;
+    import visitor.ast.*;
+    import static visitor.ast.Type.*;
+    import static visitor.ast.Operator.*;
 }
 
 /* Parser */
