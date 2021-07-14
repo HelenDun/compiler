@@ -29,9 +29,17 @@ public class VisitorIntermediateRepresentation extends Visitor
         m_var_env.descope();
     }
 
-    private int __getRegister()
+    private int __getRegister(boolean is_array, Type type)
     {
-        return m_counter_register++;
+        return __getRegister(is_array, type, null, false);
+    }
+
+    private int __getRegister(boolean is_array, Type type, String name, boolean isParameter)
+    {
+        int register = m_counter_register++;
+        IRDeclaration declaration = new IRDeclaration(register, is_array, type, name, isParameter);
+        m_func_curr.getFirst().addDeclaration(declaration);
+        return register;
     }
 
     private int __getLabel()
@@ -45,10 +53,9 @@ public class VisitorIntermediateRepresentation extends Visitor
         Type type = e.getType();
         boolean is_array = e.isArray();
         int array_size = e.getArraySize();
-        int register = __getRegister();
+        int register = __getRegister(is_array, type, name, isParameter);
 
-        IRDeclaration declaration = new IRDeclaration(register, is_array, type, name, isParameter);
-        m_func_curr.getFirst().addDeclaration(declaration);
+        
 
         ElementRegister er = new ElementRegister(type, array_size, name, register);
         m_var_env.add(name, er);
@@ -63,8 +70,7 @@ public class VisitorIntermediateRepresentation extends Visitor
     private Pair<Type,Integer> __addLiteral(Literal l)
     {
         Type type = l.getType();
-        int register = __getRegister();
-        m_func_curr.getFirst().addDeclaration(new IRDeclaration(register, false, type));
+        int register = __getRegister(false, type);
         m_func_curr.getFirst().addStatement(new IRAssignmentConstant(register, NO_ARRAY, l));
         return new Pair<Type,Integer>(type, register);
     }
@@ -306,8 +312,9 @@ public class VisitorIntermediateRepresentation extends Visitor
         */
         String name = exf.getIdentifier().accept(this).toString();
         ElementFunction ef = m_func_env.find(name);
-        int register = __getRegister();
+
         Type type = ef.getType();
+        int register = __getRegister(false, type);
 
         IRAssignmentCall irac = new IRAssignmentCall(register, NO_ARRAY, name, type);
 
@@ -334,11 +341,9 @@ public class VisitorIntermediateRepresentation extends Visitor
         if (ei.isArray())
         {
             Pair<Type,Integer> type_register = (Pair<Type,Integer>) ei.getArrayIndex().accept(this);
-            register_assign = __getRegister();
+            register_assign = __getRegister(false, type);
             int register_right = er.getRegister();
             int register_right_array = type_register.getSecond();
-
-            m_func_curr.getFirst().addDeclaration(new IRDeclaration(register_assign, false, type));
             m_func_curr.getFirst().addStatement(new IRAssignmentRegister(register_assign, NO_ARRAY, register_right, register_right_array));
         }
 
@@ -361,7 +366,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         {
             type_new = Type.Type_Boolean;
             if (type != type_new)
-                register_assign = __getRegister();
+                register_assign = __getRegister(false, type_new);
         }
 
         IRAssignmentOperation irao = new IRAssignmentOperation(register_assign, NO_ARRAY, register_right, register_left, operator, type);

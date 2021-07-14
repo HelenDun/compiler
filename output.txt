@@ -4,8 +4,8 @@ echo; echo ./tests/runnable/test_19_parameters.ul ; java Compiler ./tests/runnab
 PROG ./tests/runnable/test_19_parameters.ul
 FUNC foo(CC)C
 {
-TEMP 0:I [P("b")];
-TEMP 1:I [P("z")];
+TEMP 0:C [P("b")];
+TEMP 1:C [P("z")];
 TEMP 2:C;
 PRINTLNC T0;
 PRINTLNC T1;
@@ -16,9 +16,9 @@ RETURN T2;
 FUNC main()V
 {
 TEMP 0:I [L("z")];
-TEMP 1:I [L("a")];
-TEMP 2:I [L("c")];
-TEMP 3:I [L("_x")];
+TEMP 1:F [L("a")];
+TEMP 2:Z [L("c")];
+TEMP 3:C [L("_x")];
 TEMP 5:C;
 TEMP 6:C;
 TEMP 7:F;
@@ -85,17 +85,34 @@ TEMP 0:AI [L("a")];
 TEMP 1:I;
 TEMP 2:I;
 TEMP 3:I;
-TEMP 4:U;
+TEMP 4:I;
+TEMP 5:I;
+TEMP 6:I;
+TEMP 7:I;
+TEMP 8:I;
+TEMP 9:I;
+TEMP 10:I;
+TEMP 11:I;
+TEMP 12:U;
 T0 := NEWARRAY I 3;
 T1 := 1;
-T0 := T1;
-T2 := 2;
-T0 := T2;
-T3 := 0;
-T0 := T3;
-PRINTI T0;
-T4 := ""15"";
-PRINTLNU T4;
+T2 := 0;
+T0[2] := T1;
+T3 := 2;
+T4 := 1;
+T0[4] := T3;
+T5 := 0;
+T6 := 2;
+T0[6] := T5;
+T7 := 0;
+T8 := T0;
+T9 := 2;
+T10 := T0;
+T10 := T8 I- T10;
+T11 := T0;
+PRINTI T11;
+T12 := ""15"";
+PRINTLNU T12;
 }
 
 
@@ -219,8 +236,8 @@ RETURN;
 PROG ./tests/runnable/test_41_pretty_print_ugly.ul
 FUNC sampleOne(FF)F
 {
-TEMP 0:I [P("x")];
-TEMP 1:I [P("y")];
+TEMP 0:F [P("x")];
+TEMP 1:F [P("y")];
 TEMP 3:U;
 TEMP 4:U;
 T2 := T0 F< T1;
@@ -239,7 +256,7 @@ RETURN T1;
 FUNC sampleTwo(I)V
 {
 TEMP 0:I [P("x")];
-TEMP 1:AI [L("b")];
+TEMP 1:AF [L("b")];
 TEMP 2:I;
 TEMP 4:I;
 TEMP 5:I;
@@ -263,7 +280,7 @@ T0 := T7;
 
 FUNC main()V
 {
-TEMP 0:AI [L("a")];
+TEMP 0:AU [L("a")];
 TEMP 1:I [L("w")];
 TEMP 2:I;
 TEMP 4:F;
@@ -349,7 +366,7 @@ PRINTLNI T0;
 PROG ./tests/runnable/test_08_basic_op.ul
 FUNC foo()F
 {
-TEMP 0:I [L("a")];
+TEMP 0:F [L("a")];
 TEMP 1:F;
 TEMP 2:F;
 T1 := 3.0;
@@ -380,7 +397,7 @@ RETURN T1;
 
 FUNC main()V
 {
-TEMP 0:I [L("x")];
+TEMP 0:C [L("x")];
 TEMP 2:I;
 T1 := CALL _foo();
 T0 := T1;
@@ -403,8 +420,8 @@ FUNC main()V
 PROG ./tests/runnable/test_42_pretty_print_expected.ul
 FUNC sampleOne(FF)F
 {
-TEMP 0:I [P("x")];
-TEMP 1:I [P("y")];
+TEMP 0:F [P("x")];
+TEMP 1:F [P("y")];
 TEMP 3:U;
 TEMP 4:U;
 T2 := T0 F< T1;
@@ -423,7 +440,7 @@ RETURN T1;
 FUNC sampleTwo(I)V
 {
 TEMP 0:I [P("x")];
-TEMP 1:AI [L("b")];
+TEMP 1:AF [L("b")];
 TEMP 2:I;
 TEMP 4:I;
 TEMP 5:I;
@@ -447,7 +464,7 @@ T0 := T7;
 
 FUNC main()V
 {
-TEMP 0:AI [L("a")];
+TEMP 0:AU [L("a")];
 TEMP 1:I [L("w")];
 TEMP 2:I;
 TEMP 4:F;
