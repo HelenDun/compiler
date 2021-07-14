@@ -95,8 +95,6 @@ public class VisitorIntermediateRepresentation extends Visitor
     // returns an Intermediate Representation
     public Object visit(Program program)
     {
-        m_counter_label = 0;
-
         // add the function to the Intermediate Representation
         for (Function function : program.getFunctions())
         {
@@ -111,6 +109,7 @@ public class VisitorIntermediateRepresentation extends Visitor
 	public Object visit(Function function)
     {
         m_counter_register = 0;
+        m_counter_label = 0;
         function.getFunctionDeclaration().accept(this);
         function.getFunctionBody().accept(this);
         return null;
@@ -314,8 +313,9 @@ public class VisitorIntermediateRepresentation extends Visitor
         ElementFunction ef = m_func_env.find(name);
 
         Type type = ef.getType();
-        int register = __getRegister(false, type);
-
+        int register = -1;
+        if (type != Type.Type_Void)
+            register = __getRegister(false, type);
         IRAssignmentCall irac = new IRAssignmentCall(register, NO_ARRAY, name, type);
 
         Vector<Expression> expressions = exf.getParameters();

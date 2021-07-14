@@ -40,7 +40,9 @@ public class IRAssignmentCall extends IRAssignment
 
     public String toString()
     {
-        String str = __toString();
+        String str = "";
+        if (m_type != Type.Type_Void)
+            str = __toString();
         str += "CALL ";
         str += m_name;
         str += '(';

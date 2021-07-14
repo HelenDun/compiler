@@ -37,7 +37,7 @@ clean_ir:
 	rm -f $(DIR_IR)/*.class
 clean_test: clean_test_ppv clean_test_ir
 clean_test_ppv:
-	rm -f $(DIR_TESTS_RUNNABLE)/*_ppv.ul $(DIR_TESTS_PARSABLE)/*_ppv.ul
+	rm -f $(DIR_TESTS_RUNNABLE)/*.ppv $(DIR_TESTS_PARSABLE)/*.ppv
 clean_test_ir:
 	rm -f $(DIR_TESTS_RUNNABLE)/*.ir $(DIR_TESTS_RUNNABLE)/*.j $(DIR_TESTS_RUNNABLE)/*.class
 
@@ -46,18 +46,18 @@ test: grammar_test ppv_test tcv_test ir_test
 # java Compiler ./tests/runnable/some_file.ul
 grammar_test: grammar_test_runnable grammar_test_parsable grammar_test_invalid
 grammar_test_runnable:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -g;)
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -g; echo;)
 grammar_test_parsable:
-	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -g;)
+	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -g; echo;)
 grammar_test_invalid:
-	$(foreach file, $(wildcard $(DIR_TESTS_INVALID)/*.ul), echo; echo $(file) ; java Compiler $(file) -g;)
+	$(foreach file, $(wildcard $(DIR_TESTS_INVALID)/*.ul), echo; echo $(file) ; java Compiler $(file) -g; echo;)
 
 # java Compiler ./tests/runnable/some_file.ul -ppv
 ppv_test: ppv_test_runnable ppv_test_parsable ppv_test_ultimate
 ppv_test_runnable:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -ppv;)
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -ppv; echo;)
 ppv_test_parsable:
-	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -ppv;)
+	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -ppv; echo;)
 ppv_test_ultimate:
 	java Compiler ./tests/runnable/test_41_pretty_print_ugly.ul -ppv
 	java Compiler ./tests/runnable/test_42_pretty_print_expected.ul -ppv
@@ -66,9 +66,15 @@ ppv_test_ultimate:
 
 tcv_test: tcv_test_runnable tcv_test_parsable
 tcv_test_runnable:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -tcv;)
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -tcv; echo;)
 tcv_test_parsable:
-	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -tcv;)
+	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -tcv; echo;)
 
-ir_test:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -ir;)
+ir_test: clean_test_ir ir_test_compiler ir_test_codegen ir_test_jasmin
+ir_test_compiler:
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file); java Compiler $(file) -ir; echo;)
+ir_test_codegen:
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ir), echo; echo $(file); ./tests/codegen --file=$(file) > $(file).j; echo;)
+ir_test_jasmin:
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.j), echo; echo $(file); java -jar ~/jasmin-2.4/jasmin.jar $(file); echo;)
+

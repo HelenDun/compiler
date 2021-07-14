@@ -21,16 +21,21 @@ public class Compiler {
 			tcvFlag = tcvFlag | args[1].equals("-tcv");
 			irFlag = irFlag | args[1].equals("-ir");
 		}
-
 		if (wrongNumArgs || (args.length == 2 && !(gFlag || ppvFlag || tcvFlag || irFlag)))
 		{
 			System.out.println("Usage: Compiler filename.ul [-ppv|-tcv|-ir]");
 			return;
 		}
-		else 
-		{
-			input = new ANTLRInputStream(new FileInputStream(args[0]));
-		}
+
+		// get program name and the path to the file
+		String ulPathname;
+		String pathname;
+		String filename;
+		ulPathname = args[0];
+		pathname = ulPathname.substring(0, ulPathname.length() - 3);
+		filename = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length());
+
+		input = new ANTLRInputStream(new FileInputStream(ulPathname));
 
 		ulActionsLexer lexer = new ulActionsLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -45,11 +50,7 @@ public class Compiler {
 				VisitorPrettyPrint ppv = new VisitorPrettyPrint();
 				String sOutput = p.accept(ppv).toString();
 	
-				String ulPathname = args[0];
-				ulPathname = ulPathname.substring(0, ulPathname.length()-3);
-				ulPathname += "_ppv.ul";
-	
-				FileWriter output = new FileWriter(ulPathname);
+				FileWriter output = new FileWriter(pathname + ".ppv");
 				output.write(sOutput);
 				output.close();
 			}
@@ -62,16 +63,12 @@ public class Compiler {
 			{
 				VisitorType tcv = new VisitorType();
 				Environment<ElementFunction> env_func = (Environment<ElementFunction>) p.accept(tcv);
-				
-				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(args[0], env_func);
+
+				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(filename, env_func);
 				IRProgram irprogram = (IRProgram) p.accept(irv);
 				String sOutput = irprogram.toString();
 				
-				String ulPathname = args[0];
-				ulPathname = ulPathname.substring(0, ulPathname.length()-3);
-				ulPathname += ".ir";
-	
-				FileWriter output = new FileWriter(ulPathname);
+				FileWriter output = new FileWriter(pathname + ".ir");
 				output.write(sOutput);
 				output.close();
 			}
@@ -79,8 +76,8 @@ public class Compiler {
 			{
 				VisitorType tcv = new VisitorType();
 				Environment<ElementFunction> env_func = (Environment<ElementFunction>) p.accept(tcv);
-				
-				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(args[0], env_func);
+
+				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(filename, env_func);
 				IRProgram irprogram = (IRProgram) p.accept(irv);
 				System.out.println(irprogram.toString());
 			}
