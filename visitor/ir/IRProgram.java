@@ -11,6 +11,7 @@ public class IRProgram extends IRNode
     public IRProgram(String name)
     {
         m_name = name;
+        m_functions = new Vector<IRFunction>();
     }
 
     public String getName()

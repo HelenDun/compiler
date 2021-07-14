@@ -17,9 +17,12 @@ public class IRFunction extends IRNode
     
     public IRFunction(Type type, boolean is_array, String name)
     {
+        m_declarations = new Vector<IRDeclaration>();
+        m_statements = new Vector<IRStatement>();
         m_type = type;
         m_is_array = is_array;
         m_name = name;
+        m_parameters = new Vector<Pair<Type,Boolean>>();
     }
 
     public Type getType()

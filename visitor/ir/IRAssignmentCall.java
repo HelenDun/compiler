@@ -15,7 +15,7 @@ public class IRAssignmentCall extends IRAssignment
         super(register);
         m_name = name;
         m_type = type;
-        Vector<Integer> m_parameter_registers = new Vector<Integer>();
+        m_parameter_registers = new Vector<Integer>();
     }
 
     public String getName()
