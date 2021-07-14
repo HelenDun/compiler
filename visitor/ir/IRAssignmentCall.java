@@ -10,9 +10,9 @@ public class IRAssignmentCall extends IRAssignment
     Type m_type;
     Vector<Integer> m_parameter_registers;
 
-    public IRAssignmentCall(int register, String name, Type type)
+    public IRAssignmentCall(int register, int array_register, String name, Type type)
     {
-        super(register);
+        super(register, array_register);
         m_name = name;
         m_type = type;
         m_parameter_registers = new Vector<Integer>();

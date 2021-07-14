@@ -8,6 +8,7 @@ import java.util.Vector;
 public class VisitorIntermediateRepresentation extends Visitor
 {
     /* PRIVATE */
+    private static final int NO_ARRAY = -1;
 
     private Environment<ElementFunction> m_func_env;
     private Environment<ElementRegister> m_var_env;
@@ -64,7 +65,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         Type type = l.getType();
         int register = __getRegister();
         m_func_curr.getFirst().addDeclaration(new IRDeclaration(register, false, type));
-        m_func_curr.getFirst().addStatement(new IRAssignmentConstant(register, l));
+        m_func_curr.getFirst().addStatement(new IRAssignmentConstant(register, NO_ARRAY, l));
         return new Pair<Type,Integer>(type, register);
     }
 
@@ -181,7 +182,7 @@ public class VisitorIntermediateRepresentation extends Visitor
     public Object visit(Variable var)
     {
         // create and return the Element
-        Pair<Type, Integer> pair = (Pair<Type, Integer>) var.getCompoundType().accept(this);
+        Pair<Type,Integer> pair = (Pair<Type,Integer>) var.getCompoundType().accept(this);
         String name = var.getIdentifier().accept(this).toString();
         return new Element(pair.getFirst(), pair.getSecond(), name);
     }
@@ -197,8 +198,16 @@ public class VisitorIntermediateRepresentation extends Visitor
         // get the register the expression assigned to
         Pair<Type,Integer> type_register_address = (Pair<Type,Integer>) sa.getExpression().accept(this);
 
+        // get the array index if the variable being assigned to is an array
+        int array_index = NO_ARRAY;
+        if (sa.isArray())
+        {
+            Pair<Type,Integer> type_register_array = (Pair<Type,Integer>) sa.getArrayIndex().accept(this);
+            array_index = type_register_array.getSecond();
+        }
+
         // add assignment statement to list of statements for this function
-        IRAssignmentRegister irar = new IRAssignmentRegister(e.getRegister(), type_register_address.getSecond());
+        IRAssignmentRegister irar = new IRAssignmentRegister(e.getRegister(), array_index, type_register_address.getSecond(), NO_ARRAY);
         m_func_curr.getFirst().addStatement(irar);
         return null;
     }
@@ -300,7 +309,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         int register = __getRegister();
         Type type = ef.getType();
 
-        IRAssignmentCall irac = new IRAssignmentCall(register, name, type);
+        IRAssignmentCall irac = new IRAssignmentCall(register, NO_ARRAY, name, type);
 
         Vector<Expression> expressions = exf.getParameters();
         for (Expression expression : expressions)
@@ -316,8 +325,24 @@ public class VisitorIntermediateRepresentation extends Visitor
     public Object visit(ExpressionIdentifier ei)
     {
         String name = ei.getIdentifier().accept(this).toString();
+
         ElementRegister er = m_var_env.find(name);
-        return new Pair<Type,Integer>(er.getType(), er.getRegister());
+        Type type = er.getType();
+        int register_assign = er.getRegister();
+
+        // if an array, get the value from the array at the index
+        if (ei.isArray())
+        {
+            Pair<Type,Integer> type_register = (Pair<Type,Integer>) ei.getArrayIndex().accept(this);
+            register_assign = __getRegister();
+            int register_right = er.getRegister();
+            int register_right_array = type_register.getSecond();
+
+            m_func_curr.getFirst().addDeclaration(new IRDeclaration(register_assign, false, type));
+            m_func_curr.getFirst().addStatement(new IRAssignmentRegister(register_assign, NO_ARRAY, register_right, register_right_array));
+        }
+
+        return new Pair<Type,Integer>(type, register_assign);
     }
 
     public Object visit(ExpressionOperation eo)
@@ -339,7 +364,7 @@ public class VisitorIntermediateRepresentation extends Visitor
                 register_assign = __getRegister();
         }
 
-        IRAssignmentOperation irao = new IRAssignmentOperation(register_assign, register_right, register_left, operator, type);
+        IRAssignmentOperation irao = new IRAssignmentOperation(register_assign, NO_ARRAY, register_right, register_left, operator, type);
         m_func_curr.getFirst().addStatement(irao);
 
         return new Pair<Type,Integer>(type_new, register_assign);

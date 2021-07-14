@@ -9,7 +9,7 @@ public class IRAssignmentArray extends IRAssignment
 
     public IRAssignmentArray(int register, int size, Type type)
     {
-        super(register);
+        super(register, -1);
         m_size = size;
         m_type = type;
     }

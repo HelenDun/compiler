@@ -2,24 +2,31 @@ package visitor.ir;
 
 public class IRAssignmentRegister extends IRAssignment
 {
-    private int m_register_address;
+    private int m_register_right;
+    private int m_register_right_array;
 
-    public IRAssignmentRegister(int register_assigned, int register_address)
+    public IRAssignmentRegister(int register_assign, int register_array, int register_right, int register_right_array)
     {
-        super(register_assigned);
-        m_register_address = register_address;
+        super(register_assign, register_array);
+        m_register_right = register_right;
+        m_register_right_array = register_right_array;
     }
 
-    public int getRegisterAddress()
+    public int getRegisterRight()
     {
-        return m_register_address;
+        return m_register_right;
+    }
+
+    public int getRegisterRightArray()
+    {
+        return m_register_right_array;
     }
 
     public String toString()
     {
         String str = __toString();
         str += 'T';
-        str += String.valueOf(m_register_address);
+        str += String.valueOf(m_register_right);
         return str;
     }
 }

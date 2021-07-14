@@ -10,9 +10,9 @@ public class IRAssignmentOperation extends IRAssignment
     private int m_register_right;
     private int m_register_left;
 
-    public IRAssignmentOperation(int register_assign, int register_right, int register_left, Operator operator, Type type)
+    public IRAssignmentOperation(int register_assign, int register_array, int register_right, int register_left, Operator operator, Type type)
     {
-        super(register_assign);
+        super(register_assign, register_array);
         m_register_right = register_right;
         m_register_left = register_left;
         m_operator = operator;

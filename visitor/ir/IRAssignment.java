@@ -4,22 +4,22 @@ import java.lang.String;
 
 public abstract class IRAssignment extends IRStatement
 {
-    private int m_array_index;
+    private int m_register_array;
 
     public IRAssignment(int register, int array_index)
     {
         super(register);
-        m_array_index = array_index;
+        m_register_array = array_index;
     }
 
     public int getArrayIndex()
     {
-        return m_array_index;
+        return m_register_array;
     }
 
     public boolean isArray()
     {
-        return m_array_index > 0;
+        return m_register_array > 0;
     }
 
     protected String __toString()
@@ -29,7 +29,7 @@ public abstract class IRAssignment extends IRStatement
         if(isArray())
         {
             str += '[';
-            str += String.valueOf(m_array_index);
+            str += String.valueOf(m_register_array);
             str += ']';
         }
         str += " := ";

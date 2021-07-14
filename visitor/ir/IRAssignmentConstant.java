@@ -7,9 +7,9 @@ public class IRAssignmentConstant extends IRAssignment
 {
     Literal m_value;
 
-    public IRAssignmentConstant(int register, Literal value)
+    public IRAssignmentConstant(int register, int register_array, Literal value)
     {
-        super(register);
+        super(register, register_array);
         m_value = value;
     }
 
