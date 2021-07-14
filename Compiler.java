@@ -12,12 +12,12 @@ public class Compiler {
 		boolean wrongNumArgs = (args.length == 0 || args.length > 2);
 		boolean ppvFlag = false;
 		boolean tcvFlag = false;
-		boolean irFlag = false;
+		boolean irFlag = true;
 		if (args.length == 2)
 		{
-			ppvFlag = args[1].equals("-ppv");
-			tcvFlag = args[1].equals("-tcv");
-			irFlag = args[1].equals("-ir");
+			ppvFlag = ppvFlag | args[1].equals("-ppv");
+			tcvFlag = tcvFlag | args[1].equals("-tcv");
+			irFlag = irFlag | args[1].equals("-ir");
 		}
 
 		if (wrongNumArgs || (args.length == 2 && !(ppvFlag || tcvFlag || irFlag)))
