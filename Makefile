@@ -77,5 +77,3 @@ ir_test_codegen:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ir), echo; echo $(file); ./tests/codegen --file=$(file) > $(file).j; echo;)
 ir_test_jasmin:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.j), echo; echo $(file); java -jar ~/jasmin-2.4/jasmin.jar $(file); echo;)
-ir_test_class:
-	$(foreach file, $(wildcard $(DIR_SRC)/test_*.class), echo; echo $(file); java $(file); echo;)
