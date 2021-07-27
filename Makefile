@@ -74,6 +74,6 @@ ir_test: clean_test_ir ir_test_compiler ir_test_codegen ir_test_jasmin
 ir_test_compiler:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file); java Compiler $(file) -ir; echo;)
 ir_test_codegen:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ir), echo; echo $(file); ./tests/codegen --file=$(file) > $(file).j; echo;)
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ir), echo; echo $(file); ./codegen --file=$(file) > $(file).j; echo;)
 ir_test_jasmin:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.j), echo; echo $(file); java -jar ~/jasmin-2.4/jasmin.jar $(file); echo;)
