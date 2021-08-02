@@ -1,0 +1,15 @@
+void sampleTwo (int x)
+{
+    if (x<10)
+    {
+        x=3;
+    }
+}
+
+void main ()
+{
+    int w;
+
+    w=3;
+    sampleTwo(w);
+}

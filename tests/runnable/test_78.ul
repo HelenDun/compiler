@@ -1,0 +1,20 @@
+void sampleTwo ()
+{
+    int x;
+
+    x = 2;
+    if (x<10)
+    {
+        x=3;
+    }
+    x=8;
+}
+
+void main ()
+{
+    int w;
+
+    w=3;
+    sampleTwo();
+    print "works";
+}

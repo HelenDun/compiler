@@ -104,6 +104,13 @@ public class IRFunction extends IRNode
             str += ";\n";
         }
 
+        if (m_statements.size() > 0 && !m_statements.lastElement().isReturn() && this.getType() == Type.Type_Void)
+        {
+            IRStatementReturn ret = new IRStatementReturn();
+            str += ret.toString();
+            str += ";\n";
+        }
+
         str += "}\n";
         return str;
     }

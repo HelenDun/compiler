@@ -70,7 +70,6 @@ tcv_test_runnable:
 tcv_test_parsable:
 	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -tcv; echo;)
 
-ir_test: clean_test_ir ir_test_compiler ir_test_codegen ir_test_jasmin
 ir_test_compiler:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file); java Compiler $(file) -ir; echo;)
 ir_test_codegen:

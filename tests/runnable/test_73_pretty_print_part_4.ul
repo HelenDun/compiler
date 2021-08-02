@@ -1,0 +1,17 @@
+void sampleTwo (int x)
+{
+    if (x<10)
+    {
+        x=x-1;
+    }
+    x=8;
+}
+
+void main ()
+{
+    string[10] a;
+    int w;
+
+    w=3;
+    sampleTwo(w);
+}

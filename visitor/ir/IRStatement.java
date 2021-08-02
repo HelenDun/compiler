@@ -21,5 +21,10 @@ public abstract class IRStatement extends IRNode
         return m_register >= 0;
     }
 
+    public boolean isReturn()
+    {
+        return false;
+    }
+
     public abstract String toString();
 }

@@ -14,6 +14,11 @@ public class IRStatementReturn extends IRStatement
         super(register);
     }
 
+    public boolean isReturn()
+    {
+        return true;
+    }
+
     public void setRegister(int register)
     {
         m_register = register;
