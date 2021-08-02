@@ -1,8 +1,15 @@
 # Compiled class file
 *.class
+ulActions.tokens
+ulActionsLexer.java
+ulActionsParser.java
 
 # PrettyPrintVisitor test file
 *_ppv.ul
+
+# Intermediate Representation test file
+*.j
+*.ir
 
 # Log file
 *.log
