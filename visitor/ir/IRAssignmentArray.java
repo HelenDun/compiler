@@ -1,17 +1,17 @@
 package visitor.ir;
 
+import visitor.IRVisitor;
 import visitor.ast.Type;
 
 public class IRAssignmentArray extends IRAssignment
 {
     private int m_size;
-    private Type m_type;
 
+    // T0 := NEWARRAY I 3;
     public IRAssignmentArray(int register, int size, Type type)
     {
-        super(register, -1);
+        super(register, -1, type);
         m_size = size;
-        m_type = type;
     }
 
     public int getSize()
@@ -19,18 +19,18 @@ public class IRAssignmentArray extends IRAssignment
         return m_size;
     }
 
-    public Type getType()
-    {
-        return m_type;
-    }
-
     public String toString()
     {
         String str = __toString();
         str += "NEWARRAY ";
-        str += m_type.toChar();
+        str += getType().toChar();
         str += ' ';
         str += String.valueOf(m_size);
         return str;
+    }
+
+    public Object accept(IRVisitor visitor)
+    {
+        return visitor.visit(this);
     }
 }

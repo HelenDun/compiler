@@ -1,5 +1,6 @@
 package visitor.ir;
 
+import visitor.IRVisitor;
 import visitor.ast.Type;
 
 public class IRDeclaration extends IRNode
@@ -40,6 +41,10 @@ public class IRDeclaration extends IRNode
 
     public String getName()
     {
+        if (m_name == null)
+        {
+            return "T" + String.valueOf(getRegister());
+        }
         return m_name;
     }
 
@@ -81,5 +86,29 @@ public class IRDeclaration extends IRNode
 
         str += ";";
         return str;
+    }
+
+    public String toStringJasmin()
+    {
+        // .var 0 is n I from L_0 to L_1
+        String str = "    .var ";
+        str += String.valueOf(getRegister());
+        str += "is ";
+        str += getName();
+        str += ' ';
+
+        if (isArray())
+        {
+            str += '[';
+        }
+
+        str += getType().toChar();
+        str += " from ";
+        return str;
+    }
+
+    public Object accept(IRVisitor visitor)
+    {
+        return visitor.visit(this);
     }
 }

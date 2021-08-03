@@ -1,13 +1,17 @@
 package visitor.ir;
 
+import visitor.IRVisitor;
+import visitor.ast.Type;
+
 public class IRAssignmentRegister extends IRAssignment
 {
     private int m_register_right;
     private int m_register_right_array;
 
-    public IRAssignmentRegister(int register_assign, int register_array, int register_right, int register_right_array)
+    // T4[T5] := T6[T7];
+    public IRAssignmentRegister(int register_assign, int register_array, Type type, int register_right, int register_right_array)
     {
-        super(register_assign, register_array);
+        super(register_assign, register_array, type);
         m_register_right = register_right;
         m_register_right_array = register_right_array;
     }
@@ -27,6 +31,7 @@ public class IRAssignmentRegister extends IRAssignment
         return m_register_right_array > 0;
     }
 
+    // T4[T5] := T6[T7];
     public String toString()
     {
         String str = __toString();
@@ -40,4 +45,10 @@ public class IRAssignmentRegister extends IRAssignment
         }
         return str;
     }
+
+    public Object accept(IRVisitor visitor)
+    {
+        return visitor.visit(this);
+    }
+
 }

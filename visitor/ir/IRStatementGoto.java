@@ -1,6 +1,7 @@
 package visitor.ir;
 
 import java.lang.String;
+import visitor.IRVisitor;
 
 public class IRStatementGoto extends IRStatement
 {
@@ -35,5 +36,10 @@ public class IRStatementGoto extends IRStatement
         str += "GOTO L";
         str += String.valueOf(m_label);
         return str;
+    }
+
+    public Object accept(IRVisitor visitor)
+    {
+        return visitor.visit(this);
     }
 }

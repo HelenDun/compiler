@@ -1,6 +1,7 @@
 package visitor.ir;
 
 import java.lang.String;
+import visitor.IRVisitor;
 
 public class IRStatementLabel extends IRStatement
 {
@@ -12,7 +13,7 @@ public class IRStatementLabel extends IRStatement
         m_number = number;
     }
 
-    public int getNumber()
+    public int getLabel()
     {
         return m_number;
     }
@@ -24,5 +25,9 @@ public class IRStatementLabel extends IRStatement
         str += ':';
         return str;
     }
-    
+
+    public Object accept(IRVisitor visitor)
+    {
+        return visitor.visit(this);
+    }
 }

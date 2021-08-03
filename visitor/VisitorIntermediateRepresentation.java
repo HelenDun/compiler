@@ -123,7 +123,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         Type type = func_decl.getCompoundType().getTypeNode().getType();
         boolean is_array = func_decl.getCompoundType().isArray();
 
-        IRFunction irf = new IRFunction(type, is_array, name);
+        IRFunction irf = new IRFunction(type, is_array, name, __getLabel(), __getLabel());
         m_program.addFunction(irf);
         ElementFunction ef = m_func_env.find(name);        
         m_func_curr = new Pair<IRFunction, ElementFunction>(irf, ef);
@@ -271,6 +271,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         {
             Pair<Type,Integer> type_register = (Pair<Type,Integer>) sr.getExpression().accept(this);
             statement.setRegister(type_register.getSecond());
+            statement.setType(type_register.getFirst());
         }
         m_func_curr.getFirst().addStatement(statement);
         return null;

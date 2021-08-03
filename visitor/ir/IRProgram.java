@@ -3,6 +3,8 @@ package visitor.ir;
 import java.lang.String;
 import java.util.Vector;
 
+import visitor.IRVisitor;
+
 public class IRProgram extends IRNode
 {
     private String m_name;
@@ -31,14 +33,23 @@ public class IRProgram extends IRNode
 
     public String toString()
     {
+        // PROG test_01_example
         String str = "PROG ";
         str += m_name;
         str += '\n';
+
+        // FUNC factorial(I)I
         for (IRFunction function : m_functions)
         {
             str += function.toString();
             str += '\n';
         }
+
         return str;
+    }
+
+    public Object accept(IRVisitor visitor)
+    {
+        return visitor.visit(this);
     }
 }

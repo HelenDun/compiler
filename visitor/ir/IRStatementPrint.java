@@ -1,6 +1,7 @@
 package visitor.ir;
 
 import java.lang.String;
+import visitor.IRVisitor;
 import visitor.ast.Type;
 
 public class IRStatementPrint extends IRStatement
@@ -34,5 +35,10 @@ public class IRStatementPrint extends IRStatement
         str += " T";
         str += String.valueOf(getRegister());
         return str;
+    }
+
+    public Object accept(IRVisitor visitor)
+    {
+        return visitor.visit(this);
     }
 }

@@ -2,6 +2,7 @@ package visitor.ir;
 
 import java.lang.String;
 import java.util.Vector;
+import visitor.IRVisitor;
 import visitor.Pair;
 import visitor.ast.Type;
 
@@ -13,16 +14,31 @@ public class IRFunction extends IRNode
     private Type m_type;
     private boolean m_is_array;
     private String m_name;
+    private int m_label_begin;
+    private int m_label_end;
+
     private Vector<Pair<Type,Boolean>> m_parameters;
     
-    public IRFunction(Type type, boolean is_array, String name)
+    public IRFunction(Type type, boolean is_array, String name, int label_begin, int label_end)
     {
         m_declarations = new Vector<IRDeclaration>();
         m_statements = new Vector<IRStatement>();
         m_type = type;
         m_is_array = is_array;
         m_name = name;
+        m_label_begin = label_begin;
+        m_label_end = label_end;
         m_parameters = new Vector<Pair<Type,Boolean>>();
+    }
+
+    public Vector<IRDeclaration> getDeclarations()
+    {
+        return m_declarations;
+    }
+
+    public Vector<IRStatement> getStatements()
+    {
+        return m_statements;
     }
 
     public Type getType()
@@ -30,18 +46,29 @@ public class IRFunction extends IRNode
         return m_type;
     }
 
-    public boolean getIsArray()
-    {
-        return m_is_array;
-    }
     public String getName()
     {
         return m_name;
     }
 
+    public int getLabelBegin()
+    {
+        return m_label_begin;
+    }
+
+    public int getLabelEnd()
+    {
+        return m_label_end;
+    }
+
     public Vector<Pair<Type,Boolean>> getParameters()
     {
         return m_parameters;
+    }
+
+    public boolean isArray()
+    {
+        return m_is_array;
     }
 
     public void addParameter(Type type, boolean is_array)
@@ -72,11 +99,19 @@ public class IRFunction extends IRNode
         return null;
     }
 
+    public Object accept(IRVisitor visitor)
+    {
+        return visitor.visit(this);
+    }
+
     public String toString()
     {
         // function header
+        // ex. FUNC factorial(I)I
         String str = "FUNC ";
         str += m_name;
+
+        // parameters
         str += '(';
         for (Pair<Type,Boolean> parameter : m_parameters)
         {
@@ -85,6 +120,8 @@ public class IRFunction extends IRNode
             str += parameter.getFirst().toChar();
         }
         str += ')';
+
+        // return type
         if (m_is_array)
             str += 'A';
         str += m_type.toChar();
@@ -104,6 +141,7 @@ public class IRFunction extends IRNode
             str += ";\n";
         }
 
+        // always end with a return
         if (m_statements.size() > 0 && !m_statements.lastElement().isReturn() && this.getType() == Type.Type_Void)
         {
             IRStatementReturn ret = new IRStatementReturn();
