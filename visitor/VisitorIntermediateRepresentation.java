@@ -71,7 +71,7 @@ public class VisitorIntermediateRepresentation extends Visitor
     {
         Type type = l.getType();
         int register = __getRegister(false, type);
-        m_func_curr.getFirst().addStatement(new IRAssignmentConstant(register, NO_ARRAY, l));
+        m_func_curr.getFirst().addStatement(new IRAssignmentConstant(register, NO_ARRAY, type, l));
         return new Pair<Type,Integer>(type, register);
     }
 
@@ -212,7 +212,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         }
 
         // add assignment statement to list of statements for this function
-        IRAssignmentRegister irar = new IRAssignmentRegister(e.getRegister(), array_index, type_register_address.getSecond(), NO_ARRAY);
+        IRAssignmentRegister irar = new IRAssignmentRegister(e.getRegister(), array_index, type_register_address.getFirst(), type_register_address.getSecond(), NO_ARRAY);
         m_func_curr.getFirst().addStatement(irar);
         return null;
     }
@@ -323,7 +323,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         for (Expression expression : expressions)
         {
             Pair<Type,Integer> pair = (Pair<Type,Integer>) expression.accept(this);
-            irac.addParameterRegister(pair.getSecond());
+            irac.addParameterRegister(pair);
         }
         m_func_curr.getFirst().addStatement(irac);
 
@@ -345,7 +345,7 @@ public class VisitorIntermediateRepresentation extends Visitor
             register_assign = __getRegister(false, type);
             int register_right = er.getRegister();
             int register_right_array = type_register.getSecond();
-            m_func_curr.getFirst().addStatement(new IRAssignmentRegister(register_assign, NO_ARRAY, register_right, register_right_array));
+            m_func_curr.getFirst().addStatement(new IRAssignmentRegister(register_assign, NO_ARRAY, type_register.getFirst(), register_right, register_right_array));
         }
 
         return new Pair<Type,Integer>(type, register_assign);
@@ -366,7 +366,15 @@ public class VisitorIntermediateRepresentation extends Visitor
             type_new = Type.Type_Boolean;
         int register_assign = __getRegister(false, type_new);
 
-        IRAssignmentOperation irao = new IRAssignmentOperation(register_assign, NO_ARRAY, register_right, register_left, operator, type);
+        IRAssignmentOperation irao;
+        if (operator == Operator.Operator_Less_Than)
+        {
+            irao = new IRAssignmentOperation(register_assign, NO_ARRAY, register_right, register_left, __getLabel(), __getLabel());
+        }
+        else
+        {
+            irao = new IRAssignmentOperation(register_assign, NO_ARRAY, type, register_right, register_left, operator);
+        }
         m_func_curr.getFirst().addStatement(irao);
 
         return new Pair<Type,Integer>(type_new, register_assign);

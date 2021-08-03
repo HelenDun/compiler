@@ -32,6 +32,11 @@ public class IRAssignmentCall extends IRAssignment
         m_parameter_registers.add(new Pair<Type, Integer>(type, register));
     }
 
+    public void addParameterRegister(Pair<Type, Integer> pair)
+    {
+        m_parameter_registers.add(pair);
+    }
+
     public String toString()
     {
         String str = "";
