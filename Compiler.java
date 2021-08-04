@@ -82,8 +82,8 @@ public class Compiler {
 				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(filename, env_func);
 				IRProgram irprogram = (IRProgram) p.accept(irv);
 
-				IRVisitorJasmin jasmin_visitor = new IRVisitorJasmin();
-				String sOutput = jasmin_visitor.accept(irprogram).toString();
+				IRVisitorJasmin jv = new IRVisitorJasmin();
+				String sOutput = jv.visit(irprogram).toString();
 				
 				FileWriter output = new FileWriter(pathname + ".j");
 				output.write(sOutput);
@@ -98,7 +98,7 @@ public class Compiler {
 				IRProgram irprogram = (IRProgram) p.accept(irv);
 
 				IRVisitorJasmin jv = new IRVisitorJasmin();
-				System.out.println(jasmin_visitor.accept(irprogram).toString());
+				System.out.println(jv.visit(irprogram).toString());
 			}
 		}
 		catch (RecognitionException e)	
