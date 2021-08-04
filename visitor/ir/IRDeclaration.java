@@ -88,25 +88,6 @@ public class IRDeclaration extends IRNode
         return str;
     }
 
-    public String toStringJasmin()
-    {
-        // .var 0 is n I from L_0 to L_1
-        String str = "    .var ";
-        str += String.valueOf(getRegister());
-        str += "is ";
-        str += getName();
-        str += ' ';
-
-        if (isArray())
-        {
-            str += '[';
-        }
-
-        str += getType().toChar();
-        str += " from ";
-        return str;
-    }
-
     public Object accept(IRVisitor visitor)
     {
         return visitor.visit(this);

@@ -6,11 +6,61 @@ import visitor.ast.Type;
 
 public class IRVisitorJasmin extends IRVisitor
 {
-    private String m_name_program;
+    private final String TAB = "    ";
+    private final String NEWLINETAB = "\n    ";
+    private String m_name;
+    private int m_counter_label_func;
+    private int m_counter_label_op;
 
-    private String __toStringLabel(int label)
+    private int __getLabelFunc()
+    {
+        return m_counter_label_func++;
+    }
+
+    private int __getLabelOp()
+    {
+        return m_counter_label_op++;
+    }
+
+    private String __toStringLabel(String label)
+    {
+        label += ":\n";
+        return label;
+    }
+
+    private String __toStringLabelRegular(int label)
     {
         return 'L' + String.valueOf(label);
+    }
+
+    private String __toStringLabelFunction(int label)
+    {
+        return 'F' + String.valueOf(label);
+    }
+
+    private String __toStringLabelOperation(int label)
+    {
+        return 'O' + String.valueOf(label);
+    }
+
+    private String __toStringInstructionLoad(Type type, bool isArray, int register)
+    {
+        String str = TAB;
+        str += __toCharInstructionType(type, isArray);
+        str += "load ";
+        str += String.valueOf(register);
+        str += '\n';
+        return str;
+    }
+
+    private String __toStringInstructionStore(Type type, bool isArray, int register)
+    {
+        String str = TAB;
+        str += __toCharInstructionType(type, isArray);
+        str += "store ";
+        str += String.valueOf(register);
+        str += '\n';
+        return str;
     }
 
     private String __toStringType(Type type)
@@ -22,7 +72,7 @@ public class IRVisitorJasmin extends IRVisitor
         return String.valueOf(type.toChar());
     }
 
-    private char __toCharType(Type type, boolean isArray)
+    private char __toCharInstructionType(Type type, boolean isArray)
     {
         if (isArray || type == Type.Type_String)
         {
@@ -43,13 +93,13 @@ public class IRVisitorJasmin extends IRVisitor
     {
         // .source test_01_example.ul
         String str = ".source ";
-        m_name_program = program.getName();
-        str += m_name_program;
+        m_name = program.getName();
+        str += m_name;
         str += ".ul\n";
 
         // .class public test_01_example
         str += ".class public ";
-        str += m_name_program;
+        str += m_name;
         str += '\n';
 
         // .super java/lang/Object
@@ -62,35 +112,29 @@ public class IRVisitorJasmin extends IRVisitor
         }
 
         // boilerplate
-        /*
-        .method public static main([Ljava/lang/String;)V
-            .limit locals 1
-            .limit stack 4
-            invokestatic test_01_example/__main()V
-            return
-        .end method
+        String str_main = ".method public static main([Ljava/lang/String;)V\n";
+        str_main += TAB;
+        str_main += ".limit locals 1\n";
+        str_main += TAB;
+        str_main += ".limit stack 4\n";
+        str_main += TAB;
+        str_main += "invokestatic ";
+        str_main += m_name;
+        str_main += "/__main()V\n";
+        str_main += TAB;
+        str_main += "return\n";
+        str_main += ".end method\n\n";
+        str += str_main;
 
-        .method public <init>()V
-            aload_0
-            invokenonvirtual java/lang/Object/<init>()V
-            return
-        .end method
-        */
-        str += ".method public static main([Ljava/lang/String;)V\n";
-        str += "    .limit locals 1\n";
-        str += "    .limit stack 4\n";
-        str += "    invokestatic ";
-        str += m_name_program;
-        str += "/__main()V\n";
-
-        str += "    return\n";
-        str += ".end method\n";
-        str += '\n';
-        str += ".method public <init>()V";
-        str += "    aload_0\n";
-        str += "    invokenonvirtual java/lang/Object/<init>()V\n";
-        str += "    return\n";
-        str += ".end method\n";
+        String str_init = ".method public <init>()V";
+        str_init += TAB;
+        str_init += "aload_0\n";
+        str_init += TAB;
+        str_init += "invokenonvirtual java/lang/Object/<init>()V\n";
+        str_init += TAB;
+        str_init += "return\n";
+        str_init += ".end method\n";
+        str += str_init;
 
         return str;
     }
@@ -98,14 +142,8 @@ public class IRVisitorJasmin extends IRVisitor
 	public Object visit(IRFunction function)
     {
         // .method public static factorial(I)I
-        String str = ".method public static ";
-
-        String name = function.getName();
-        if (name.equals("main"))
-        {
-            name = "__main";
-        }
-        str += name;
+        String str = ".method public static __";
+        str += function.getName();
 
         // parameters
         str += '(';
@@ -119,24 +157,32 @@ public class IRVisitorJasmin extends IRVisitor
 
         // return type
         if (function.isArray())
+        {
             str += '[';
+        }
         str += __toStringType(function.getType());
         str += '\n';
 
+        int label_start = __getLabelFunc();
+        int label_end = __getLabelFunc();
+        String str_label_start = __toStringLabelFunc(label_start);
+        String str_label_end = __toStringLabelFunc(label_end);
+
         // .limit locals 8
-        str += ".limit locals ";
-        str += String.valueOf(function.getDeclarations().size());
-        str += '\n';
+        String str_decs = TAB;
+        str_decs += ".limit locals ";
+        str_decs += String.valueOf(function.getDeclarations().size());
+        str_decs += '\n';
 
         // declarations
         // ex. .var 0 is n I from L_0 to L_1
-        String from = __toStringLabel(function.getLabelBegin()) + " to " + __toStringLabel(function.getLabelEnd());
+        String str_range = ' ' + str_label_start + " to " + str_label_end;
         for (IRDeclaration declaration : function.getDeclarations())
         {
-            // .var 0 is n I from L_0 to L_1
-            String var = ".var ";
+            String var = TAB;
+            var += ".var ";
             var += String.valueOf(declaration.getRegister());
-            var += "is ";
+            var += " is ";
             var += declaration.getName();
             var += ' ';
 
@@ -146,32 +192,36 @@ public class IRVisitorJasmin extends IRVisitor
             }
 
             var += declaration.getType().toChar();
-            var += " from ";
-            var += declaration.toStringJasmin();
-            var += from;
+            var += str_range;
             var += '\n';
-            str += var;
+            str_decs += var;
         }
 
         // .limit stack 16
-        str += ".limit stack 16\n";
+        str_decs += TAB;
+        str_decs += ".limit stack 16\n";
+        str += str_decs;
 
         // label for variable declaration
-        IRStatementLabel label_begin = new IRStatementLabel(function.getLabelBegin());
-        str += label_begin.accept(this).toString();
+        str += __toStringLabel(str_label_start);
 
         // initialization of declarations
+        String str_inits = "";
         for (IRDeclaration declaration : function.getDeclarations())
         {
-            str += declaration.accept(this).toString();
+            str_inits += declaration.accept(this).toString();
         }
+        str_inits = __tabBlock(str_inits);
+        str += str_inits;
 
         // statements
+        String str_stats = "";
         Vector<IRStatement> statements = function.getStatements();
         for (IRStatement statement : statements)
         {
-            str += statement.accept(this).toString();
+            str_stats += statement.accept(this).toString();
         }
+        str += str_stats;
 
         // always end with a return
         if (statements.size() > 0 && !statements.lastElement().isReturn() && function.getType() == Type.Type_Void)
@@ -181,9 +231,7 @@ public class IRVisitorJasmin extends IRVisitor
         }
 
         // label for variable declaration
-        IRStatementLabel label_end = new IRStatementLabel(function.getLabelEnd());
-        str += label_end.accept(this).toString();
-        
+        str += __toStringLabel(str_label_end);
         str += '\n';
         return str;
     }
@@ -201,25 +249,25 @@ public class IRVisitorJasmin extends IRVisitor
             ldc 0.0
             fstore 5
         */
-        String str = "";
-        Type type = declaration.getType();
-        if (declaration.isArray() || type == Type.Type_String)
+        if (declaration.isParameter())
         {
-            str += "aconst_null\na";
+            return "";
+        }
+
+        String str = TAB;
+        if (declaration.isArray() || declaration.getType() == Type.Type_String)
+        {
+            str += "aconst_null\n";
         }
         else if (type == Type.Type_Float)
         {
-            str += "ldc 0.0\nf";
+            str += "ldc 0.0\n";
         }
         else
         {
-            str += "ldc 0\ni";
+            str += "ldc 0\n";
         }
-
-        str += "store ";
-        str += String.valueOf(declaration.getRegister());
-        str += '\n';
-
+        str += __toStringInstructionStore(type, declaration.isArray(), declaration.getRegister());
         return str;
     }
 
@@ -232,14 +280,15 @@ public class IRVisitorJasmin extends IRVisitor
         // ifne L0
         if (sg.isRegister())
         {
-            str += "iload ";
-            str += String.valueOf(sg.getRegister());
-            str += "\nifne ";
+            str += __toStringInstructionLoad(Type.Type_Boolean, false, sg.getRegister());
+            str += TAB;
+            str += "ifne ";
         }
         
         // goto L1
         else
         {
+            str += TAB;
             str += "goto ";
         }
 
@@ -250,9 +299,7 @@ public class IRVisitorJasmin extends IRVisitor
     
 	public Object visit(IRStatementLabel sl)
     {
-        String str = __toStringLabel(sl.getLabel());
-        str += ":\n";
-        return str;
+        return __toStringLabel(__toStringLabelRegular(sl.getLabel()));
     }
 
 	public Object visit(IRStatementPrint sp)
@@ -271,23 +318,13 @@ public class IRVisitorJasmin extends IRVisitor
         Type type = sp.getType();
 
         // load print function
-        String str = "getstatic java/lang/System/out Ljava/io/PrintStream;\n";
+        String str = "    getstatic java/lang/System/out Ljava/io/PrintStream;\n";
 
         // load parameter
-        if (type == Type.Type_String)
-        {
-            str += 'a';
-        }
-        else if (type == Type.Type_Float)
-        {
-            str += 'f';
-        }
-        else
-        {
-            str += 'i';
-        }
+        str += __toStringInstructionLoad(sp.getType(), false, sp.getRegister());
 
         // invoke print function
+        str += TAB;
         str += "invokevirtual java/io/PrintStream/print";
         if (sp.isNewline())
         {
@@ -309,12 +346,9 @@ public class IRVisitorJasmin extends IRVisitor
         {
             // iload 1
             // ireturn
-            char type = __toCharType(sr.getType(), sr.isArray());
-            str += type;
-            str += "load ";
-            str += String.valueOf(sr.getRegister());
-            str += '\n';
-            str += type;
+            str += __toStringInstructionLoad(sr.getType(), sr.isArray(), sr.getRegister());
+            str += TAB;
+            str += __toCharInstructionType(sr.getType(), sr.isArray());
         }
 
         str += "return\n";
@@ -324,17 +358,20 @@ public class IRVisitorJasmin extends IRVisitor
 
 	public Object visit(IRAssignmentArray aa)
     {
-        /*
-        ldc 3
-        newarray int
-        astore 0
-        */
-        String str = "ldc ";
+        // ldc 3
+        String str = TAB;
+        str += "ldc ";
         str += String.valueOf(aa.getSize());
-        str += "\nnewarray ";
+        str += '\n';
+
+        // newarray int
+        str += TAB;
+        str += "newarray ";
         str += aa.getType().toString();
-        str += "\nastore ";
-        str += String.valueOf(aa.getRegister());
+        str += '\n';
+
+        // astore 0
+        str += __toStringInstructionStore(aa.getType(), true, aa.getRegister());
         return str;
     }
 
@@ -347,20 +384,17 @@ public class IRVisitorJasmin extends IRVisitor
         istore 3
         */
         String str = "";
-        char type = __toCharType(ac.getType(), ac.isArray());
 
         for (Pair<Type, Integer> pair : ac.getParameterRegisters())
         {
-            str += __toCharType(pair.getFirst(), false);
-            str += "load ";
-            str += String.valueOf(pair.getSecond());
-            str += '\n';
+            str += __toStringInstructionLoad(pair.getFirst(), false, pair.getSecond());
         }
 
         // invoke function
+        str += TAB;
         str += "invokestatic ";
-        str += m_name_program;
-        str += '/';
+        str += m_name;
+        str += "/__";
         str += ac.getName();
 
         // parameters
@@ -372,14 +406,12 @@ public class IRVisitorJasmin extends IRVisitor
         str += ')';
 
         // return type
-        str += type;
+        str += __toCharInstructionType(ac.getType(), ac.isArray());
         str += '\n';
 
         if (!ac.getType().equals(Type.Type_Void))
         {
-            str += type;
-            str += "store ";
-            str += ac.getRegister();
+            str += __toStringInstructionStore(ac.getType(), ac.isArray(), ac.getRegister());
         }
 
         return str;
@@ -392,100 +424,107 @@ public class IRVisitorJasmin extends IRVisitor
         ldc 1
         istore 1
         */
-        String str = "ldc ";
+        String str = "    ldc ";
         str += String.valueOf(ac.getLiteral());
         str += '\n';
-        str += __toCharType(ac.getType(), false);
-        str += "store ";
-        str += String.valueOf(ac.getRegister());
-        str += '\n';
+        str += __toStringInstructionStore(ac.getType(), false, ac.getRegister());
         return str;
     }
 
 	public Object visit(IRAssignmentOperation ao)
     {
         // T11 := T8 I- T10;
-        char type = __toCharType(ao.getType(), false);
+        Operator op = ao.getOperator();
+        Type type = ao.getType();
+        Type type_result = type;
+        if (op == Operator.Operator_Equals || op == Operator.Operator_Less_Than)
+        {
+            type_result = Type.Type_Boolean;
+        }
+        char char_type = __toCharInstructionType(type, false);
 
         // iload 8
-        String str = "";
-        str += type;
-        str += "load ";
-        str += String.valueOf(ao.getRegisterLeft());
-        str += '\n';
+        String str = __toStringInstructionLoad(type, false, ao.getRegisterLeft());
 
         // iload 10
-        str += type;
-        str += "load ";
-        str += String.valueOf(ao.getRegisterRight());
-        str += '\n';
+        str += __toStringInstructionLoad(type, false, ao.getRegisterRight());
 
-        // isub
-        str += type;
-        switch (ao.getOperator())
+        if (type == Type.Type_Boolean)
         {
-            case Operator_Addition:
-            {
-                str += "add\n";
-                break;
-            }
-            case Operator_Subtraction:
-            {
-                str += "sub\n";
-                break;
-            }
-            case Operator_Multiply:
-            {
-                str += "mul\n";
-                break;
-            }
             /*
             ;		T8 := T6 Z== T7;
             ixor
             ldc 1
             ixor
             */
-            case Operator_Equals:
-            {
-                str += "xor\n";
-                str += "ldc 1";
-                str += "ixor\n";
-                break;
-            }
-            /*
-            isub
-            iflt L_2
-            ldc 0
-            goto L_3
-        L_2:
-            ldc 1
-        L_3:
-            istore 4
-            */
-            case Operator_Less_Than:
-            {
-                String label_1 = __toStringLabel(ao.getLabel1());
-                String label_2 = __toStringLabel(ao.getLabel2());
-                str += "sub\n";
-                str += "iflt ";
-                str += label_1;
-                str += "\nldc 0";
-                str += "\ngoto ";
-                str += label_2;
-                str += '\n';
-                str += label_1;
-                str += ":\nldc 1\n";
-                str += label_2;
-                str += ":\n";
-                break;
-            }
-            default:
-                break;
+
         }
-        str += type;
-        str += "store ";
-        str += String.valueOf(ao.getRegister());
-        str += '\n';
+        else if (type == Type.Type_String)
+        {
+
+        }
+        else // (type == Type.Type_Integer || type == Type.Type_Char || type == Type.Type_Float)
+        {
+            str += TAB;
+            str += char_type;
+            if (op == Operator.Operator_Addition)
+            {
+                str += "add";
+            }
+            else if (op == Operator.Operator_Subtraction)
+            {
+                str += "sub";
+            }
+            else if (op == Operator.Operator_Multiply)
+            {
+                str += "mul";
+            }
+            else // equal or less than
+            {
+                int label_op_1 = __getLabelOp();
+                int label_op_2 = __getLabelOp();
+                String str_label_op_1 = __toStringLabelOperation(label_op_1);
+                String str_label_op_2 = __toStringLabelOperation(label_op_2);
+
+                // isub
+                str += "sub\n";
+
+                // ifeq OP1 || iflt OP1
+                str += TAB;
+                if (op == Operator.Operator_Equals)
+                {
+                    str += "ifeq ";
+                }
+                else
+                {
+                    str += "iflt ";
+                }
+                str += str_label_op_1;
+                str += '\n';
+
+                // ldc 0
+                str += TAB;
+                str += "ldc 0\n";
+
+                // goto OP2
+                str += TAB;
+                str += "goto ";
+                str += str_label_op_2;
+                str += '\n';
+
+                // OP1: 
+                str += __toStringLabel(str_label_op_1);
+
+                // ldc 1
+                str += TAB;
+                str += "ldc 1\n";
+
+                // OP2:
+                str += __toStringLabel(str_label_op_2);
+            }
+            str += '\n';
+        }
+        str += __toStringInstructionStore(type_result, false, String.valueOf(ao.getRegister()));
         return str;
     }
 
@@ -510,28 +549,30 @@ public class IRVisitorJasmin extends IRVisitor
         String str = "";
         String register_lhs = String.valueOf(ar.getRegister());
         String register_rhs = String.valueOf(ar.getRegisterRight());
-        char type = __toCharType(ar.getType(), false);
+        char type = __toCharInstructionType(ar.getType(), false);
 
         // T0[T2] := T1;
         if (ar.isArray())
         {
             // aload 0
-            str += "aload ";
+            str += "    aload ";
             str += register_lhs;
             str += '\n';
 
             // iload 2
-            str += "iload ";
+            str += "    iload ";
             str += String.valueOf(ar.getArrayIndex());
             str += '\n';
 
             // iload 1
+            str += "    ";
             str += type;
             str += "load ";
             str += register_rhs;
             str += '\n';
 
             // iastore
+            str += "    ";
             str += type;
             str += "astore\n";
         }
@@ -540,20 +581,21 @@ public class IRVisitorJasmin extends IRVisitor
         else if (ar.isRegisterRightArray())
         {
             // aload 0
-            str += "aload ";
+            str += "    aload ";
             str += register_rhs;
             str += '\n';
 
             // iload 7
-            str += "iload ";
+            str += "    iload ";
             str += String.valueOf(ar.getRegisterRightArray());
             str += '\n';
 
             // iaload
             str += type;
-            str += "aload\n";
+            str += "    aload\n";
 
             // istore 8
+            str += "    ";
             str += type;
             str += "store ";
             str += register_lhs;
@@ -563,12 +605,14 @@ public class IRVisitorJasmin extends IRVisitor
         else
         {
 	        // fload 3
+            str += "    ";
             str += type;
             str += "load ";
             str += register_rhs;
             str += '\n';
 
 	        // fstore 0
+            str += "    ";
             str += type;
             str += "store ";
             str += register_lhs;

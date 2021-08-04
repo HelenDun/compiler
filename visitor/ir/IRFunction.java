@@ -14,20 +14,16 @@ public class IRFunction extends IRNode
     private Type m_type;
     private boolean m_is_array;
     private String m_name;
-    private int m_label_begin;
-    private int m_label_end;
 
     private Vector<Pair<Type,Boolean>> m_parameters;
     
-    public IRFunction(Type type, boolean is_array, String name, int label_begin, int label_end)
+    public IRFunction(Type type, boolean is_array, String name)
     {
         m_declarations = new Vector<IRDeclaration>();
         m_statements = new Vector<IRStatement>();
         m_type = type;
         m_is_array = is_array;
         m_name = name;
-        m_label_begin = label_begin;
-        m_label_end = label_end;
         m_parameters = new Vector<Pair<Type,Boolean>>();
     }
 
@@ -49,16 +45,6 @@ public class IRFunction extends IRNode
     public String getName()
     {
         return m_name;
-    }
-
-    public int getLabelBegin()
-    {
-        return m_label_begin;
-    }
-
-    public int getLabelEnd()
-    {
-        return m_label_end;
     }
 
     public Vector<Pair<Type,Boolean>> getParameters()

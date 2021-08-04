@@ -25,7 +25,7 @@ public class Compiler {
 		}
 		if (wrongNumArgs || (args.length == 2 && !(gFlag || ppvFlag || tcvFlag || irFlag || jFlag)))
 		{
-			System.out.println("Usage: Compiler filename.ul [-ppv|-tcv|-ir]");
+			System.out.println("Usage: Compiler filename.ul [-ppv|-tcv|-ir|-j]");
 			return;
 		}
 
@@ -66,7 +66,7 @@ public class Compiler {
 				VisitorType tcv = new VisitorType();
 				Environment<ElementFunction> env_func = (Environment<ElementFunction>) p.accept(tcv);
 
-				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(filename, env_func);
+				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(filename, env_func, false);
 				IRProgram irprogram = (IRProgram) p.accept(irv);
 				String sOutput = irprogram.toString();
 				
@@ -79,7 +79,7 @@ public class Compiler {
 				VisitorType tcv = new VisitorType();
 				Environment<ElementFunction> env_func = (Environment<ElementFunction>) p.accept(tcv);
 
-				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(filename, env_func);
+				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(filename, env_func, true);
 				IRProgram irprogram = (IRProgram) p.accept(irv);
 
 				IRVisitorJasmin jv = new IRVisitorJasmin();
@@ -94,7 +94,7 @@ public class Compiler {
 				VisitorType tcv = new VisitorType();
 				Environment<ElementFunction> env_func = (Environment<ElementFunction>) p.accept(tcv);
 
-				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(filename, env_func);
+				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(filename, env_func, true);
 				IRProgram irprogram = (IRProgram) p.accept(irv);
 
 				IRVisitorJasmin jv = new IRVisitorJasmin();

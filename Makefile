@@ -26,7 +26,8 @@ compile_ast:
 compile_ir:
 	javac $(DIR_IR)/*.java
 
-clean: clean_root clean_vst clean_ast clean_ir clean_test
+clean: clean_java clean_test
+clean_java: clean_root clean_vst clean_ast clean_ir
 clean_root:
 	rm -f *.class $(GNAME)*.java $(GNAME)__.g $(GNAME).tokens
 clean_vst:
@@ -74,5 +75,10 @@ ir_test_compiler:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file); java Compiler $(file) -ir; echo;)
 ir_test_codegen:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ir), echo; echo $(file); ./codegen --file=$(file) > $(file).j; echo;)
-ir_test_jasmin:
+
+j_test:
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file); java Compiler $(file) -j; echo;)
+	
+test_jasmin:
 	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.j), echo; echo $(file); java -jar ~/jasmin-2.4/jasmin.jar $(file); echo;)
+

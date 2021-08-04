@@ -1,0 +1,14 @@
+void main ()
+{
+    char a;
+    char b;
+
+    a = 't';
+    b = 'k';
+    a = 'x';
+    print a;
+    println b;
+    b = b + a;
+    print b;
+    return;
+}

@@ -16,6 +16,7 @@ public class VisitorIntermediateRepresentation extends Visitor
     private IRProgram m_program;
     private int m_counter_register;
     private int m_counter_label;
+    private boolean m_is_jasmin;
 
     private void __enscope()
     {
@@ -77,7 +78,7 @@ public class VisitorIntermediateRepresentation extends Visitor
 
     /* PUBLIC */
 
-    public VisitorIntermediateRepresentation(String name, Environment<ElementFunction> func_env)
+    public VisitorIntermediateRepresentation(String name, Environment<ElementFunction> func_env, boolean isJasmin)
     {
         m_func_env = func_env;
         m_var_env = new Environment<ElementRegister>();
@@ -85,6 +86,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         m_program = new IRProgram(name);
         m_counter_register = 0;
         m_counter_label = 0;
+        m_is_jasmin = isJasmin;
     }
 
     public IRProgram getIRProgram()
@@ -123,7 +125,7 @@ public class VisitorIntermediateRepresentation extends Visitor
         Type type = func_decl.getCompoundType().getTypeNode().getType();
         boolean is_array = func_decl.getCompoundType().isArray();
 
-        IRFunction irf = new IRFunction(type, is_array, name, __getLabel(), __getLabel());
+        IRFunction irf = new IRFunction(type, is_array, name);
         m_program.addFunction(irf);
         ElementFunction ef = m_func_env.find(name);        
         m_func_curr = new Pair<IRFunction, ElementFunction>(irf, ef);
@@ -366,15 +368,7 @@ public class VisitorIntermediateRepresentation extends Visitor
             type_new = Type.Type_Boolean;
         int register_assign = __getRegister(false, type_new);
 
-        IRAssignmentOperation irao;
-        if (operator == Operator.Operator_Less_Than)
-        {
-            irao = new IRAssignmentOperation(register_assign, NO_ARRAY, register_right, register_left, __getLabel(), __getLabel());
-        }
-        else
-        {
-            irao = new IRAssignmentOperation(register_assign, NO_ARRAY, type, register_right, register_left, operator);
-        }
+        IRAssignmentOperation irao = new IRAssignmentOperation(register_assign, NO_ARRAY, type, register_right, register_left, operator);
         m_func_curr.getFirst().addStatement(irao);
 
         return new Pair<Type,Integer>(type_new, register_assign);
