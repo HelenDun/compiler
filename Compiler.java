@@ -14,14 +14,16 @@ public class Compiler {
 		boolean ppvFlag = false;
 		boolean tcvFlag = false;
 		boolean irFlag = false;
+		boolean jFlag = false;
 		if (args.length == 2)
 		{
 			gFlag = gFlag | args[1].equals("-g");
 			ppvFlag = ppvFlag | args[1].equals("-ppv");
 			tcvFlag = tcvFlag | args[1].equals("-tcv");
 			irFlag = irFlag | args[1].equals("-ir");
+			jFlag = jFlag | args[1].equals("-j");
 		}
-		if (wrongNumArgs || (args.length == 2 && !(gFlag || ppvFlag || tcvFlag || irFlag)))
+		if (wrongNumArgs || (args.length == 2 && !(gFlag || ppvFlag || tcvFlag || irFlag || jFlag)))
 		{
 			System.out.println("Usage: Compiler filename.ul [-ppv|-tcv|-ir]");
 			return;
@@ -72,6 +74,21 @@ public class Compiler {
 				output.write(sOutput);
 				output.close();
 			}
+			else if (jFlag)
+			{
+				VisitorType tcv = new VisitorType();
+				Environment<ElementFunction> env_func = (Environment<ElementFunction>) p.accept(tcv);
+
+				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(filename, env_func);
+				IRProgram irprogram = (IRProgram) p.accept(irv);
+
+				IRVisitorJasmin jasmin_visitor = new IRVisitorJasmin();
+				String sOutput = jasmin_visitor.accept(irprogram).toString();
+				
+				FileWriter output = new FileWriter(pathname + ".j");
+				output.write(sOutput);
+				output.close();
+			}
 			else if (!gFlag)
 			{
 				VisitorType tcv = new VisitorType();
@@ -79,7 +96,9 @@ public class Compiler {
 
 				VisitorIntermediateRepresentation irv = new VisitorIntermediateRepresentation(filename, env_func);
 				IRProgram irprogram = (IRProgram) p.accept(irv);
-				System.out.println(irprogram.toString());
+
+				IRVisitorJasmin jv = new IRVisitorJasmin();
+				System.out.println(jasmin_visitor.accept(irprogram).toString());
 			}
 		}
 		catch (RecognitionException e)	

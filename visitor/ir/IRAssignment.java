@@ -1,7 +1,6 @@
 package visitor.ir;
 
 import java.lang.String;
-
 import visitor.ast.Type;
 
 public abstract class IRAssignment extends IRStatement

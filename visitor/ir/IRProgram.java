@@ -2,7 +2,6 @@ package visitor.ir;
 
 import java.lang.String;
 import java.util.Vector;
-
 import visitor.IRVisitor;
 
 public class IRProgram extends IRNode
