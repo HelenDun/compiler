@@ -10,7 +10,11 @@ public class Compiler {
 		ANTLRInputStream input;
 
 		// grammar, reprint, type-check, intermediate representation, jasmin file
-		boolean grFlag, rpFlag, tcFlag, irFlag, jaFlag;
+		boolean grFlag = false;
+		boolean rpFlag = false;
+		boolean tcFlag = false;
+		boolean irFlag = false;
+		boolean jaFlag = false;
 		boolean wrongNumArgs = (args.length == 0 || args.length > 2);
 
 		// check for flags
@@ -24,25 +28,26 @@ public class Compiler {
 		}
 
 		// check the arguments are correct
-		if (wrongNumArgs || (args.length == 2 && !(rpFlag || tcFlag || irFlag || jaFlag)))
+		if (wrongNumArgs || (args.length == 2 && !(grFlag || rpFlag || tcFlag || irFlag || jaFlag)))
 		{
-			System.out.println("Usage: Compiler <filename> [-gr|-rp|-tc|-ir|-ja]");
+			System.out.println("Error: Compiler <filename> [-gr|-rp|-tc|-ir|-ja]");
+			System.out.println(args.length);
 			return;
 		}
 
 		// get program name and the path to the file
-		String ulPathname;
+		String hdPathname;
 		String pathname;
 		String filename;
-		ulPathname = args[0];
-		pathname = ulPathname.substring(0, ulPathname.length() - 3);
+		hdPathname = args[0];
+		pathname = hdPathname.substring(0, hdPathname.length() - 3);
 		filename = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length());
 
 		// parse file with Antlr grammar
-		input = new ANTLRInputStream(new FileInputStream(ulPathname));
-		ulActionsLexer lexer = new ulActionsLexer(input);
+		input = new ANTLRInputStream(new FileInputStream(hdPathname));
+		hdActionsLexer lexer = new hdActionsLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		ulActionsParser parser = new ulActionsParser(tokens);
+		hdActionsParser parser = new hdActionsParser(tokens);
 
 		try 
 		{
@@ -106,7 +111,7 @@ public class Compiler {
 
 			if (output != null)
 			{
-				FileWriter out = new FileWriter("../output/" + filename + extension);
+				FileWriter out = new FileWriter("./output/" + filename + extension);
 				out.write(output);
 				out.close();
 			}

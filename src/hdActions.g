@@ -1,9 +1,9 @@
 /*
-The action version of the Antlr 3.0 grammar for the Jackets Language
+The action version of the Antlr 3.0 grammar for the HD Language
 Author: Helen Dun
 */
 
-grammar ulActions;
+grammar hdActions;
 
 @header 
 {

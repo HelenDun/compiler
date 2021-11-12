@@ -1,52 +1,46 @@
 
-Compiler for the Unnamed Language
+***Compiler for the HD Language***
+*Author: Helen Dun*
+*Email: helen@dun.org*
 
-Author: Helen Dun
-VNum: V00912482
-Email: dunhelen@uvic.ca
+**Pre-Requirements**
+- Unix Operating System
+- Java
 
-Note. For TA testing purposes, unless -ppv or -tcv commands are added, Compiler.java will always run the intermediate representation visitor.
+**How to Run the Compiler**
+To compile, run the command:
+    make all
 
-**How to Run the Compiler:**
+To execute, run the command:
+    java  -cp 'antlr.jar:build' Compiler <file_name> [-gr|-rp|-tc|-ir|-ja]
 
-1. Ensure antlr.jar is installed on your system.
-2. Turn the ulActions.g into usable coding using the following command:
-    make grammar
-2. Compile all files using the following commands:
-    make compile
-3. Run the Compiler program using the following command:
-    java Compiler test_file [-ppv|-tcv|-ir]
-Note. For step 3, run 'make test' for an automated testing.
+When no tag parameters are added, the Compiler executable will default use the -ja tag and output a .j file. 
+
+The -gr tag stands for 'grammar' and will output any errors with the grammar of the file. It will output nothing if the grammar does not encounter any errors.
+
+The -rp tag stands for 'reprint' and will output a nicely formatted version of the input file. This  is not a part of the compilation process but is used to check that the grammar works as desired.
+
+The -tc tag stands for 'type-check' and will output any errors with the types of variables and operations. It will output nothing if the type-check does not encounter any errors. 
+
+The -ir tag stands for 'intermediate representation' and will output a .ir file. The .ir files are similar to assembly code and are for checking that the intermediate representation is correct.
+
+The -ja tag stands for 'jasmin' and will output a .j file. The external Jasmin program can take the .j file as input and output an executable java file. Thus the Jackets language can finally be executed in the JVM.
+
 
 **Tests**
 
-There are 3 categories of tests: runnable, parsable and invalid. Runnable tests are .ul programs that can be parsed by the grammar and compiled by the Compiler. Parsable tests are .ul programs that can be parsed by the grammar but will throw an error during compilation due to issues such as type-checking. Invalid tests are false .ul programs that cannot be parsed by the grammar and are not within the Unnamed Language (and so can also not be compiled).
+There are 3 categories of test files: runnable, parsable and invalid. Runnable tests are .hd programs that can be parsed by the grammar and compiled by the Compiler. Parsable tests are .hd programs that can be parsed by the grammar but will throw an error during compilation due to issues such as type-checking. Invalid tests are false .hd programs that cannot be parsed by the grammar and are not within the Jackets Language (and so can also not be compiled).
 
-To test the parsing ability of the Compiler, either run the 'make grammar_test' command or run the Compiler program without the ppv command like so:
-    java Compiler test_file.ul
+The Makefile has many automated unit tests that use the different tag parameters. Make sure to always 'make clean' and 'make all' before running the unit tests.
 
-To test the pretty print visitor ability of the Compiler, either run the 'make ppv_test' command to create pretty print vistor versions of all parsable test cases, or run the Compiler program with the ppv command like so:
-    java Compiler test_file.ul -ppv
+For the 'make grammar_test' command, the grammar should output mostly nothing on runnable and parsable test files but fail on invalid test files.
 
-To test the type check visitor ability of the Compiler, either run the 'make tcv_test' command to out put any type-check errors for all parsable test cases, or run the Compiler program with the tcv command like so:
-    java Compiler test_file.ul -tcv
+For the 'make rp_test' command, the Compiler should output reprinted versions of all runnable and parsable tests into the output folder.
 
-To test the intermediate representation visitor ability of the Compiler, either run the 'make ir_test' command to output the intermediate representation for each of my test files, or run the Compiler program with the ir command like so:
-    java Compiler test_file.ul -ir
+For the 'make tc_test' command, the Compiler should output nothing for all runnable tests and errors for all parsable tests.
 
+For the 'make ir_test' and 'make ja_test' commands, the Compiler should output .ir and .j files for all runnable tests into the output folder.
 
-**The Makefile**
+For the 'make ja_executable' command, the Jasmin executable should output java executable files for all .j files in the output folder.
 
-The Makefile has several commands:
-    make grammar
-    make compile
-    make test
-    make clean
-
-The 'grammar' command reads in the ulActions.g file and creates Lexer.java, Parser.java and .tokens files for the grammar.
-
-The 'compile' command uses the 'compile_root' and 'compile_ast' commands. 'compile_root' will compile all files in the top-level directory such as Compiler.java. 'compile_ast' will compile all files in the ast/ folder, which contains the Visitor classes and Abstract Syntax Tree classes.
-
-The 'test' command uses the 'grammar_test', 'ppv_test', 'tcv_test', 'ir_test' commands. 'grammar_test' tests whether the Compiler program can parse .ul programs. 'ppv_test' tests whether the Compiler program can read in a parsable .ul program, create an Abstract Syntax Tree, and re-output the .ul program in the PrettyPrintVisitor format. 'tcv_test' tests whether the Compiler can type-check an input .ul program correctly.
-
-The 'clean' command removes all files created by the previous commands.
+For full compilation testing, the user should run the 'make ja_test' and 'make ja_executable' commands in that order.

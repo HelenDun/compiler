@@ -1,8 +1,8 @@
 /*
-The non-action version of the Antlr 3.0 grammar for the Jackets Language
+The non-action version of the Antlr 3.0 grammar for the HD Language
 Author: Helen Dun
 */
-grammar ulNoActions;
+grammar hdNoActions;
 
 /* Parser */
 
