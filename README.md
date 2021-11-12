@@ -50,3 +50,6 @@ For the 'make ir_test' and 'make ja_test' commands, the Compiler should output .
 For the 'make ja_executable' command, the Jasmin executable should output java executable files for all .j files in the output folder.
 
 For full compilation testing, the user should run the 'make ja_test' and 'make ja_executable' commands in that order.
+
+**Acknowledgements**
+This project uses the "compiler-compiler" Antlr v3.0 (https://www.antlr3.org/) and the Jasmin program (https://github.com/jasmin-lang/jasmin/wiki). I take no credit for the antlr.jar file or jasmin-2.4 folder in my project.
