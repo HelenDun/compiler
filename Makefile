@@ -1,84 +1,68 @@
-DIR_SRC= .
-DIR_VST= $(DIR_SRC)/visitor
-DIR_AST= $(DIR_VST)/ast
-DIR_IR= $(DIR_VST)/ir
-DIR_TESTS= $(DIR_SRC)/tests
+DIR_SRC= ./src
+DIR_SRC_VST= $(DIR_SRC)/visitor
+DIR_SRC_AST= $(DIR_VST)/ast
+DIR_SRC_IR= $(DIR_VST)/ir
+DIR_TESTS= ./tests
 DIR_TESTS_RUNNABLE= $(DIR_TESTS)/runnable
 DIR_TESTS_PARSABLE= $(DIR_TESTS)/parsable
 DIR_TESTS_INVALID= $(DIR_TESTS)/invalid
-PPV_FILE= _ppv
-
-GNAME= ulActions
-GSRC= $(GNAME).g
+DIR_OUTPUT= ./output
+DIR_BUILD= ./build
 
 all: grammar compile
 
-grammar: $(GSRCS)
-	java org.antlr.Tool -fo . $(GSRC)
+GNAME= $(DIR_SRC)/ulActions
+grammar:
+	java org.antlr.Tool -fo . $(GNAME).g
 
 compile: compile_ir compile_ast compile_vst compile_root
 compile_root:
-	javac *.java
+	javac -d $(DIR_BUILD) *.java
 compile_vst:
-	javac $(DIR_VST)/*.java
+	javac -d $(DIR_BUILD) $(DIR_VST)/*.java
 compile_ast:
-	javac $(DIR_AST)/*.java
+	javac -d $(DIR_BUILD) $(DIR_AST)/*.java
 compile_ir:
-	javac $(DIR_IR)/*.java
+	javac -d $(DIR_BUILD) $(DIR_IR)/*.java
 
-clean: clean_java clean_test
-clean_java: clean_root clean_vst clean_ast clean_ir
-clean_root:
-	rm -f *.class $(GNAME)*.java $(GNAME)__.g $(GNAME).tokens
-clean_vst:
-	rm -f $(DIR_VST)/*.class
-clean_ast:
-	rm -f $(DIR_AST)/*.class
-clean_ir:
-	rm -f $(DIR_IR)/*.class
-clean_test: clean_test_ppv clean_test_ir
-clean_test_ppv:
-	rm -f $(DIR_TESTS_RUNNABLE)/*.ppv $(DIR_TESTS_PARSABLE)/*.ppv
-clean_test_ir:
-	rm -f $(DIR_TESTS_RUNNABLE)/*.ir $(DIR_TESTS_RUNNABLE)/*.j $(DIR_TESTS_RUNNABLE)/*.class
-
-test: grammar_test ppv_test tcv_test ir_test
+clean: clean_output clean_build clean_grammar
+clean_output: rm $(DIR_OUTPUT)/*
+clean_build: rm $(DIR_BUILD)/*
+clean_grammar: rm $(GNAME)*.java $(GNAME)__.g $(GNAME).tokens
 
 # java Compiler ./tests/runnable/some_file.ul
 grammar_test: grammar_test_runnable grammar_test_parsable grammar_test_invalid
 grammar_test_runnable:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -g; echo;)
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java $(DIR_BUILD)/Compiler $(file) -gr; echo;)
 grammar_test_parsable:
-	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -g; echo;)
+	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java $(DIR_BUILD)Compiler $(file) -gr; echo;)
 grammar_test_invalid:
-	$(foreach file, $(wildcard $(DIR_TESTS_INVALID)/*.ul), echo; echo $(file) ; java Compiler $(file) -g; echo;)
+	$(foreach file, $(wildcard $(DIR_TESTS_INVALID)/*.ul), echo; echo $(file) ; java $(DIR_BUILD)Compiler $(file) -gr; echo;)
 
-# java Compiler ./tests/runnable/some_file.ul -ppv
-ppv_test: ppv_test_runnable ppv_test_parsable ppv_test_ultimate
-ppv_test_runnable:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -ppv; echo;)
-ppv_test_parsable:
-	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -ppv; echo;)
-ppv_test_ultimate:
-	java Compiler ./tests/runnable/test_41_pretty_print_ugly.ul -ppv
-	java Compiler ./tests/runnable/test_42_pretty_print_expected.ul -ppv
-	diff ./tests/runnable/test_42_pretty_print_expected_ppv.ul ./tests/runnable/test_42_pretty_print_expected.ul
-	diff ./tests/runnable/test_41_pretty_print_ugly_ppv.ul ./tests/runnable/test_42_pretty_print_expected.ul
+# java Compiler ./tests/runnable/some_file.ul -rp
+rp_test: rp_test_runnable rp_test_parsable rp_test_ultimate
+rp_test_runnable:
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java $(DIR_BUILD)Compiler $(file) -rp; echo;)
+rp_test_parsable:
+	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java $(DIR_BUILD)Compiler $(file) -rp; echo;)
+rp_test_ultimate:
+	java $(DIR_BUILD)Compiler ./tests/runnable/test_41_pretty_print_ugly.ul -rp
+	java $(DIR_BUILD)Compiler ./tests/runnable/test_42_pretty_print_expected.ul -rp
+	diff $(DIR_OUTPUT)/test_42_pretty_print_expected.rp ./tests/runnable/test_42_pretty_print_expected.ul
+	diff $(DIR_OUTPUT)/test_41_pretty_print_ugly.rp ./tests/runnable/test_42_pretty_print_expected.ul
 
-tcv_test: tcv_test_runnable tcv_test_parsable
-tcv_test_runnable:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -tcv; echo;)
-tcv_test_parsable:
-	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java Compiler $(file) -tcv; echo;)
+tc_test: tc_test_runnable tc_test_parsable
+tc_test_runnable:
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file) ; java $(DIR_BUILD)Compiler $(file) -tc; echo;)
+tc_test_parsable:
+	$(foreach file, $(wildcard $(DIR_TESTS_PARSABLE)/*.ul), echo; echo $(file) ; java $(DIR_BUILD)Compiler $(file) -tc; echo;)
 
-ir_test_compiler:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file); java Compiler $(file) -ir; echo;)
-ir_test_codegen:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ir), echo; echo $(file); ./codegen --file=$(file) > $(file).j; echo;)
+ir_test:
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file); java $(DIR_BUILD)Compiler $(file) -ir; echo;)
 
-j_test:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file); java Compiler $(file) -j; echo;)
+ja_test:
+	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.ul), echo; echo $(file); java $(DIR_BUILD)Compiler $(file) -ja; echo;)
 	
-test_jasmin:
-	$(foreach file, $(wildcard $(DIR_TESTS_RUNNABLE)/*.j), echo; echo $(file); java -jar ~/jasmin-2.4/jasmin.jar $(file); echo;)
+ja_executable:
+	$(foreach file, $(wildcard $(DIR_OUTPUT)/*.j), echo; echo $(file); java -jar jasmin-2.4/jasmin.jar $(file); echo;)
 
