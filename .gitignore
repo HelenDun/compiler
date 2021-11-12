@@ -1,11 +1,11 @@
 # Compiled class file
 *.class
-ulActions.tokens
-ulActionsLexer.java
-ulActionsParser.java
+*Actions.tokens
+*ActionsLexer.java
+*ActionsParser.java
 
-# PrettyPrintVisitor test file
-*_ppv.ul
+# Reprint test file
+*.rp
 
 # Intermediate Representation test file
 *.j
@@ -28,6 +28,9 @@ ulActionsParser.java
 *.zip
 *.tar.gz
 *.rar
+
+# MacOS meta files
+*.DS_Store
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
