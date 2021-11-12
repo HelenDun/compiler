@@ -10,10 +10,13 @@
 - Java
 
 **How to Run the Compiler**
+
 To compile, run the command:
+
     make all
 
 To execute, run the command:
+
     java  -cp 'antlr.jar:build' Compiler <file_name> [-gr|-rp|-tc|-ir|-ja]
 
 When no tag parameters are added, the Compiler executable will default use the -ja tag and output a .j file. 
@@ -27,6 +30,7 @@ The -tc tag stands for 'type-check' and will output any errors with the types of
 The -ir tag stands for 'intermediate representation' and will output a .ir file. The .ir files are similar to assembly code and are for checking that the intermediate representation is correct.
 
 The -ja tag stands for 'jasmin' and will output a .j file. The external Jasmin program can take the .j file as input and output an executable java file. Thus the Jackets language can finally be executed in the JVM.
+
 
 
 **Tests**
