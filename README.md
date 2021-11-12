@@ -1,6 +1,8 @@
 
 ***Compiler for the HD Language***
+
 *Author: Helen Dun*
+
 *Email: helen@dun.org*
 
 **Pre-Requirements**
