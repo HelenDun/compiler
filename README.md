@@ -16,7 +16,7 @@ To execute, run the command:
 
     java  -cp 'antlr.jar:build' Compiler <file_name> [-gr|-rp|-tc|-ir|-ja]
 
-When no tag parameters are added, the Compiler executable will default use the -ja tag and output a .j file. 
+When no tag parameters are added, the Compiler executable will default use the -ja tag and output a .j file. Below are the descriptions of what each tag does/is for:
 - The -gr tag stands for 'grammar' and will output any errors with the grammar of the file. It will output nothing if the grammar does not encounter any errors.
 - The -rp tag stands for 'reprint' and will output a nicely formatted version of the input file. This  is not a part of the compilation process but is used to check that the grammar works as desired.
 - The -tc tag stands for 'type-check' and will output any errors with the types of variables and operations. It will output nothing if the type-check does not encounter any errors. 
